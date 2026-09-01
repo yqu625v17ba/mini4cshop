@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MINI4C X CHEATS - Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background: #0f1016; color: #fff; font-family: sans-serif; margin: 0; padding: 0; }
+        #loginScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f1016; display: flex; justify-content: center; align-items: center; z-index: 2000; }
+        .login-box { background: #161925; padding: 30px; border-radius: 10px; border: 1px solid #2a2f45; width: 300px; text-align: center; }
+        .login-box h2 { color: #00ffcc; margin-bottom: 20px; }
+        .login-box input { width: 100%; padding: 10px; margin: 10px 0; background: #1f2437; border: 1px solid #2a2f45; color: #fff; border-radius: 5px; box-sizing: border-box; }
+        .login-box button { width: 100%; padding: 10px; background: #7c3aed; color: #fff; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .top-navbar { display: flex; justify-content: space-between; align-items: center; background: #161925; padding: 15px; border-bottom: 1px solid #2a2f45; }
+        .menu-toggle { font-size: 20px; cursor: pointer; color: #fff; }
+        .logo { font-weight: bold; font-size: 16px; color: #00ffcc; }
+        .wallet-section { display: flex; align-items: center; gap: 10px; }
+        .wallet-balance { background: #1f2437; padding: 5px 10px; border-radius: 5px; font-size: 14px; }
+        .add-fund-btn { background: #7c3aed; color: #fff; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .sidebar { position: fixed; top: 0; left: -250px; width: 250px; height: 100%; background: #161925; transition: 0.3s; z-index: 1000; box-shadow: 2px 0 10px rgba(0,0,0,0.5); }
+        .sidebar.active { left: 0; }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid #2a2f45; }
+        .sidebar-links { list-style: none; padding: 0; margin: 0; }
+        .sidebar-links li a { display: flex; align-items: center; gap: 12px; padding: 15px 20px; color: #fff; text-decoration: none; border-bottom: 1px solid #1f2437; transition: 0.2s; cursor: pointer; }
+        .sidebar-links li a:hover { background: #7c3aed; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; z-index: 999; }
+        .overlay.active { display: block; }
+        .main-content { padding: 20px; }
+        .section { display: none; }
+        .section.active { display: block; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; justify-content: center; }
+        .product-card { background: #161925; border: 1px solid #2a2f45; border-radius: 12px; padding: 15px; text-align: center; box-shadow: 0 4px 15px rgba(0,255,204,0.05); }
+        .product-title { color: #00ffcc; font-size: 16px; font-weight: bold; margin-bottom: 10px; }
+        .features-box { background: #1f2437; border-radius: 6px; padding: 8px; margin-bottom: 10px; font-size: 13px; text-align: left; color: #ddd; }
+        .features-box div { margin: 4px 0; }
+        .purchase-toggle-btn { background: #7c3aed; color: #fff; border: none; padding: 10px; border-radius: 6px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 5px; transition: 0.2s; }
+        .purchase-toggle-btn:hover { background: #6d28d9; }
+        .variants-container { display: none; margin-top: 10px; background: #11131d; border: 1px solid #2a2f45; border-radius: 8px; padding: 10px; max-height: 250px; overflow-y: auto; }
+        .variants-container.active { display: block; }
+        .variant-row { display: flex; justify-content: space-between; align-items: center; background: #191d2b; padding: 8px 10px; border-radius: 6px; margin-bottom: 8px; font-size: 13px; border: 1px solid #252b3d; }
+        .variant-info { text-align: left; }
+        .variant-name { font-weight: bold; color: #fff; }
+        .variant-price { color: #00ffcc; font-weight: bold; margin-top: 2px; }
+        .variant-action { display: flex; align-items: center; gap: 6px; }
+        .qty-input { width: 35px; background: #10121a; border: 1px solid #333952; color: #fff; text-align: center; border-radius: 4px; padding: 4px; font-size: 12px; }
+        .buy-variant-btn { background: #7c3aed; color: #fff; border: none; padding: 5px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 12px; }
+        .key-card { background: #161925; border: 1px solid #2a2f45; padding: 15px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .key-code { font-family: monospace; background: #1f2437; padding: 5px 10px; border-radius: 4px; color: #00ffcc; }
+        .copy-btn { background: #00ffcc; color: #000; border: none; padding: 5px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 3000; justify-content: center; align-items: center; }
+        .modal-content { background: #161925; border: 1px solid #2a2f45; padding: 25px; border-radius: 10px; width: 320px; text-align: center; }
+        .modal-content input { width: 100%; padding: 10px; margin: 10px 0; background: #1f2437; border: 1px solid #2a2f45; color: #fff; border-radius: 5px; box-sizing: border-box; }
+        .modal-content button { width: 100%; padding: 10px; background: #7c3aed; color: #fff; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 5px; }
+        .close-modal { background: #ef4444 !important; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div id="loginScreen">
+        <div class="login-box">
+            <h2>MINI4C LOGIN</h2>
+            <input type="text" id="usernameInput" placeholder="Enter Username">
+            <input type="password" id="passwordInput" placeholder="Enter Password">
+            <button onclick="handleLogin()">Login / Register</button>
+        </div>
+    </div>
+    <header class="top-navbar">
+        <div class="menu-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></div>
+        <div class="logo">MINI4C X CHEATS</div>
+        <div class="wallet-section">
+            <span class="wallet-balance">₹<span id="userBalance">0.00</span></span>
+            <button class="add-fund-btn" onclick="openAddFundModal()">+ Add Fund</button>
+        </div>
+    </header>
+    <nav id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h3>Menu</h3>
+            <i class="fa-solid fa-xmark close-btn" onclick="toggleSidebar()" style="cursor:pointer;"></i>
+        </div>
+        <ul class="sidebar-links">
+            <li><a onclick="switchTab('buyKey')"><i class="fa-solid fa-key"></i> Buy Key</a></li>
+            <li><a onclick="switchTab('myKeys')"><i class="fa-solid fa-box-archive"></i> My Keys</a></li>
+            <li><a href="https://t.me/+Ga2FZ1QnY8VjN2Y1" target="_blank"><i class="fa-brands fa-telegram"></i> Customer Support</a></li>
+            <li><a onclick="handleLogout()" style="color: #ef4444;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+        </ul>
+    </nav>
+    <div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
+
+    <div id="fundModal" class="modal">
+        <div class="modal-content">
+            <h3>Add Funds via UPI</h3>
+            <p style="font-size: 13px; color: #00ffcc;">UPI ID: ankittt.3@fam</p>
+            <div id="step1">
+                <input type="number" id="fundAmountInput" placeholder="Enter Amount (INR)">
+                <button onclick="generateDynamicQR()">Generate QR & Pay</button>
+            </div>
+            <div id="step2" style="display:none;">
+                <div id="qrcodeContainer" style="margin: 15px 0;"></div>
+                <p style="font-size: 12px; color: #888;">Scan via PhonePe/FamPay & enter UTR/Txn ID below:</p>
+                <input type="text" id="utrInput" placeholder="Enter 12-digit UTR / Txn ID">
+                <button onclick="submitFundRequest()">Submit for Verification</button>
+            </div>
+            <button class="close-modal" onclick="closeAddFundModal()">Cancel</button>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <div id="buyKeySection" class="section active">
+            <h2>Marketplace / User Stock</h2>
+            <div class="product-grid" id="productGrid"></div>
+        </div>
+        <div id="myKeysSection" class="section">
+            <h2>My Purchased Keys</h2>
+            <div id="myKeysList"><p style="color: #888;">No keys purchased yet.</p></div>
+        </div>
+    </main>
+    <script>
+        const products = [
+            { id: 1, name: "DELTA PROXY IOS IPHONE", features: ["⚡ Body Proxy - Full Red", "⚡ Neck Proxy V1", "⚡ Neck Proxy V2"], variants: [{ name: "1 Days", price: 150 }, { name: "7 Days", price: 350 }, { name: "30 Days", price: 700 }] },
+            { id: 2, name: "MIGUL IPHONE IOS FF", features: ["⚡ Silent Aim", "⚡ AimBot", "⚡ Speed"], variants: [{ name: "1 Day's Basic", price: 250 }, { name: "7 Day's Basic", price: 600 }, { name: "30 Day's Basic", price: 1200 }, { name: "1 Day's PRO", price: 250 }, { name: "7 Day's PRO", price: 600 }, { name: "30 Day's PRO", price: 1200 }] },
+            { id: 3, name: "XYZ CHEATS FF ROOT ANDROID", features: ["⚡ Silent Aim", "⚡ Aim Magnet", "⚡ Aimbot"], variants: [{ name: "1 Days", price: 70 }, { name: "2 Days", price: 150 }] },
+            { id: 4, name: "PRIME HOOK FF NONROOT ANDROID", features: ["⚡ Aim Magnet", "⚡ Silent Aim", "⚡ Aimbot"], variants: [{ name: "1 Days Nonroot", price: 50 }, { name: "3 Days Nonroot", price: 100 }, { name: "7 Days Nonroot", price: 270 }, { name: "10 Days Nonroot", price: 300 }] },
+            { id: 5, name: "BALA MOD XYZ - V2 FF NONROOT", features: ["⚡ NONROOT", "⚡ Headshot", "⚡ Location"], variants: [{ name: "1 Hours", price: 15 }, { name: "3 Hours", price: 35 }, { name: "6 Hours", price: 60 }, { name: "12 Hours", price: 120 }, { name: "1 Days", price: 230 }, { name: "2 Days", price: 400 }, { name: "3 Days", price: 550 }, { name: "5 Days", price: 950 }, { name: "7 Days", price: 1300 }] },
+            { id: 6, name: "HG CHEATS PRIME PROXY FF NONROOT", features: ["⚡ Aimsafe", "⚡ Aimbot", "⚡ Headshot"], variants: [{ name: "1 Days", price: 70 }, { name: "7 Days", price: 250 }, { name: "10 Days", price: 300 }] },
+            { id: 7, name: "DRIPCLIENT FF NONROOT APKMOD", features: ["⚡ Aimkill", "⚡ Silent Aim", "⚡ Underkill"], variants: [{ name: "1 Day's Nonroot", price: 60 }, { name: "3 Day's Nonroot", price: 140 }, { name: "7 Day's Nonroot", price: 250 }, { name: "15 Day's Nonroot", price: 400 }, { name: "30 Day's Nonroot", price: 600 }] },
+            { id: 8, name: "HG CHEATS ANDROID PROXY FF NONROOT", features: ["⚡ AIMBOT", "⚡ PRECISAO", "⚡ HS ALTO"], variants: [{ name: "1 Day's", price: 70 }, { name: "7 Day's", price: 270 }, { name: "10 Day's", price: 300 }, { name: "30 Day's", price: 500 }] },
+            { id: 9, name: "HG CHEATS FF APKMOD NONROOT+ROOT", features: ["⚡ Aim Magnet", "⚡ Silent Aim", "⚡ Aimbot"], variants: [{ name: "1 Day's Root + Nonroot", price: 70 }, { name: "7 Day's Root + Nonroot", price: 270 }, { name: "10 Day's Root + Nonroot", price: 300 }, { name: "30 Day's Root + Nonroot", price: 500 }] },
+            { id: 10, name: "HAXX-CKER PRO FF ROOT", features: ["⚡ Aimsafe Main Id Root", "⚡ Aimbot", "⚡ Headshot"], variants: [{ name: "3 Day's", price: 180 }, { name: "5 Day's", price: 280 }, { name: "10 Day's", price: 550 }, { name: "20 Day's", price: 1050 }, { name: "30 Day's", price: 1450 }, { name: "60 Day's", price: 2800 }] },
+            { id: 11, name: "SILENT CHEAT FF ROOT ANDROID", features: ["⚡ Safe Main Id", "⚡ Silent Aim", "⚡ Underkill"], variants: [{ name: "1 Day's SAFE", price: 90 }, { name: "3 Day's SAFE", price: 180 }, { name: "7 Day's SAFE", price: 350 }, { name: "14 Day's SAFE", price: 600 }, { name: "28 Day's SAFE", price: 900 }, { name: "1 Day's BRUTAL", price: 90 }, { name: "3 Day's BRUTAL", price: 180 }, { name: "7 Day's BRUTAL", price: 350 }, { name: "14 Day's BRUTAL", price: 600 }, { name: "28 Day's BRUTAL", price: 900 }] },
+            { id: 12, name: "PATO TEAM FF ALL ANDROID", features: ["⚡ Silent Aim", "⚡ Aim Magnet", "⚡ Speed"], variants: [{ name: "3 Day's All Colours Mix", price: 150 }, { name: "7 Day's All Colours Mix", price: 300 }, { name: "15 Day's All Colours Mix", price: 500 }, { name: "30 Day's All Colours Mix", price: 700 }] },
+            { id: 13, name: "BR MOD FF PC VERSION", features: ["⚡ Silent Aim", "⚡ Aim Magnet", "⚡ Speed"], variants: [{ name: "1 Day Pc Aim Silent", price: 79 }, { name: "10 Days Pc Aim Silent", price: 479 }, { name: "20 Days Pc Aim Silent", price: 799 }, { name: "10 Days Pc Bypass + Silent", price: 519 }, { name: "1 Day Pc Modmenu x86", price: 79 }, { name: "10 Day Pc Modmenu x86", price: 479 }, { name: "30 Day Pc Modmenu x86", price: 799 }] }
+        ];
+        window.onload = function() {
+            if(localStorage.getItem("isLoggedIn") === "true") {
+                document.getElementById("loginScreen").style.display = "none";
+            } else {
+                document.getElementById("loginScreen").style.display = "flex";
+            }
+            loadUserData();
+            renderProducts();
+        }
+
+        function handleLogin() {
+            let user = document.getElementById("usernameInput").value;
+            let pass = document.getElementById("passwordInput").value;
+            if(user.trim() !== "" && pass.trim() !== "") {
+                localStorage.setItem("isLoggedIn", "true");
+                document.getElementById("loginScreen").style.display = "none";
+                alert("Login successful!");
+            } else { alert("Enter credentials!"); }
+        }
+
+        function handleLogout() {
+            localStorage.removeItem("isLoggedIn");
+            location.reload();
+        }
+
+        function renderProducts() {
+            let grid = document.getElementById("productGrid");
+            let html = "";
+            products.forEach(prod => {
+                let variantsHtml = "";
+                prod.variants.forEach((v, idx) => {
+                    variantsHtml += `
+                        <div class="variant-row">
+                            <div class="variant-info">
+                                <div class="variant-name">${v.name}</div>
+                                <div class="variant-price">₹${v.price}.00</div>
+                            </div>
+                            <div class="variant-action">
+                                <input type="number" id="qty_${prod.id}_${idx}" class="qty-input" value="1" min="1">
+                                <button class="buy-variant-btn" onclick="buyVariant('${prod.name} (${v.name})', ${v.price}, 'qty_${prod.id}_${idx}')">BUY</button>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                let featuresList = prod.features.map(f => `<div>${f}</div>`).join("");
+
+                html += `
+                    <div class="product-card">
+                        <div class="product-title">${prod.name}</div>
+                        <div class="features-box">${featuresList}</div>
+                        <button class="purchase-toggle-btn" onclick="toggleVariants(${prod.id})">PURCHASE KEY</button>
+                        <div id="variants_${prod.id}" class="variants-container">
+                            ${variantsHtml}
+                        </div>
+                    </div>
+                `;
+            });
+            grid.innerHTML = html;
+        }
+
+        function toggleVariants(id) {
+            let container = document.getElementById(`variants_${id}`);
+            container.classList.toggle("active");
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        function switchTab(tabName) {
+            toggleSidebar();
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            if(tabName === 'buyKey') { document.getElementById('buyKeySection').classList.add('active'); }
+            else if(tabName === 'myKeys') { document.getElementById('myKeysSection').classList.add('active'); renderMyKeys(); }
+        }
+
+        function openAddFundModal() {
+            document.getElementById("fundModal").style.display = "flex";
+            document.getElementById("step1").style.display = "block";
+            document.getElementById("step2").style.display = "none";
+            document.getElementById("fundAmountInput").value = "";
+            document.getElementById("utrInput").value = "";
+        }
+
+        function closeAddFundModal() {
+            document.getElementById("fundModal").style.display = "none";
+        }
+
+        function generateDynamicQR() {
+            let amt = document.getElementById("fundAmountInput").value;
+            if(!amt || isNaN(amt) || parseFloat(amt) <= 0) {
+                alert("Please enter a valid amount!");
+                return;
+            }
+            let upiUrl = `upi://pay?pa=ankittt.3@fam&pn=MINI4C&am=${amt}&cu=INR`;
+            let qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=` + encodeURIComponent(upiUrl);
+            
+            document.getElementById("qrcodeContainer").innerHTML = `<img src="${qrApi}" alt="UPI QR Code" style="border-radius: 5px; border: 2px solid #7c3aed;">`;
+            document.getElementById("step1").style.display = "none";
+            document.getElementById("step2").style.display = "block";
+        }
+
+        function submitFundRequest() {
+            let utr = document.getElementById("utrInput").value;
+            let amt = document.getElementById("fundAmountInput").value;
+            if(!utr || utr.length < 8) {
+                alert("Please enter a valid UTR / Transaction ID!");
+                return;
+            }
+            let bal = parseFloat(localStorage.getItem("walletBalance") || "0.00");
+            bal += parseFloat(amt);
+            localStorage.setItem("walletBalance", bal.toFixed(2));
+            updateBalanceUI();
+            alert("Payment verified with UTR: " + utr + "! Added ₹" + amt + " to wallet.");
+            closeAddFundModal();
+        }
+
+        function updateBalanceUI() {
+            document.getElementById("userBalance").innerText = localStorage.getItem("walletBalance") || "0.00";
+        }
+
+        function loadUserData() {
+            if(!localStorage.getItem("walletBalance")) {
+                localStorage.setItem("walletBalance", "0.00");
+            }
+            updateBalanceUI();
+        }
+
+        function generateKey() {
+            let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            let key = "MINI4C";
+            for(let i=0; i<3; i++) {
+                let seg = "";
+                for(let j=0; j<4; j++) seg += chars.charAt(Math.floor(Math.random() * chars.length));
+                key += "-" + seg;
+            }
+            return key;
+        }
+
+        function buyVariant(productName, unitPrice, qtyInputId) {
+            let qty = parseInt(document.getElementById(qtyInputId).value) || 1;
+            let totalPrice = unitPrice * qty;
+            let bal = parseFloat(localStorage.getItem("walletBalance") || "0.00");
+
+            if(bal < totalPrice) {
+                alert("Insufficient balance! Please add funds using the dynamic QR scanner.");
+                openAddFundModal();
+                return;
+            }
+
+            if(confirm(`Buy ${qty} x ${productName} for Total ₹${totalPrice}?`)) {
+                bal -= totalPrice;
+                localStorage.setItem("walletBalance", bal.toFixed(2));
+                updateBalanceUI();
+
+                let myKeys = JSON.parse(localStorage.getItem("myKeysList") || "[]");
+                for(let i=0; i<qty; i++) {
+                    myKeys.unshift({ product: productName, key: generateKey(), date: new Date().toLocaleDateString() });
+                }
+                localStorage.setItem("myKeysList", JSON.stringify(myKeys));
+                alert("Purchase successful! Keys generated in My Keys.");
+                switchTab('myKeys');
+            }
+        }
+
+        function renderMyKeys() {
+            let myKeys = JSON.parse(localStorage.getItem("myKeysList") || "[]");
+            let container = document.getElementById("myKeysList");
+            if(myKeys.length === 0) { container.innerHTML = '<p style="color: #888;">No keys purchased yet.</p>'; return; }
+            let html = "";
+            myKeys.forEach(item => {
+                html += `<div class="key-card"><div><strong>${item.product}</strong><br><small>${item.date}</small></div><div><span class="key-code">${item.key}</span> <button class="copy-btn" onclick="navigator.clipboard.writeText('${item.key}');alert('Copied!');">Copy</button></div></div>`;
+            });
+            container.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
