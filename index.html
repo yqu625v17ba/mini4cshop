@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MINI4C SHOP</title>
+<title>MINI4C X CHEATS</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@600&display=swap" rel="stylesheet">
 <style>
@@ -25,6 +25,7 @@ body{background:var(--bg);color:var(--text);overflow-x:hidden}
 .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:1002;justify-content:center;align-items:center;padding:15px}
 .modal-content{background:var(--card);border:1px solid var(--red);padding:20px;border-radius:10px;width:100%;max-width:380px;text-align:center}
 .p-btn{width:100%;padding:10px;margin-bottom:8px;background:rgba(0,0,0,0.5);border:1px solid var(--border);color:#fff;border-radius:5px;display:flex;justify-content:space-between;cursor:pointer;font-weight:600}
+.support-btn{display:block;width:100%;padding:10px;margin-bottom:8px;border-radius:5px;color:#fff;text-decoration:none;font-weight:700;font-size:13px;text-align:center}
 </style>
 </head>
 <body>
@@ -32,11 +33,11 @@ body{background:var(--bg);color:var(--text);overflow-x:hidden}
 <header class="top-navbar">
     <div style="display:flex;align-items:center;gap:12px;">
         <i class="fa-solid fa-bars" onclick="toggleSidebar()" style="cursor:pointer;font-size:18px;"></i>
-        <div class="logo"><i class="fa-solid fa-skull"></i> MINI4C</div>
+        <div class="logo"><i class="fa-solid fa-skull"></i> MINI4C X CHEATS</div>
     </div>
     <div style="display:flex;align-items:center;gap:10px;">
         <div style="background:#000;padding:4px 10px;border-radius:15px;border:1px solid var(--neon);color:var(--neon);font-family:'Orbitron';font-size:13px">₹<span id="bal">0.00</span></div>
-        <button class="btn top-btn" onclick="openModal('fundModal')">+ FUND</button>
+        <button class="btn top-btn" onclick="openModal('fundModal')">+ ADD FUND</button>
     </div>
 </header>
 
@@ -61,7 +62,20 @@ body{background:var(--bg);color:var(--text);overflow-x:hidden}
 
 <div id="planModal" class="modal"><div class="modal-content"><h3 id="mTitle" style="color:var(--red);margin-bottom:12px">Select Plan</h3><div id="planList" style="max-height:220px;overflow-y:auto;margin-bottom:12px"></div><button onclick="closeModal('planModal')" class="btn" style="background:#222">Cancel</button></div></div>
 
-<div id="succModal" class="modal"><div class="modal-content"><h3 style="color:#00ff66;margin-bottom:8px">Success!</h3><p id="succText" style="color:var(--red);font-size:13px;margin-bottom:10px"></p><div style="background:#000;padding:8px;border-radius:5px;border:1px solid var(--neon);margin-bottom:12px"><span id="keyText" style="color:var(--neon);font-family:'Orbitron';font-size:12px;user-select:all"></span></div><button onclick="closeModal('succModal')" class="cyber-btn" style="background:var(--neon);color:#000">DONE</button></div></div>
+<!-- Updated Success Modal matching your screenshot -->
+<div id="succModal" class="modal">
+    <div class="modal-content">
+        <div style="font-size:32px;color:#00ff66;margin-bottom:5px;"><i class="fa-solid fa-circle-check"></i></div>
+        <h3 style="color:#fff;font-family:'Orbitron';font-size:15px;margin-bottom:6px">Order Placed Successfully!</h3>
+        <p id="succText" style="color:var(--red);font-weight:bold;font-size:12px;margin-bottom:12px"></p>
+        <div style="background:rgba(0,0,0,0.6);border:1px dashed var(--red);padding:10px;border-radius:6px;margin-bottom:12px">
+            <p style="color:#ccc;font-size:11px;line-height:1.4">Note: Order complete hone ke baad apni Real Key claim karne ke liye humare Customer Support se contact karein.</p>
+        </div>
+        <a href="https://t.me/+Ga2FZ1QnY8VjN2Y1" target="_blank" class="support-btn" style="background:#0088cc;"><i class="fa-brands fa-telegram"></i> Contact Telegram Support</a>
+        <a href="https://discord.gg/Yttbf69xx" target="_blank" class="support-btn" style="background:#5865F2;"><i class="fa-brands fa-discord"></i> Contact Discord Support</a>
+        <button onclick="closeModal('succModal')" class="btn" style="background:#222;margin-top:4px">Close</button>
+    </div>
+</div>
 
 <div id="keysModal" class="modal"><div class="modal-content" style="max-width:420px"><h3 style="color:var(--red);margin-bottom:12px;font-family:'Orbitron'">My Purchased Keys</h3><div id="keysList" style="max-height:250px;overflow-y:auto;margin-bottom:12px;text-align:left"></div><button onclick="closeModal('keysModal')" class="btn" style="background:#222">Close</button></div></div>
 
@@ -96,7 +110,7 @@ window.onload=()=>{render(products);updateBal()};
 function render(l){document.getElementById("pContainer").innerHTML=l.map(p=>`<div class="card"><h3>${p.name}</h3><button class="cyber-btn" onclick="openPlan(${p.id})">BUY NOW</button></div>`).join('');}
 function filterP(){let q=document.getElementById("search").value.toLowerCase();render(products.filter(p=>p.name.toLowerCase().includes(q)));}
 function openPlan(id){let p=products.find(x=>x.id===id);document.getElementById("mTitle").innerText=p.name;document.getElementById("planList").innerHTML=p.v.map(v=>`<div class="p-btn" onclick="buy('${p.name}','${v.n}',${v.p})"><span>${v.n}</span><span style="color:var(--neon)">₹${v.p}</span></div>`).join('');openModal('planModal');}
-function buy(pn,vn,pr){let b=parseFloat(localStorage.getItem("bal")||"0");if(b<pr){alert("Low balance! Add funds.");closeModal('planModal');openModal('fundModal');document.getElementById("fAmt").value=pr-b;return;}b-=pr;localStorage.setItem("bal",b.toFixed(2));updateBal();let k="MINI4C-"+Math.random().toString(36).substring(2,8).toUpperCase();let h=JSON.parse(localStorage.getItem("myKeys")||"[]");h.unshift({p:pn,v:vn,k:k,d:new Date().toLocaleString()});localStorage.setItem("myKeys",JSON.stringify(h));document.getElementById("succText").innerText=`${pn} (${vn})`;document.getElementById("keyText").innerText=k;closeModal('planModal');openModal('succModal');}
+function buy(pn,vn,pr){let b=parseFloat(localStorage.getItem("bal")||"0");if(b<pr){alert("Low balance! Add funds.");closeModal('planModal');openModal('fundModal');document.getElementById("fAmt").value=pr-b;return;}b-=pr;localStorage.setItem("bal",b.toFixed(2));updateBal();let k="MINI4C-"+Math.random().toString(36).substring(2,8).toUpperCase();let h=JSON.parse(localStorage.getItem("myKeys")||"[]");h.unshift({p:pn,v:vn,k:k,d:new Date().toLocaleString()});localStorage.setItem("myKeys",JSON.stringify(h));document.getElementById("succText").innerText=`${pn} (${vn})`;closeModal('planModal');openModal('succModal');}
 function openMyKeys(){let h=JSON.parse(localStorage.getItem("myKeys")||"[]");document.getElementById("keysList").innerHTML=h.length?h.map(x=>`<div style="background:rgba(0,0,0,0.6);border:1px solid var(--border);padding:8px;border-radius:5px;margin-bottom:8px;"><div style="font-size:12px;font-weight:bold">${x.p}</div><div style="font-size:10px;color:#aaa">${x.v} | ${x.d}</div><div style="font-family:'Orbitron';font-size:11px;color:var(--neon);margin-top:3px;user-select:all">Key: ${x.k}</div></div>`).join(''):`<p style="color:#888;text-align:center;">No keys purchased yet!</p>`;openModal('keysModal');}
 function genQR(){let a=parseFloat(document.getElementById("fAmt").value);if(!a||a<10){alert("Min ₹10 required");return;}document.getElementById("qrImg").src=`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=`+encodeURIComponent('upi://pay?pa=ankittt.3@fam&pn=MINI4C&am='+a+'&cu=INR');document.getElementById("qrAmt").innerText=`Pay: ₹${a}`;document.getElementById("qrBox").style.display="block";document.getElementById("utr").style.display="block";document.getElementById("vBtn").style.display="block";}
 function addMoney(){let u=document.getElementById("utr").value.trim();let a=parseFloat(document.getElementById("fAmt").value);if(u.length<8){alert("Enter valid UTR");return;}let b=parseFloat(localStorage.getItem("bal")||"0")+a;localStorage.setItem("bal",b.toFixed(2));updateBal();alert("Added Successfully!");closeModal('fundModal');}
