@@ -29,7 +29,7 @@
         .main-content { padding: 20px; }
         .section { display: none; }
         .section.active { display: block; }
-                .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; justify-content: center; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; justify-content: center; }
         .product-card { background: #161925; border: 1px solid #2a2f45; border-radius: 12px; padding: 15px; text-align: center; box-shadow: 0 4px 15px rgba(0,255,204,0.05); }
         .product-title { color: #00ffcc; font-size: 16px; font-weight: bold; margin-bottom: 10px; }
         .features-box { background: #1f2437; border-radius: 6px; padding: 8px; margin-bottom: 10px; font-size: 13px; text-align: left; color: #ddd; }
@@ -56,7 +56,7 @@
     </style>
 </head>
 <body>
-        <div id="loginScreen">
+    <div id="loginScreen">
         <div class="login-box">
             <h2>MINI4C LOGIN</h2>
             <input type="text" id="usernameInput" placeholder="Enter Username">
@@ -131,9 +131,17 @@
             { id: 10, name: "HAXX-CKER PRO FF ROOT", features: ["⚡ Aimsafe Main Id Root", "⚡ Aimbot", "⚡ Headshot"], variants: [{ name: "3 Day's", price: 180 }, { name: "5 Day's", price: 280 }, { name: "10 Day's", price: 550 }, { name: "20 Day's", price: 1050 }, { name: "30 Day's", price: 1450 }, { name: "60 Day's", price: 2800 }] },
             { id: 11, name: "SILENT CHEAT FF ROOT ANDROID", features: ["⚡ Safe Main Id", "⚡ Silent Aim", "⚡ Underkill"], variants: [{ name: "1 Day's SAFE", price: 90 }, { name: "3 Day's SAFE", price: 180 }, { name: "7 Day's SAFE", price: 350 }, { name: "14 Day's SAFE", price: 600 }, { name: "28 Day's SAFE", price: 900 }, { name: "1 Day's BRUTAL", price: 90 }, { name: "3 Day's BRUTAL", price: 180 }, { name: "7 Day's BRUTAL", price: 350 }, { name: "14 Day's BRUTAL", price: 600 }, { name: "28 Day's BRUTAL", price: 900 }] },
             { id: 12, name: "PATO TEAM FF ALL ANDROID", features: ["⚡ Silent Aim", "⚡ Aim Magnet", "⚡ Speed"], variants: [{ name: "3 Day's All Colours Mix", price: 150 }, { name: "7 Day's All Colours Mix", price: 300 }, { name: "15 Day's All Colours Mix", price: 500 }, { name: "30 Day's All Colours Mix", price: 700 }] },
-            { id: 13, name: "BR MOD FF PC VERSION", features: ["⚡ Silent Aim", "⚡ Aim Magnet", "⚡ Speed"], variants: [{ name: "1 Day Pc Aim Silent", price: 79 }, { name: "10 Days Pc Aim Silent", price: 479 }, { name: "20 Days Pc Aim Silent", price: 799 }, { name: "10 Days Pc Bypass + Silent", price: 519 }, { name: "1 Day Pc Modmenu x86", price: 79 }, { name: "10 Day Pc Modmenu x86", price: 479 }, { name: "30 Day Pc Modmenu x86", price: 799 }] }
+            { id: 13, name: "BR MOD FF PC VERSION", features: ["⚡ Silent Aim", "⚡ Aim Magnet", "⚡ Speed"], variants: [{ name: "1 Day Pc Aim Silent", price: 79 }, { name: "10 Days Pc Aim Silent", price: 479 }, { name: "20 Days Pc Aim Silent", price: 799 }, { name: "10 Days Pc Bypass + Silent", price: 519 }, { name: "1 Day Pc Modmenu x86", price: 79 }, { name: "10 Day Pc Modmenu x86", price: 479 }, { name: "30 Day Pc Modmenu x86", price: 799 }] },
+            { id: 14, name: "INVISIBLE X (STREAMER PANEL)", features: ["⚡ Streamer Panel", "⚡ All Devices Support"], variants: [{ name: "1 Day", price: 99 }, { name: "7 Days", price: 399 }, { name: "15 Days", price: 599 }, { name: "31 Days", price: 999 }] },
+            { id: 15, name: "RAPID CORE", features: ["⚡ Rapid Core Engine", "⚡ Anti-Cheat Bypass"], variants: [{ name: "1 Day", price: 89 }, { name: "7 Days", price: 279 }, { name: "15 Days", price: 459 }, { name: "30 Days", price: 799 }] },
+            { id: 16, name: "SKB MOD (SPECIAL OFFER)", features: ["⚡ Special Offer", "⚡ High Headshot"], variants: [{ name: "1 Day", price: 99 }, { name: "7 Days", price: 299 }, { name: "15 Days", price: 499 }, { name: "30 Days", price: 799 }] },
+            { id: 17, name: "INVISABLE X", features: ["⚡ High Performance", "⚡ Safe Aim"], variants: [{ name: "1 Day", price: 99 }, { name: "7 Days", price: 349 }, { name: "15 Days", price: 599 }, { name: "30 Days", price: 999 }] },
+            { id: 18, name: "P20 ROOT DEVICE", features: ["⚡ Root Device Special"], variants: [{ name: "30 Days Plan", price: 600 }] },
+            { id: 19, name: "P20 NON ROOT", features: ["⚡ Non-Root Supported"], variants: [{ name: "30 Days Plan", price: 800 }] },
+            { id: 20, name: "PHONE TO PHONE ROOTING SERVICE", features: ["⚡ Xiaomi HyperOS (₹1500)", "⚡ POCO HyperOS (₹1500)", "⚡ Redmi MIUI / Moto / Infinix / Tecno / Samsung / Nothing / OnePlus (₹1000)"], variants: [{ name: "HyperOS Device Root", price: 1500 }, { name: "Other Brands Root", price: 1000 }] },
+            { id: 21, name: "NINE X INJECTOR", features: ["⚡ High Precision Injector"], variants: [{ name: "10 Days", price: 400 }] }
         ];
-        window.onload = function() {
+                    window.onload = function() {
             if(localStorage.getItem("isLoggedIn") === "true") {
                 document.getElementById("loginScreen").style.display = "none";
             } else {
