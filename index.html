@@ -29,7 +29,7 @@
         .main-content { padding: 20px; }
         .section { display: none; }
         .section.active { display: block; }
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; justify-content: center; }
+                .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; justify-content: center; }
         .product-card { background: #161925; border: 1px solid #2a2f45; border-radius: 12px; padding: 15px; text-align: center; box-shadow: 0 4px 15px rgba(0,255,204,0.05); }
         .product-title { color: #00ffcc; font-size: 16px; font-weight: bold; margin-bottom: 10px; }
         .features-box { background: #1f2437; border-radius: 6px; padding: 8px; margin-bottom: 10px; font-size: 13px; text-align: left; color: #ddd; }
@@ -56,7 +56,7 @@
     </style>
 </head>
 <body>
-    <div id="loginScreen">
+        <div id="loginScreen">
         <div class="login-box">
             <h2>MINI4C LOGIN</h2>
             <input type="text" id="usernameInput" placeholder="Enter Username">
@@ -80,7 +80,7 @@
         <ul class="sidebar-links">
             <li><a onclick="switchTab('buyKey')"><i class="fa-solid fa-key"></i> Buy Key</a></li>
             <li><a onclick="switchTab('myKeys')"><i class="fa-solid fa-box-archive"></i> My Keys</a></li>
-            <li><a href="https://t.me/+Ga2FZ1QnY8VjN2Y1" target="_blank"><i class="fa-brands fa-telegram"></i> Customer Support</a></li>
+            <li><a href="https://t.me/+Ga2FZ1QnY8VjN2Y1" target="_blank"><i class="fa-brands fa-telegram"></i> Customer Support (Telegram)</a></li>
             <li><a onclick="handleLogout()" style="color: #ef4444;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
         </ul>
     </nav>
@@ -111,10 +111,13 @@
         </div>
         <div id="myKeysSection" class="section">
             <h2>My Purchased Keys</h2>
+            <div style="background: #1f2437; padding: 12px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #00ffcc;">
+                <p style="margin: 0; font-size: 13px; color: #ddd;">⚠️ <strong>Note:</strong> Key lene ke baad Telegram Support par message karein taaki aapko real/active key mil sake!</p>
+            </div>
             <div id="myKeysList"><p style="color: #888;">No keys purchased yet.</p></div>
         </div>
     </main>
-    <script>
+        <script>
         const products = [
             { id: 1, name: "DELTA PROXY IOS IPHONE", features: ["⚡ Body Proxy - Full Red", "⚡ Neck Proxy V1", "⚡ Neck Proxy V2"], variants: [{ name: "1 Days", price: 150 }, { name: "7 Days", price: 350 }, { name: "30 Days", price: 700 }] },
             { id: 2, name: "MIGUL IPHONE IOS FF", features: ["⚡ Silent Aim", "⚡ AimBot", "⚡ Speed"], variants: [{ name: "1 Day's Basic", price: 250 }, { name: "7 Day's Basic", price: 600 }, { name: "30 Day's Basic", price: 1200 }, { name: "1 Day's PRO", price: 250 }, { name: "7 Day's PRO", price: 600 }, { name: "30 Day's PRO", price: 1200 }] },
@@ -292,7 +295,7 @@
                     myKeys.unshift({ product: productName, key: generateKey(), date: new Date().toLocaleDateString() });
                 }
                 localStorage.setItem("myKeysList", JSON.stringify(myKeys));
-                alert("Purchase successful! Keys generated in My Keys.");
+                alert("Purchase successful! Check 'My Keys' section and message on Telegram for real key.");
                 switchTab('myKeys');
             }
         }
