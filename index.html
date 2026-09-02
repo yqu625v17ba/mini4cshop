@@ -1,123 +1,353 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MINI4C X CHEATS - Store</title>
+    <title>MINI4C X CHEATS - Premium Cyber Store</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background: #0f1016; color: #fff; font-family: sans-serif; margin: 0; padding: 0; }
-        #loginScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f1016; display: flex; justify-content: center; align-items: center; z-index: 2000; }
-        .login-box { background: #161925; padding: 30px; border-radius: 10px; border: 1px solid #2a2f45; width: 300px; text-align: center; }
-        .login-box h2 { color: #00ffcc; margin-bottom: 20px; }
-        .login-box input { width: 100%; padding: 10px; margin: 10px 0; background: #1f2437; border: 1px solid #2a2f45; color: #fff; border-radius: 5px; box-sizing: border-box; }
-        .login-box button { width: 100%; padding: 10px; background: #7c3aed; color: #fff; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .top-navbar { display: flex; justify-content: space-between; align-items: center; background: #161925; padding: 15px; border-bottom: 1px solid #2a2f45; }
-        .menu-toggle { font-size: 20px; cursor: pointer; color: #fff; }
-        .logo { font-weight: bold; font-size: 16px; color: #00ffcc; }
-        .wallet-section { display: flex; align-items: center; gap: 10px; }
-        .wallet-balance { background: #1f2437; padding: 5px 10px; border-radius: 5px; font-size: 14px; }
-        .add-fund-btn { background: #7c3aed; color: #fff; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        .sidebar { position: fixed; top: 0; left: -250px; width: 250px; height: 100%; background: #161925; transition: 0.3s; z-index: 1000; box-shadow: 2px 0 10px rgba(0,0,0,0.5); }
+        :root {
+            --bg-black: #050508;
+            --card-bg: rgba(18, 18, 26, 0.75);
+            --red-glow: #ff003c;
+            --red-dim: #990024;
+            --text-main: #ffffff;
+            --text-sub: #a0a5b5;
+            --border-neon: rgba(255, 0, 60, 0.3);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        body {
+            background-color: var(--bg-black);
+            color: var(--text-main);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        h2, h3 { text-transform: uppercase; letter-spacing: 1.5px; }
+
+        #loginScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 5, 8, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .login-box {
+            background: var(--card-bg);
+            padding: 35px 30px;
+            border-radius: 16px;
+            border: 1px solid var(--red-glow);
+            box-shadow: 0 0 35px rgba(255, 0, 60, 0.4), inset 0 0 15px rgba(255, 0, 60, 0.1);
+            width: 320px;
+            text-align: center;
+            animation: floatCard 4s infinite ease-in-out;
+            position: relative;
+        }
+
+        @keyframes floatCard {
+            0%, 100% { transform: translateY(0px) rotateX(0deg); }
+            50% { transform: translateY(-8px) rotateX(2deg); }
+        }
+
+        .login-box h2 {
+            color: var(--red-glow);
+            font-size: 22px;
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px var(--red-glow);
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: rgba(10, 10, 15, 0.8);
+            border: 1px solid var(--border-neon);
+            color: #fff;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .login-box input:focus {
+            border-color: var(--red-glow);
+            box-shadow: 0 0 10px rgba(255, 0, 60, 0.5);
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--red-glow), var(--red-dim));
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin-top: 15px;
+            box-shadow: 0 0 15px rgba(255, 0, 60, 0.4);
+            transition: 0.3s;
+        }
+
+        .login-box button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(255, 0, 60, 0.8);
+        }
+
+        .top-navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 15, 22, 0.8);
+            backdrop-filter: blur(12px);
+            padding: 15px 25px;
+            border-bottom: 1px solid var(--border-neon);
+            position: sticky;
+            top: 0;
+            z-index: 900;
+        }
+
+        .menu-toggle { font-size: 22px; cursor: pointer; color: var(--red-glow); transition: 0.3s; }
+        .menu-toggle:hover { text-shadow: 0 0 10px var(--red-glow); }
+        
+        .logo { font-weight: 900; font-size: 18px; color: #fff; text-shadow: 0 0 10px var(--red-glow); letter-spacing: 2px; }
+
+        .wallet-section { display: flex; align-items: center; gap: 12px; }
+        .wallet-balance { background: rgba(0, 0, 0, 0.6); border: 1px solid var(--border-neon); padding: 6px 14px; border-radius: 20px; font-size: 14px; color: #fff; }
+        .add-fund-btn { background: var(--red-glow); color: #fff; border: none; padding: 7px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 13px; box-shadow: 0 0 10px var(--red-glow); transition: 0.3s; }
+        .add-fund-btn:hover { box-shadow: 0 0 20px var(--red-glow); transform: scale(1.05); }
+
+        .sidebar { position: fixed; top: 0; left: -280px; width: 280px; height: 100%; background: rgba(10, 10, 15, 0.95); backdrop-filter: blur(15px); transition: 0.4s ease; z-index: 1000; border-right: 1px solid var(--border-neon); box-shadow: 10px 0 30px rgba(0,0,0,0.8); }
         .sidebar.active { left: 0; }
-        .sidebar-header { display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid #2a2f45; }
-        .sidebar-links { list-style: none; padding: 0; margin: 0; }
-        .sidebar-links li a { display: flex; align-items: center; gap: 12px; padding: 15px 20px; color: #fff; text-decoration: none; border-bottom: 1px solid #1f2437; transition: 0.2s; cursor: pointer; }
-        .sidebar-links li a:hover { background: #7c3aed; }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; z-index: 999; }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid var(--border-neon); color: var(--red-glow); }
+        .sidebar-links { list-style: none; padding: 10px 0; }
+        .sidebar-links li a { display: flex; align-items: center; gap: 14px; padding: 15px 25px; color: var(--text-sub); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.03); transition: 0.3s; cursor: pointer; }
+        .sidebar-links li a:hover { background: rgba(255, 0, 60, 0.15); color: #fff; border-left: 4px solid var(--red-glow); text-shadow: 0 0 8px var(--red-glow); }
+        
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; z-index: 999; backdrop-filter: blur(3px); }
         .overlay.active { display: block; }
-        .main-content { padding: 20px; }
-        .section { display: none; }
+
+        .main-content { padding: 30px 20px; max-width: 1200px; margin: 0 auto; }
+        .section { display: none; animation: fadeIn 0.4s ease-in-out; }
         .section.active { display: block; }
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; justify-content: center; }
-        .product-card { background: #161925; border: 1px solid #2a2f45; border-radius: 12px; padding: 15px; text-align: center; box-shadow: 0 4px 15px rgba(0,255,204,0.05); }
-        .product-title { color: #00ffcc; font-size: 16px; font-weight: bold; margin-bottom: 10px; }
-        .features-box { background: #1f2437; border-radius: 6px; padding: 8px; margin-bottom: 10px; font-size: 13px; text-align: left; color: #ddd; }
-        .features-box div { margin: 4px 0; }
-        .purchase-toggle-btn { background: #7c3aed; color: #fff; border: none; padding: 10px; border-radius: 6px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 5px; transition: 0.2s; }
-        .purchase-toggle-btn:hover { background: #6d28d9; }
-        .variants-container { display: none; margin-top: 10px; background: #11131d; border: 1px solid #2a2f45; border-radius: 8px; padding: 10px; max-height: 250px; overflow-y: auto; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 20px; }
+        .product-card { background: var(--card-bg); border: 1px solid var(--border-neon); border-radius: 14px; padding: 20px; text-align: center; backdrop-filter: blur(10px); box-shadow: 0 4px 20px rgba(0,0,0,0.5); transition: 0.3s; }
+        .product-card:hover { border-color: var(--red-glow); box-shadow: 0 0 25px rgba(255, 0, 60, 0.25); transform: translateY(-5px); }
+        .product-title { color: #fff; font-size: 17px; font-weight: 800; margin-bottom: 12px; text-shadow: 0 0 5px rgba(255,255,255,0.2); }
+        .features-box { background: rgba(5, 5, 8, 0.7); border-radius: 8px; padding: 12px; margin-bottom: 15px; font-size: 13px; text-align: left; color: var(--text-sub); border: 1px solid rgba(255,255,255,0.05); }
+        .features-box div { margin: 5px 0; color: #ddd; }
+        .purchase-toggle-btn { background: transparent; color: var(--red-glow); border: 1px solid var(--red-glow); padding: 10px; border-radius: 8px; width: 100%; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .purchase-toggle-btn:hover { background: var(--red-glow); color: #fff; box-shadow: 0 0 15px var(--red-glow); }
+        
+        .variants-container { display: none; margin-top: 12px; background: rgba(0,0,0,0.8); border: 1px solid var(--border-neon); border-radius: 8px; padding: 10px; max-height: 250px; overflow-y: auto; }
         .variants-container.active { display: block; }
-        .variant-row { display: flex; justify-content: space-between; align-items: center; background: #191d2b; padding: 8px 10px; border-radius: 6px; margin-bottom: 8px; font-size: 13px; border: 1px solid #252b3d; }
-        .variant-info { text-align: left; }
+        .variant-row { display: flex; justify-content: space-between; align-items: center; background: rgba(20, 20, 30, 0.8); padding: 10px; border-radius: 6px; margin-bottom: 8px; font-size: 13px; border: 1px solid rgba(255,255,255,0.05); }
         .variant-name { font-weight: bold; color: #fff; }
-        .variant-price { color: #00ffcc; font-weight: bold; margin-top: 2px; }
+        .variant-price { color: var(--red-glow); font-weight: bold; margin-top: 2px; }
         .variant-action { display: flex; align-items: center; gap: 6px; }
-        .qty-input { width: 35px; background: #10121a; border: 1px solid #333952; color: #fff; text-align: center; border-radius: 4px; padding: 4px; font-size: 12px; }
-        .buy-variant-btn { background: #7c3aed; color: #fff; border: none; padding: 5px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 12px; }
-        .key-card { background: #161925; border: 1px solid #2a2f45; padding: 15px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-        .key-code { font-family: monospace; background: #1f2437; padding: 5px 10px; border-radius: 4px; color: #00ffcc; }
-        .copy-btn { background: #00ffcc; color: #000; border: none; padding: 5px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 3000; justify-content: center; align-items: center; }
-        .modal-content { background: #161925; border: 1px solid #2a2f45; padding: 25px; border-radius: 10px; width: 320px; text-align: center; }
-        .modal-content input { width: 100%; padding: 10px; margin: 10px 0; background: #1f2437; border: 1px solid #2a2f45; color: #fff; border-radius: 5px; box-sizing: border-box; }
-        .modal-content button { width: 100%; padding: 10px; background: #7c3aed; color: #fff; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 5px; }
-        .close-modal { background: #ef4444 !important; margin-top: 10px; }
+        .qty-input { width: 38px; background: #000; border: 1px solid var(--border-neon); color: #fff; text-align: center; border-radius: 4px; padding: 4px; font-size: 12px; }
+        .buy-variant-btn { background: var(--red-glow); color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 12px; transition: 0.2s; }
+        .buy-variant-btn:hover { box-shadow: 0 0 10px var(--red-glow); }
+
+        .key-card { background: var(--card-bg); border: 1px solid var(--border-neon); padding: 15px; border-radius: 10px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .key-code { font-family: monospace; background: rgba(0,0,0,0.8); padding: 6px 12px; border-radius: 4px; color: var(--red-glow); border: 1px dashed var(--red-glow); }
+        .copy-btn { background: var(--red-glow); color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-weight: bold; cursor: pointer; }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 3000; justify-content: center; align-items: center; }
+        .modal-content { background: var(--card-bg); border: 1px solid var(--red-glow); padding: 30px; border-radius: 14px; width: 340px; text-align: center; box-shadow: 0 0 30px rgba(255,0,60,0.3); }
+        .modal-content input { width: 100%; padding: 12px; margin: 12px 0; background: rgba(0,0,0,0.7); border: 1px solid var(--border-neon); color: #fff; border-radius: 6px; }
+        .modal-content button { width: 100%; padding: 12px; background: var(--red-glow); color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 8px; box-shadow: 0 0 10px var(--red-glow); }
+        .close-modal { background: #333 !important; margin-top: 10px; box-shadow: none !important; }
     </style>
 </head>
 <body>
+
+    <canvas id="bgCanvas"></canvas>
+
     <div id="loginScreen">
         <div class="login-box">
-            <h2>MINI4C LOGIN</h2>
+            <h2><i class="fa-solid fa-shield-halved"></i> MINI4C LOGIN</h2>
             <input type="text" id="usernameInput" placeholder="Enter Username">
             <input type="password" id="passwordInput" placeholder="Enter Password">
-            <button onclick="handleLogin()">Login / Register</button>
+            <button onclick="handleLogin()">AUTHENTICATE</button>
         </div>
     </div>
+
     <header class="top-navbar">
         <div class="menu-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></div>
-        <div class="logo">MINI4C X CHEATS</div>
+        <div class="logo"><i class="fa-solid fa-skull"></i> MINI4C X CHEATS</div>
         <div class="wallet-section">
             <span class="wallet-balance">₹<span id="userBalance">0.00</span></span>
-            <button class="add-fund-btn" onclick="openAddFundModal()">+ Add Fund</button>
+            <button class="add-fund-btn" onclick="openAddFundModal()">+ ADD FUND</button>
         </div>
     </header>
+
     <nav id="sidebar" class="sidebar">
         <div class="sidebar-header">
-            <h3>Menu</h3>
+            <h3><i class="fa-solid fa-gamepad"></i> MENU</h3>
             <i class="fa-solid fa-xmark close-btn" onclick="toggleSidebar()" style="cursor:pointer;"></i>
         </div>
         <ul class="sidebar-links">
             <li><a onclick="switchTab('buyKey')"><i class="fa-solid fa-key"></i> Buy Key</a></li>
             <li><a onclick="switchTab('myKeys')"><i class="fa-solid fa-box-archive"></i> My Keys</a></li>
+            <li><a onclick="openAddFundModal(); toggleSidebar();"><i class="fa-solid fa-wallet"></i> Add Funds</a></li>
+            <li><a onclick="switchTab('history')"><i class="fa-solid fa-clock-rotate-left"></i> Transaction History</a></li>
+            <li><a onclick="switchTab('terms')"><i class="fa-solid fa-file-contract"></i> Terms & Conditions</a></li>
+            <li><a href="https://discord.gg/Yttbf69xx" target="_blank"><i class="fa-brands fa-discord"></i> Join Discord Server</a></li>
             <li><a href="https://t.me/+Ga2FZ1QnY8VjN2Y1" target="_blank"><i class="fa-brands fa-telegram"></i> Customer Support (Telegram)</a></li>
-            <li><a onclick="handleLogout()" style="color: #ef4444;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            <li><a onclick="handleLogout()" style="color: var(--red-glow);"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
         </ul>
     </nav>
     <div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
 
     <div id="fundModal" class="modal">
         <div class="modal-content">
-            <h3>Add Funds via UPI</h3>
-            <p style="font-size: 13px; color: #00ffcc;">UPI ID: ankittt.3@fam</p>
+            <h3 style="color: var(--red-glow);">ADD FUNDS VIA UPI</h3>
+            <p style="font-size: 13px; color: #fff; margin-top: 5px;">UPI ID: <span style="color:var(--red-glow);">ankittt.3@fam</span></p>
             <div id="step1">
                 <input type="number" id="fundAmountInput" placeholder="Enter Amount (INR)">
-                <button onclick="generateDynamicQR()">Generate QR & Pay</button>
+                <button onclick="generateDynamicQR()">GENERATE DYNAMIC QR</button>
             </div>
             <div id="step2" style="display:none;">
                 <div id="qrcodeContainer" style="margin: 15px 0;"></div>
-                <p style="font-size: 12px; color: #888;">Scan via PhonePe/FamPay & enter UTR/Txn ID below:</p>
-                <input type="text" id="utrInput" placeholder="Enter 12-digit UTR / Txn ID">
-                <button onclick="submitFundRequest()">Submit for Verification</button>
+                <p style="font-size: 12px; color: var(--text-sub);">Scan & enter 12-digit Transaction UTR below:</p>
+                <input type="text" id="utrInput" placeholder="Enter 12-digit UTR">
+                <button onclick="submitFundRequest()">VERIFY PAYMENT</button>
             </div>
-            <button class="close-modal" onclick="closeAddFundModal()">Cancel</button>
+            <button class="close-modal" onclick="closeAddFundModal()">CANCEL</button>
         </div>
     </div>
 
     <main class="main-content">
         <div id="buyKeySection" class="section active">
-            <h2>Marketplace / User Stock</h2>
+            <h2 style="color: var(--red-glow); font-size: 20px; border-bottom: 2px solid var(--red-glow); display: inline-block; padding-bottom: 5px;">Marketplace / Stock</h2>
             <div class="product-grid" id="productGrid"></div>
         </div>
+        
         <div id="myKeysSection" class="section">
-            <h2>My Purchased Keys</h2>
-            <div style="background: #1f2437; padding: 12px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #00ffcc;">
-                <p style="margin: 0; font-size: 13px; color: #ddd;">⚠️ <strong>Note:</strong> Key lene ke baad Telegram Support par message karein taaki aapko real/active key mil sake!</p>
+            <h2 style="color: var(--red-glow); font-size: 20px; border-bottom: 2px solid var(--red-glow); display: inline-block; padding-bottom: 5px; margin-bottom: 15px;">My Keys</h2>
+            <div style="background: rgba(255, 0, 60, 0.1); border: 1px solid var(--red-glow); padding: 12px; border-radius: 8px; margin-bottom: 20px;">
+                <p style="margin: 0; font-size: 13px; color: #fff;">⚠️ <strong>Note:</strong> Key lene ke baad Telegram Support par message karein taaki active keys confirm ho sakein!</p>
             </div>
-            <div id="myKeysList"><p style="color: #888;">No keys purchased yet.</p></div>
+            <div id="myKeysList"><p style="color: var(--text-sub);">No keys purchased yet.</p></div>
+        </div>
+
+        <div id="historySection" class="section">
+            <h2 style="color: var(--red-glow); font-size: 20px; border-bottom: 2px solid var(--red-glow); display: inline-block; padding-bottom: 5px; margin-bottom: 15px;">Transaction History</h2>
+            <div id="historyList"><p style="color: var(--text-sub);">No logs recorded yet.</p></div>
+        </div>
+
+        <div id="termsSection" class="section">
+            <h2 style="color: var(--red-glow); font-size: 20px; border-bottom: 2px solid var(--red-glow); display: inline-block; padding-bottom: 5px; margin-bottom: 15px;">Terms & Conditions</h2>
+            <div style="background: var(--card-bg); border: 1px solid var(--border-neon); padding: 25px; border-radius: 12px; line-height: 1.6; font-size: 14px; color: #ddd;">
+                <h3 style="color: var(--red-glow); margin-top: 0;">🔒 Rules & Guidelines</h3>
+                <ol style="padding-left: 20px; margin-top: 10px;">
+                    <li><strong>Don’t share key:</strong> Personal use only. Shared = ban.</li>
+                    <li><strong>No other panels:</strong> Conflict/ban risk.</li>
+                    <li><strong>No refund for user mistakes.</strong></li>
+                    <li><strong>1 PC only:</strong> System change = block.</li>
+                    <li><strong>Respect support:</strong> Spam/abuse = ignored.</li>
+                    <li><strong>Wait 24–72 hrs for reply:</strong> Don’t spam.</li>
+                    <li><strong>No chargebacks:</strong> Dispute = blacklist.</li>
+                    <li><strong>No resell/share files:</strong> Strictly prohibited.</li>
+                    <li><strong>No modifying/reverse engineering:</strong> Legal action.</li>
+                    <li><strong>Service can be denied anytime:</strong> Suspicious = permanent block.</li>
+                    <li><strong>Lifetime = till service active.</strong></li>
+                    <li><strong>Misuse/exploits = permanent suspension.</strong></li>
+                    <li><strong>Read guides before use:</strong> Misuse = your responsibility.</li>
+                    <li><strong>Use clean system:</strong> Other tools may clash.</li>
+                    <li><strong>Keep key secure:</strong> Shared = auto disable.</li>
+                    <li><strong>Subscription ends on expiry:</strong> No extra time.</li>
+                    <li><strong>Game updates may break tool:</strong> Wait for fix.</li>
+                </ol>
+                <hr style="border-color: var(--border-neon); margin: 20px 0;">
+                <h3 style="color: var(--red-glow);">💸 REFUND POLICY</h3>
+                <ol style="padding-left: 20px; margin-top: 10px;">
+                    <li>No refund after key delivery.</li>
+                    <li>No refund for wrong setup/misuse.</li>
+                    <li>No refund for bans caused by user.</li>
+                    <li>Refund only if tool not working at all (with full proof).</li>
+                    <li>Chargeback = permanent blacklist.</li>
+                </ol>
+            </div>
         </div>
     </main>
         <script>
+        // Red Cyber Particle Matrix Background Animation
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        const particles = [];
+        for(let i = 0; i < 45; i++) {
+            particles.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                radius: Math.random() * 2 + 1,
+                vx: (Math.random() - 0.5) * 0.8,
+                vy: (Math.random() - 0.5) * 0.8
+            });
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.fillStyle = '#ff003c';
+            ctx.strokeStyle = 'rgba(255, 0, 60, 0.15)';
+
+            for(let i = 0; i < particles.length; i++) {
+                let p = particles[i];
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if(p.x < 0 || p.x > width) p.vx *= -1;
+                if(p.y < 0 || p.y > height) p.vy *= -1;
+
+                for(let j = i + 1; j < particles.length; j++) {
+                    let p2 = particles[j];
+                    let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                    if(dist < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(drawParticles);
+        }
+        drawParticles();
+
+        // Product Catalog Data
         const products = [
             { id: 1, name: "DELTA PROXY IOS IPHONE", features: ["⚡ Body Proxy - Full Red", "⚡ Neck Proxy V1", "⚡ Neck Proxy V2"], variants: [{ name: "1 Days", price: 150 }, { name: "7 Days", price: 350 }, { name: "30 Days", price: 700 }] },
             { id: 2, name: "MIGUL IPHONE IOS FF", features: ["⚡ Silent Aim", "⚡ AimBot", "⚡ Speed"], variants: [{ name: "1 Day's Basic", price: 250 }, { name: "7 Day's Basic", price: 600 }, { name: "30 Day's Basic", price: 1200 }, { name: "1 Day's PRO", price: 250 }, { name: "7 Day's PRO", price: 600 }, { name: "30 Day's PRO", price: 1200 }] },
@@ -157,7 +387,6 @@
             if(user.trim() !== "" && pass.trim() !== "") {
                 localStorage.setItem("isLoggedIn", "true");
                 document.getElementById("loginScreen").style.display = "none";
-                alert("Login successful!");
             } else { alert("Enter credentials!"); }
         }
 
@@ -174,7 +403,7 @@
                 prod.variants.forEach((v, idx) => {
                     variantsHtml += `
                         <div class="variant-row">
-                            <div class="variant-info">
+                            <div>
                                 <div class="variant-name">${v.name}</div>
                                 <div class="variant-price">₹${v.price}.00</div>
                             </div>
@@ -192,7 +421,7 @@
                     <div class="product-card">
                         <div class="product-title">${prod.name}</div>
                         <div class="features-box">${featuresList}</div>
-                        <button class="purchase-toggle-btn" onclick="toggleVariants(${prod.id})">PURCHASE KEY</button>
+                        <button class="purchase-toggle-btn" onclick="toggleVariants(${prod.id})">SELECT VARIANT</button>
                         <div id="variants_${prod.id}" class="variants-container">
                             ${variantsHtml}
                         </div>
@@ -203,8 +432,7 @@
         }
 
         function toggleVariants(id) {
-            let container = document.getElementById(`variants_${id}`);
-            container.classList.toggle("active");
+            document.getElementById(`variants_${id}`).classList.toggle("active");
         }
 
         function toggleSidebar() {
@@ -213,10 +441,14 @@
         }
 
         function switchTab(tabName) {
-            toggleSidebar();
+            let sidebar = document.getElementById('sidebar');
+            if(sidebar.classList.contains('active')) toggleSidebar();
+            
             document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
-            if(tabName === 'buyKey') { document.getElementById('buyKeySection').classList.add('active'); }
+            if(tabName === 'buyKey') document.getElementById('buyKeySection').classList.add('active');
             else if(tabName === 'myKeys') { document.getElementById('myKeysSection').classList.add('active'); renderMyKeys(); }
+            else if(tabName === 'history') { document.getElementById('historySection').classList.add('active'); renderHistory(); }
+            else if(tabName === 'terms') document.getElementById('termsSection').classList.add('active');
         }
 
         function openAddFundModal() {
@@ -240,9 +472,15 @@
             let upiUrl = `upi://pay?pa=ankittt.3@fam&pn=MINI4C&am=${amt}&cu=INR`;
             let qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=` + encodeURIComponent(upiUrl);
             
-            document.getElementById("qrcodeContainer").innerHTML = `<img src="${qrApi}" alt="UPI QR Code" style="border-radius: 5px; border: 2px solid #7c3aed;">`;
+            document.getElementById("qrcodeContainer").innerHTML = `<img src="${qrApi}" alt="UPI QR Code" style="border-radius: 8px; border: 2px solid var(--red-glow);">`;
             document.getElementById("step1").style.display = "none";
             document.getElementById("step2").style.display = "block";
+        }
+
+        function addTransactionRecord(type, desc, amount) {
+            let logs = JSON.parse(localStorage.getItem("txHistory") || "[]");
+            logs.unshift({ type: type, desc: desc, amount: amount, date: new Date().toLocaleString() });
+            localStorage.setItem("txHistory", JSON.stringify(logs));
         }
 
         function submitFundRequest() {
@@ -256,7 +494,9 @@
             bal += parseFloat(amt);
             localStorage.setItem("walletBalance", bal.toFixed(2));
             updateBalanceUI();
-            alert("Payment verified with UTR: " + utr + "! Added ₹" + amt + " to wallet.");
+            
+            addTransactionRecord("Deposit", `Added funds via UTR: ${utr}`, `+₹${amt}`);
+            alert("Payment submitted! Added ₹" + amt + " to wallet.");
             closeAddFundModal();
         }
 
@@ -265,9 +505,7 @@
         }
 
         function loadUserData() {
-            if(!localStorage.getItem("walletBalance")) {
-                localStorage.setItem("walletBalance", "0.00");
-            }
+            if(!localStorage.getItem("walletBalance")) localStorage.setItem("walletBalance", "0.00");
             updateBalanceUI();
         }
 
@@ -288,7 +526,7 @@
             let bal = parseFloat(localStorage.getItem("walletBalance") || "0.00");
 
             if(bal < totalPrice) {
-                alert("Insufficient balance! Please add funds using the dynamic QR scanner.");
+                alert("Insufficient balance! Add funds to proceed.");
                 openAddFundModal();
                 return;
             }
@@ -303,7 +541,9 @@
                     myKeys.unshift({ product: productName, key: generateKey(), date: new Date().toLocaleDateString() });
                 }
                 localStorage.setItem("myKeysList", JSON.stringify(myKeys));
-                alert("Purchase successful! Check 'My Keys' section and message on Telegram for real key.");
+                
+                addTransactionRecord("Purchase", `Bought ${qty}x ${productName}`, `-₹${totalPrice}`);
+                alert("Purchase successful! Contact Telegram support for active keys.");
                 switchTab('myKeys');
             }
         }
@@ -311,10 +551,33 @@
         function renderMyKeys() {
             let myKeys = JSON.parse(localStorage.getItem("myKeysList") || "[]");
             let container = document.getElementById("myKeysList");
-            if(myKeys.length === 0) { container.innerHTML = '<p style="color: #888;">No keys purchased yet.</p>'; return; }
+            if(myKeys.length === 0) { container.innerHTML = '<p style="color: var(--text-sub);">No keys purchased yet.</p>'; return; }
             let html = "";
             myKeys.forEach(item => {
-                html += `<div class="key-card"><div><strong>${item.product}</strong><br><small>${item.date}</small></div><div><span class="key-code">${item.key}</span> <button class="copy-btn" onclick="navigator.clipboard.writeText('${item.key}');alert('Copied!');">Copy</button></div></div>`;
+                html += `<div class="key-card"><div><strong>${item.product}</strong><br><small style="color:var(--text-sub);">${item.date}</small></div><div><span class="key-code">${item.key}</span> <button class="copy-btn" onclick="navigator.clipboard.writeText('${item.key}');alert('Copied!');">Copy</button></div></div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderHistory() {
+            let logs = JSON.parse(localStorage.getItem("txHistory") || "[]");
+            let container = document.getElementById("historyList");
+            if(logs.length === 0) { container.innerHTML = '<p style="color: var(--text-sub);">No transactions recorded yet.</p>'; return; }
+            let html = "";
+            logs.forEach(item => {
+                let isDeposit = item.type === "Deposit";
+                let color = isDeposit ? "#00ffcc" : "var(--red-glow)";
+                html += `
+                    <div style="background: var(--card-bg); border: 1px solid var(--border-neon); padding: 14px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong>${item.desc}</strong><br>
+                            <small style="color: var(--text-sub);">${item.date}</small>
+                        </div>
+                        <div style="font-weight: bold; color: ${color}; font-size: 16px;">
+                            ${item.amount}
+                        </div>
+                    </div>
+                `;
             });
             container.innerHTML = html;
         }
