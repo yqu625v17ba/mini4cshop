@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,113 +10,100 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Rajdhani',sans-serif}
 body{background:var(--bg);color:var(--text);overflow-x:hidden}
 .top-navbar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:rgba(10,10,16,0.9);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
-.logo{font-family:'Orbitron',sans-serif;color:var(--red);font-size:16px;font-weight:700}
-.wallet{background:#000;padding:4px 10px;border-radius:15px;border:1px solid var(--neon);color:var(--neon);font-family:'Orbitron';font-size:13px}
-.btn{background:var(--red);color:#fff;border:none;padding:6px 12px;border-radius:5px;font-weight:700;cursor:pointer}
+.logo{font-family:'Orbitron',sans-serif;color:var(--red);font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
+.sidebar{position:fixed;top:0;left:-260px;width:250px;height:100%;background:rgba(10,10,16,0.98);z-index:1001;transition:0.3s;padding:20px;border-right:1px solid var(--border)}
+.sidebar.active{left:0}
+.sidebar ul{list-style:none;margin-top:20px}
+.sidebar ul li{margin-bottom:15px}
+.sidebar ul li a{color:#fff;text-decoration:none;font-weight:600;display:flex;align-items:center;gap:10px;cursor:pointer;font-size:15px}
 .container{padding:20px;max-width:1000px;margin:auto}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:15px}
 .card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:15px;display:flex;flex-direction:column;justify-content:space-between}
 .card h3{font-family:'Orbitron';font-size:13px;margin-bottom:10px}
-.cyber-btn{width:100%;padding:10px;background:var(--red);color:#fff;border:none;border-radius:5px;font-family:'Orbitron';font-weight:700;cursor:pointer;font-size:12px}
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:1000;justify-content:center;align-items:center;padding:15px}
-.modal-content{background:var(--card);border:1px solid var(--red);padding:20px;border-radius:10px;width:100%;max-width:360px;text-align:center}
+.btn, .cyber-btn{width:100%;padding:10px;background:var(--red);color:#fff;border:none;border-radius:5px;font-family:'Orbitron';font-weight:700;cursor:pointer;font-size:12px}
+.top-btn{width:auto;padding:6px 12px;font-size:13px}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:1002;justify-content:center;align-items:center;padding:15px}
+.modal-content{background:var(--card);border:1px solid var(--red);padding:20px;border-radius:10px;width:100%;max-width:380px;text-align:center}
 .p-btn{width:100%;padding:10px;margin-bottom:8px;background:rgba(0,0,0,0.5);border:1px solid var(--border);color:#fff;border-radius:5px;display:flex;justify-content:space-between;cursor:pointer;font-weight:600}
 </style>
 </head>
 <body>
+
 <header class="top-navbar">
-    <div class="logo"><i class="fa-solid fa-skull"></i> MINI4C</div>
+    <div style="display:flex;align-items:center;gap:12px;">
+        <i class="fa-solid fa-bars" onclick="toggleSidebar()" style="cursor:pointer;font-size:18px;"></i>
+        <div class="logo"><i class="fa-solid fa-skull"></i> MINI4C</div>
+    </div>
     <div style="display:flex;align-items:center;gap:10px;">
-        <div class="wallet">₹<span id="bal">0.00</span></div>
-        <button class="btn" onclick="openModal('fundModal')">+ FUND</button>
+        <div style="background:#000;padding:4px 10px;border-radius:15px;border:1px solid var(--neon);color:var(--neon);font-family:'Orbitron';font-size:13px">₹<span id="bal">0.00</span></div>
+        <button class="btn top-btn" onclick="openModal('fundModal')">+ FUND</button>
     </div>
 </header>
+
+<div id="sidebar" class="sidebar">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+        <h3 style="color:var(--red);font-family:'Orbitron';font-size:14px">DASHBOARD</h3>
+        <i class="fa-solid fa-xmark" onclick="toggleSidebar()" style="cursor:pointer;font-size:18px;"></i>
+    </div>
+    <ul>
+        <li><a onclick="toggleSidebar()"><i class="fa-solid fa-key"></i> Marketplace Stock</a></li>
+        <li><a onclick="openMyKeys(); toggleSidebar()"><i class="fa-solid fa-box-archive"></i> My Purchased Keys</a></li>
+        <li><a onclick="openModal('fundModal'); toggleSidebar()"><i class="fa-solid fa-wallet"></i> Add Wallet Money</a></li>
+        <li><a href="https://t.me/+Ga2FZ1QnY8VjN2Y1" target="_blank"><i class="fa-brands fa-telegram"></i> Telegram Channel</a></li>
+        <li><a href="https://discord.gg/Yttbf69xx" target="_blank"><i class="fa-brands fa-discord"></i> Discord Community</a></li>
+    </ul>
+</div>
+
 <div class="container">
     <input type="text" id="search" placeholder="Search products..." onkeyup="filterP()" style="width:100%;padding:10px;background:#111;border:1px solid var(--border);color:#fff;border-radius:6px;margin-bottom:20px;outline:none;">
     <div id="pContainer" class="grid"></div>
 </div>
 
-<div id="planModal" class="modal"><div class="modal-content"><h3 id="mTitle" style="color:var(--red);margin-bottom:12px">Select Plan</h3><div id="planList" style="max-height:220px;overflow-y:auto;margin-bottom:12px"></div><button onclick="closeModal('planModal')" class="btn" style="background:#222;width:100%">Cancel</button></div></div>
+<div id="planModal" class="modal"><div class="modal-content"><h3 id="mTitle" style="color:var(--red);margin-bottom:12px">Select Plan</h3><div id="planList" style="max-height:220px;overflow-y:auto;margin-bottom:12px"></div><button onclick="closeModal('planModal')" class="btn" style="background:#222">Cancel</button></div></div>
 
 <div id="succModal" class="modal"><div class="modal-content"><h3 style="color:#00ff66;margin-bottom:8px">Success!</h3><p id="succText" style="color:var(--red);font-size:13px;margin-bottom:10px"></p><div style="background:#000;padding:8px;border-radius:5px;border:1px solid var(--neon);margin-bottom:12px"><span id="keyText" style="color:var(--neon);font-family:'Orbitron';font-size:12px;user-select:all"></span></div><button onclick="closeModal('succModal')" class="cyber-btn" style="background:var(--neon);color:#000">DONE</button></div></div>
 
-<div id="fundModal" class="modal"><div class="modal-content"><h3 style="color:var(--red);margin-bottom:10px">Add Funds</h3><input type="number" id="fAmt" placeholder="Amount (INR)" style="width:100%;padding:10px;background:#000;border:1px solid var(--border);color:#fff;border-radius:5px;text-align:center;margin-bottom:10px"><button onclick="genQR()" class="cyber-btn" style="margin-bottom:10px">GENERATE QR</button><div id="qrBox" style="display:none;background:#fff;padding:10px;border-radius:5px;margin-bottom:10px"><img id="qrImg" style="width:150px;height:150px"><p id="qrAmt" style="color:#000;font-weight:bold;font-size:13px;margin-top:5px"></p><p style="color:#333;font-size:11px">UPI: ankittt.3@fam</p></div><input type="text" id="utr" placeholder="Enter UTR Number" style="width:100%;padding:8px;background:#000;border:1px solid var(--border);color:#fff;border-radius:5px;text-align:center;margin-bottom:10px;display:none"><button id="vBtn" onclick="addMoney()" class="cyber-btn" style="background:var(--neon);color:#000;display:none;margin-bottom:8px">VERIFY & ADD</button><button onclick="closeModal('fundModal')" class="btn" style="background:#222;width:100%">Close</button></div></div>
+<div id="keysModal" class="modal"><div class="modal-content" style="max-width:420px"><h3 style="color:var(--red);margin-bottom:12px;font-family:'Orbitron'">My Purchased Keys</h3><div id="keysList" style="max-height:250px;overflow-y:auto;margin-bottom:12px;text-align:left"></div><button onclick="closeModal('keysModal')" class="btn" style="background:#222">Close</button></div></div>
+
+<div id="fundModal" class="modal"><div class="modal-content"><h3 style="color:var(--red);margin-bottom:10px">Add Funds</h3><input type="number" id="fAmt" placeholder="Amount (INR)" style="width:100%;padding:10px;background:#000;border:1px solid var(--border);color:#fff;border-radius:5px;text-align:center;margin-bottom:10px"><button onclick="genQR()" class="cyber-btn" style="margin-bottom:10px">GENERATE QR</button><div id="qrBox" style="display:none;background:#fff;padding:10px;border-radius:5px;margin-bottom:10px"><img id="qrImg" style="width:150px;height:150px"><p id="qrAmt" style="color:#000;font-weight:bold;font-size:13px;margin-top:5px"></p><p style="color:#333;font-size:11px">UPI: ankittt.3@fam</p></div><input type="text" id="utr" placeholder="Enter UTR" style="width:100%;padding:8px;background:#000;border:1px solid var(--border);color:#fff;border-radius:5px;text-align:center;margin-bottom:10px;display:none"><button id="vBtn" onclick="addMoney()" class="cyber-btn" style="background:var(--neon);color:#000;display:none;margin-bottom:8px">VERIFY & ADD</button><button onclick="closeModal('fundModal')" class="btn" style="background:#222">Close</button></div></div>
 
 <script>
 const products=[
-{id:1,name:"DELTA PROXY IOS IPHONE",variants:[{name:"1 Days",price:150},{name:"3 Days",price:350},{name:"30 Days",price:700}]},
-{id:2,name:"MIGUL IPHONE IOS FF",variants:[{name:"1 Day's Basic",price:250},{name:"7 Day's Basic",price:600},{name:"30 Day's Basic",price:1200}]},
-{id:3,name:"XYZ CHEATS FF ROOT ANDROID",variants:[{name:"1 Days",price:70},{name:"2 Days",price:150}]},
-{id:4,name:"PRIME HOOK FF NONROOT ANDROID",variants:[{name:"1 Days Nonroot",price:50},{name:"3 Days Nonroot",price:100},{name:"7 Days Nonroot",price:270}]},
-{id:5,name:"BALA MOD XYZ - V2 FF NONROOT",variants:[{name:"1 Hours",price:15},{name:"1 Days",price:230},{name:"7 Days",price:950}]},
-{id:6,name:"HG CHEATS PRIME PROXY FF NONROOT",variants:[{name:"1 Days",price:70},{name:"7 Days",price:250}]},
-{id:7,name:"DRIPCLIENT FF NONROOT APKMOD",variants:[{name:"1 Day's Nonroot",price:60},{name:"30 Day's Nonroot",price:600}]},
-{id:8,name:"HG CHEATS ANDROID PROXY FF NONROOT",variants:[{name:"1 Day's",price:70},{name:"30 Day's",price:500}]},
-{id:9,name:"HG CHEATS FF APKMOD NONROOT+ROOT",variants:[{name:"1 Day's Root + Nonroot",price:70},{name:"30 Day's Root+Nonroot",price:500}]},
-{id:10,name:"HAXX-CKER PRO FF ROOT",variants:[{name:"3 Days",price:180},{name:"30 Days",price:1450}]},
-{id:11,name:"SILENT CHEAT FF ROOT ANDROID",variants:[{name:"1 Day's SAFE",price:90},{name:"30 Days SAFE",price:900}]},
-{id:12,name:"PATO TEAM FF ALL ANDROID",variants:[{name:"3 Day's All Colours Mix",price:150},{name:"30 Day's All Colours Mix",price:700}]},
-{id:13,name:"BR MOD FF PC VERSION",variants:[{name:"1 Day Pc Aim Silent",price:79},{name:"30 Days Pc Aim Silent",price:799}]},
-{id:14,name:"NINE X INJECTER",variants:[{name:"10 Days",price:400}]},
-{id:15,name:"SKB MOD",variants:[{name:"1 Day",price:150},{name:"30 Days",price:1500}]},
-{id:16,name:"INVISABLE X",variants:[{name:"1 Day",price:150},{name:"30 Days",price:1500}]},
-{id:17,name:"P20 ROOT DEVICE",variants:[{name:"30 Days Plan",price:800}]},
-{id:18,name:"P20 NON ROOT",variants:[{name:"30 Days Plan",price:1000}]},
-{id:19,name:"RAPID CORE",variants:[{name:"1 Day",price:89},{name:"30 Days",price:799}]},
-{id:20,name:"DOLPHIN",variants:[{name:"1 Days",price:180},{name:"31 Days",price:1600}]},
-{id:21,name:"BR MOD ROOT",variants:[{name:"1 Day",price:80},{name:"30 Days",price:1000}]},
-{id:22,name:"AIM HACK FF NONROOT",variants:[{name:"1 HR",price:15},{name:"30 Days",price:700}]}
+{id:1,name:"DELTA PROXY IOS IPHONE",v:[{n:"1 Days",p:150},{n:"3 Days",p:350},{n:"30 Days",p:700}]},
+{id:2,name:"MIGUL IPHONE IOS FF",v:[{n:"1 Day",p:250},{n:"7 Days",p:600},{n:"30 Days",p:1200}]},
+{id:3,name:"XYZ CHEATS FF ROOT",v:[{n:"1 Days",p:70},{n:"2 Days",p:150}]},
+{id:4,name:"PRIME HOOK FF NONROOT",v:[{n:"1 Days",p:50},{n:"3 Days",p:100},{n:"7 Days",p:270}]},
+{id:5,name:"BALA MOD V2 FF",v:[{n:"1 Hr",p:15},{n:"1 Days",p:230},{n:"7 Days",p:950}]},
+{id:6,name:"HG PROXY FF NONROOT",v:[{n:"1 Days",p:70},{n:"7 Days",p:250}]},
+{id:7,name:"DRIPCLIENT FF NONROOT",v:[{n:"1 Day",p:60},{n:"30 Day",p:600}]},
+{id:8,name:"HG ANDROID PROXY FF",v:[{n:"1 Day",p:70},{n:"30 Day",p:500}]},
+{id:9,name:"HG APKMOD ROOT+NONROOT",v:[{n:"1 Day",p:70},{n:"30 Day",p:500}]},
+{id:10,name:"HAXX-CKER PRO FF ROOT",v:[{n:"3 Days",p:180},{n:"30 Days",p:1450}]},
+{id:11,name:"SILENT CHEAT ROOT",v:[{n:"1 Day",p:90},{n:"30 Days",p:900}]},
+{id:12,name:"PATO TEAM FF ANDROID",v:[{n:"3 Days",p:150},{n:"30 Days",p:700}]},
+{id:13,name:"BR MOD FF PC",v:[{n:"1 Day",p:79},{n:"30 Days",p:799}]},
+{id:14,name:"NINE X INJECTER",v:[{n:"10 Days",p:400}]},
+{id:15,name:"SKB MOD",v:[{n:"1 Day",p:150},{n:"30 Days",p:1500}]},
+{id:16,name:"INVISABLE X",v:[{n:"1 Day",p:150},{n:"30 Days",p:1500}]},
+{id:17,name:"P20 ROOT DEVICE",v:[{n:"30 Days",p:800}]},
+{id:18,name:"P20 NON ROOT",v:[{n:"30 Days",p:1000}]},
+{id:19,name:"RAPID CORE",v:[{n:"1 Day",p:89},{n:"30 Days",p:799}]},
+{id:20,name:"DOLPHIN",v:[{n:"1 Days",p:180},{n:"31 Days",p:1600}]},
+{id:21,name:"BR MOD ROOT",v:[{n:"1 Day",p:80},{n:"30 Days",p:1000}]},
+{id:22,name:"AIM HACK NONROOT",v:[{n:"1 HR",p:15},{n:"30 Days",p:700}]}
 ];
 window.onload=()=>{render(products);updateBal()};
-function render(list){
-let html="";
-list.forEach(p=>{html+=`<div class="card"><h3>${p.name}</h3><button class="cyber-btn" onclick="openPlan(${p.id})">BUY NOW</button></div>`;});
-document.getElementById("pContainer").innerHTML=html;
-}
-function filterP(){
-let q=document.getElementById("search").value.toLowerCase();
-render(products.filter(p=>p.name.toLowerCase().includes(q)));
-}
-function openPlan(id){
-let p=products.find(x=>x.id===id);
-document.getElementById("mTitle").innerText=p.name;
-let html="";
-p.variants.forEach(v=>{html+=`<div class="p-btn" onclick="buy('${p.name}','${v.name}',${v.price})"><span>${v.name}</span><span style="color:var(--neon)">₹${v.price}</span></div>`;});
-document.getElementById("planList").innerHTML=html;
-document.getElementById("planModal").style.display="flex";
-}
-function buy(pName,vName,price){
-let bal=parseFloat(localStorage.getItem("bal")||"0");
-if(bal<price){alert("Low balance! Add funds.");openModal('fundModal');document.getElementById("fAmt").value=price-bal;return;}
-bal-=price;localStorage.setItem("bal",bal.toFixed(2));updateBal();
-let key="MINI4C-"+Math.random().toString(36).substring(2,8).toUpperCase();
-document.getElementById("succText").innerText=`${pName} (${vName})`;
-document.getElementById("keyText").innerText=key;
-closeModal('planModal');document.getElementById("succModal").style.display="flex";
-}
-function genQR(){
-let amt=parseFloat(document.getElementById("fAmt").value);
-if(!amt||amt<10){alert("Min ₹10 required");return;}
-document.getElementById("qrImg").src=`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent('upi://pay?pa=ankittt.3@fam&pn=MINI4C&am='+amt+'&cu=INR')}`;
-document.getElementById("qrAmt").innerText=`Pay: ₹${amt}`;
-document.getElementById("qrBox").style.display="block";
-document.getElementById("utr").style.display="block";
-document.getElementById("vBtn").style.display="block";
-}
-function addMoney(){
-let utr=document.getElementById("utr").value.trim();
-let amt=parseFloat(document.getElementById("fAmt").value);
-if(utr.length<8){alert("Enter valid UTR");return;}
-let bal=parseFloat(localStorage.getItem("bal")||"0")+amt;
-localStorage.setItem("bal",bal.toFixed(2));updateBal();
-alert("Added successfully!");closeModal('fundModal');
-}
+function render(l){document.getElementById("pContainer").innerHTML=l.map(p=>`<div class="card"><h3>${p.name}</h3><button class="cyber-btn" onclick="openPlan(${p.id})">BUY NOW</button></div>`).join('');}
+function filterP(){let q=document.getElementById("search").value.toLowerCase();render(products.filter(p=>p.name.toLowerCase().includes(q)));}
+function openPlan(id){let p=products.find(x=>x.id===id);document.getElementById("mTitle").innerText=p.name;document.getElementById("planList").innerHTML=p.v.map(v=>`<div class="p-btn" onclick="buy('${p.name}','${v.n}',${v.p})"><span>${v.n}</span><span style="color:var(--neon)">₹${v.p}</span></div>`).join('');openModal('planModal');}
+function buy(pn,vn,pr){let b=parseFloat(localStorage.getItem("bal")||"0");if(b<pr){alert("Low balance! Add funds.");closeModal('planModal');openModal('fundModal');document.getElementById("fAmt").value=pr-b;return;}b-=pr;localStorage.setItem("bal",b.toFixed(2));updateBal();let k="MINI4C-"+Math.random().toString(36).substring(2,8).toUpperCase();let h=JSON.parse(localStorage.getItem("myKeys")||"[]");h.unshift({p:pn,v:vn,k:k,d:new Date().toLocaleString()});localStorage.setItem("myKeys",JSON.stringify(h));document.getElementById("succText").innerText=`${pn} (${vn})`;document.getElementById("keyText").innerText=k;closeModal('planModal');openModal('succModal');}
+function openMyKeys(){let h=JSON.parse(localStorage.getItem("myKeys")||"[]");document.getElementById("keysList").innerHTML=h.length?h.map(x=>`<div style="background:rgba(0,0,0,0.6);border:1px solid var(--border);padding:8px;border-radius:5px;margin-bottom:8px;"><div style="font-size:12px;font-weight:bold">${x.p}</div><div style="font-size:10px;color:#aaa">${x.v} | ${x.d}</div><div style="font-family:'Orbitron';font-size:11px;color:var(--neon);margin-top:3px;user-select:all">Key: ${x.k}</div></div>`).join(''):`<p style="color:#888;text-align:center;">No keys purchased yet!</p>`;openModal('keysModal');}
+function genQR(){let a=parseFloat(document.getElementById("fAmt").value);if(!a||a<10){alert("Min ₹10 required");return;}document.getElementById("qrImg").src=`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=`+encodeURIComponent('upi://pay?pa=ankittt.3@fam&pn=MINI4C&am='+a+'&cu=INR');document.getElementById("qrAmt").innerText=`Pay: ₹${a}`;document.getElementById("qrBox").style.display="block";document.getElementById("utr").style.display="block";document.getElementById("vBtn").style.display="block";}
+function addMoney(){let u=document.getElementById("utr").value.trim();let a=parseFloat(document.getElementById("fAmt").value);if(u.length<8){alert("Enter valid UTR");return;}let b=parseFloat(localStorage.getItem("bal")||"0")+a;localStorage.setItem("bal",b.toFixed(2));updateBal();alert("Added Successfully!");closeModal('fundModal');}
 function updateBal(){document.getElementById("bal").innerText=parseFloat(localStorage.getItem("bal")||"0").toFixed(2);}
+function toggleSidebar(){document.getElementById("sidebar").classList.toggle("active");}
 function openModal(id){document.getElementById(id).style.display="flex";}
-function closeModal(id){
-document.getElementById(id).style.display="none";
-if(id==='fundModal'){document.getElementById("qrBox").style.display="none";document.getElementById("utr").style.display="none";document.getElementById("vBtn").style.display="none";document.getElementById("fAmt").value="";document.getElementById("utr").value="";}
-}
+function closeModal(id){document.getElementById(id).style.display="none";if(id==='fundModal'){['qrBox','utr','vBtn'].forEach(i=>document.getElementById(i).style.display="none");document.getElementById("fAmt").value="";document.getElementById("utr").value="";}}
 </script>
 </body>
 </html>
