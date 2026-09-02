@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,6 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Rajdhani',sans-serif}
 body{background:var(--bg);color:var(--text);overflow-x:hidden;min-height:100vh}
 
-/* Animated Floating Gaming Background */
 .bg-animation{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;background:radial-gradient(circle at 50% 50%, #100014 0%, #030305 100%);overflow:hidden}
 .particle{position:absolute;display:block;list-style:none;width:20px;height:20px;background:rgba(255, 0, 60, 0.15);bottom:-150px;animation:animate 18s linear infinite;border-radius:50%;box-shadow:0 0 15px var(--red)}
 .particle:nth-child(1){left:25%;width:80px;height:80px;animation-duration:14s;}
@@ -48,7 +47,8 @@ body{background:var(--bg);color:var(--text);overflow-x:hidden;min-height:100vh}
 </style>
 </head>
 <body>
- <div class="bg-animation">
+
+<div class="bg-animation">
     <li class="particle"></li><li class="particle"></li><li class="particle"></li>
     <li class="particle"></li><li class="particle"></li><li class="particle"></li>
 </div>
@@ -116,28 +116,28 @@ body{background:var(--bg);color:var(--text);overflow-x:hidden;min-height:100vh}
 
 <script>
 const products=[
-{id:1,name:"DELTA PROXY IOS IPHONE",v:[{n:"1 Days",p:150},{n:"3 Days",p:350},{n:"30 Days",p:700}]},
-{id:2,name:"MIGUL IPHONE IOS FF",v:[{n:"1 Day",p:250},{n:"7 Days",p:600},{n:"30 Days",p:1200}]},
-{id:3,name:"XYZ CHEATS FF ROOT",v:[{n:"1 Days",p:70},{n:"2 Days",p:150}]},
-{id:4,name:"PRIME HOOK FF NONROOT",v:[{n:"1 Days",p:50},{n:"3 Days",p:100},{n:"7 Days",p:270}]},
-{id:5,name:"BALA MOD V2 FF",v:[{n:"1 Hr",p:15},{n:"1 Days",p:230},{n:"7 Days",p:950}]},
-{id:6,name:"HG PROXY FF NONROOT",v:[{n:"1 Days",p:70},{n:"7 Days",p:250}]},
-{id:7,name:"DRIPCLIENT FF NONROOT",v:[{n:"1 Day",p:60},{n:"30 Day",p:600}]},
-{id:8,name:"HG ANDROID PROXY FF",v:[{n:"1 Day",p:70},{n:"30 Day",p:500}]},
-{id:9,name:"HG APKMOD ROOT+NONROOT",v:[{n:"1 Day",p:70},{n:"30 Day",p:500}]},
-{id:10,name:"HAXX-CKER PRO FF ROOT",v:[{n:"3 Days",p:180},{n:"30 Days",p:1450}]},
-{id:11,name:"SILENT CHEAT ROOT",v:[{n:"1 Day",p:90},{n:"30 Days",p:900}]},
-{id:12,name:"PATO TEAM FF ANDROID",v:[{n:"3 Days",p:150},{n:"30 Days",p:700}]},
-{id:13,name:"BR MOD FF PC",v:[{n:"1 Day",p:79},{n:"30 Days",p:799}]},
-{id:14,name:"NINE X INJECTER",v:[{n:"10 Days",p:400}]},
-{id:15,name:"SKB MOD",v:[{n:"1 Day",p:150},{n:"30 Days",p:1500}]},
-{id:16,name:"INVISABLE X",v:[{n:"1 Day",p:150},{n:"30 Days",p:1500}]},
-{id:17,name:"P20 ROOT DEVICE",v:[{n:"30 Days",p:800}]},
-{id:18,name:"P20 NON ROOT",v:[{n:"30 Days",p:1000}]},
-{id:19,name:"RAPID CORE",v:[{n:"1 Day",p:89},{n:"30 Days",p:799}]},
-{id:20,name:"DOLPHIN",v:[{n:"1 Days",p:180},{n:"31 Days",p:1600}]},
-{id:21,name:"BR MOD ROOT",v:[{n:"1 Day",p:80},{n:"30 Days",p:1000}]},
-{id:22,name:"AIM HACK NONROOT",v:[{n:"1 HR",p:15},{n:"30 Days",p:700}]}
+{id:1,name:"DELTA PROXY IOS IPHONE",variants:[{days:"1 Day",price:150},{days:"3 Days",price:350},{days:"7 Days",price:500},{days:"30 Days",price:700}]},
+{id:2,name:"MIGUL IPHONE IOS FF",variants:[{days:"1 Day",price:250},{days:"3 Days",price:450},{days:"7 Days",price:600},{days:"30 Days",price:1200}]},
+{id:3,name:"XYZ CHEATS FF ROOT",variants:[{days:"1 Day",price:70},{days:"2 Days",price:150},{days:"7 Days",price:300},{days:"30 Days",price:800}]},
+{id:4,name:"PRIME HOOK FF NONROOT",variants:[{days:"1 Day",price:50},{days:"3 Days",price:100},{days:"7 Days",price:270},{days:"30 Days",price:750}]},
+{id:5,name:"BALA MOD V2 FF",variants:[{days:"1 Hr",price:15},{days:"1 Day",price:230},{days:"7 Days",price:950},{days:"30 Days",price:2000}]},
+{id:6,name:"HG PROXY FF NONROOT",variants:[{days:"1 Day",price:70},{days:"3 Days",price:150},{days:"7 Days",price:250},{days:"30 Days",price:650}]},
+{id:7,name:"DRIPCLIENT FF NONROOT",variants:[{days:"1 Day",price:60},{days:"7 Days",price:200},{days:"30 Days",price:600}]},
+{id:8,name:"HG ANDROID PROXY FF",variants:[{days:"1 Day",price:70},{days:"7 Days",price:220},{days:"30 Days",price:500}]},
+{id:9,name:"HG APKMOD ROOT+NONROOT",variants:[{days:"1 Day",price:70},{days:"7 Days",price:220},{days:"30 Days",price:500}]},
+{id:10,name:"HAXX-CKER PRO FF ROOT",variants:[{days:"3 Days",price:180},{days:"7 Days",price:400},{days:"30 Days",price:1450}]},
+{id:11,name:"SILENT CHEAT ROOT",variants:[{days:"1 Day",price:90},{days:"7 Days",price:300},{days:"30 Days",price:900}]},
+{id:12,name:"PATO TEAM FF ANDROID",variants:[{days:"3 Days",price:150},{days:"7 Days",price:300},{days:"30 Days",price:700}]},
+{id:13,name:"BR MOD FF PC",variants:[{days:"1 Day",price:79},{days:"7 Days",price:250},{days:"30 Days",price:799}]},
+{id:14,name:"NINE X INJECTER",variants:[{days:"1 Day",price:60},{days:"10 Days",price:400},{days:"30 Days",price:900}]},
+{id:15,name:"SKB MOD",variants:[{days:"1 Day",price:150},{days:"7 Days",price:500},{days:"30 Days",price:1500}]},
+{id:16,name:"INVISABLE X",variants:[{days:"1 Day",price:150},{days:"7 Days",price:500},{days:"30 Days",price:1500}]},
+{id:17,name:"P20 ROOT DEVICE",variants:[{days:"7 Days",price:300},{days:"30 Days",price:800}]},
+{id:18,name:"P20 NON ROOT",variants:[{days:"7 Days",price:350},{days:"30 Days",price:1000}]},
+{id:19,name:"RAPID CORE",variants:[{days:"1 Day",price:89},{days:"7 Days",price:280},{days:"30 Days",price:799}]},
+{id:20,name:"DOLPHIN",variants:[{days:"1 Day",price:80},{days:"7 Days",price:500},{days:"31 Days",price:1600}]},
+{id:21,name:"BR MOD ROOT",variants:[{days:"1 Day",price:80},{days:"7 Days",price:350},{days:"30 Days",price:1000}]},
+{id:22,name:"AIM HACK NONROOT",variants:[{days:"1 Hr",price:15},{days:"1 Day",price:70},{days:"7 Days",price:250},{days:"30 Days",price:700}]}
 ];
 
 let isReg = false;
@@ -182,14 +182,15 @@ localStorage.setItem("currUser", u);
 checkAuth();
 }
 }
- function logout(){
+
+function logout(){
 localStorage.removeItem("currUser");
 location.reload();
 }
 
 function render(l){document.getElementById("pContainer").innerHTML=l.map(p=>`<div class="card"><h3>${p.name}</h3><button class="cyber-btn" onclick="openPlan(${p.id})">BUY NOW</button></div>`).join('');}
 function filterP(){let q=document.getElementById("search").value.toLowerCase();render(products.filter(p=>p.name.toLowerCase().includes(q)));}
-function openPlan(id){let p=products.find(x=>x.id===id);document.getElementById("mTitle").innerText=p.name;document.getElementById("planList").innerHTML=p.v.map(v=>`<div class="p-btn" onclick="buy('${p.name}','${v.n}',${v.p})"><span>${v.n}</span><span style="color:var(--neon)">₹${v.p}</span></div>`).join('');openModal('planModal');}
+function openPlan(id){let p=products.find(x=>x.id===id);document.getElementById("mTitle").innerText=p.name;document.getElementById("planList").innerHTML=p.variants.map(v=>`<div class="p-btn" onclick="buy('${p.name}','${v.days}',${v.price})"><span>${v.days}</span><span style="color:var(--neon)">₹${v.price}</span></div>`).join('');openModal('planModal');}
 function buy(pn,vn,pr){let b=parseFloat(localStorage.getItem("bal")||"0");if(b<pr){alert("Low balance! Add funds.");closeModal('planModal');openModal('fundModal');document.getElementById("fAmt").value=pr-b;return;}b-=pr;localStorage.setItem("bal",b.toFixed(2));updateBal();let h=JSON.parse(localStorage.getItem("myKeys")||"[]");h.unshift({p:pn,v:vn,d:new Date().toLocaleString()});localStorage.setItem("myKeys",JSON.stringify(h));document.getElementById("succText").innerText=`${pn} (${vn})`;closeModal('planModal');openModal('succModal');}
 function openMyKeys(){let h=JSON.parse(localStorage.getItem("myKeys")||"[]");document.getElementById("keysList").innerHTML=h.length?h.map(x=>`<div style="background:rgba(0,0,0,0.6);border:1px solid var(--border);padding:8px;border-radius:5px;margin-bottom:8px;"><div style="font-size:12px;font-weight:bold">${x.p}</div><div style="font-size:10px;color:#aaa">${x.v} | ${x.d}</div></div>`).join(''):`<p style="color:#888;text-align:center;">No keys purchased yet!</p>`;openModal('keysModal');}
 function genQR(){let a=parseFloat(document.getElementById("fAmt").value);if(!a||a<10){alert("Min ₹10 required");return;}document.getElementById("qrImg").src=`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=`+encodeURIComponent('upi://pay?pa=ankittt.3@fam&pn=MINI4C&am='+a+'&cu=INR');document.getElementById("qrAmt").innerText=`Pay: ₹${a}`;document.getElementById("qrBox").style.display="block";document.getElementById("utr").style.display="block";document.getElementById("vBtn").style.display="block";}
