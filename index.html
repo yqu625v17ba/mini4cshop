@@ -84,24 +84,24 @@
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
         .product-card {
             background: var(--card-bg); border: 1px solid var(--border-neon);
-            border-radius: 8px; padding: 15px; position: relative; transition: 0.2s;
+            border-radius: 8px; padding: 15px; position: relative; transition: 0.2s; display: flex; flex-direction: column; justify-content: space-between;
         }
         .product-card:hover { border-color: var(--red-glow); transform: translateY(-3px); }
-        .product-title { font-size: 14px; color: #fff; margin-bottom: 10px; text-align: center; }
+        .product-title { font-size: 14px; color: #fff; margin-bottom: 10px; text-align: center; font-weight: bold; }
         .feature-list { list-style: none; margin-bottom: 15px; font-size: 12px; color: var(--text-sub); }
         .feature-list li { margin-bottom: 4px; }
         .buy-btn {
-            width: 100%; padding: 8px; background: var(--red-glow); color: #fff;
-            border: none; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 12px;
+            width: 100%; padding: 10px; background: var(--red-glow); color: #fff;
+            border: none; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 13px; text-transform: uppercase;
         }
 
         .modal {
             display: none; position: fixed; top:0; left:0; width:100%; height:100%;
-            background: rgba(0,0,0,0.8); z-index: 20000; justify-content: center; align-items: center; padding: 20px;
+            background: rgba(0,0,0,0.85); z-index: 20000; justify-content: center; align-items: center; padding: 20px;
         }
         .modal-content {
             background: var(--card-bg); border: 1px solid var(--red-glow);
-            padding: 20px; border-radius: 10px; width: 100%; max-width: 340px; text-align: center;
+            padding: 20px; border-radius: 10px; width: 100%; max-width: 380px; text-align: center; position: relative;
         }
         .support-btn {
             display: inline-block; width: 100%; padding: 10px; margin-top: 8px; border-radius: 6px;
@@ -109,6 +109,15 @@
         }
         .btn-tg { background: #0088cc; color: #fff; }
         .btn-dc { background: #5865F2; color: #fff; }
+
+        .plan-option-btn {
+            width: 100%; padding: 12px; margin-bottom: 8px; background: rgba(0,0,0,0.6);
+            border: 1px solid var(--border-neon); color: #fff; border-radius: 6px;
+            display: flex; justify-content: space-between; align-items: center;
+            cursor: pointer; transition: 0.2s; font-size: 13px;
+        }
+        .plan-option-btn:hover { border-color: var(--red-glow); background: rgba(255, 0, 60, 0.1); }
+        .plan-price-tag { color: #00ffcc; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -192,7 +201,16 @@
             </div>
         </div>
     </div>
-        <!-- Purchase Success Popup Modal -->
+        <!-- Select Plan Modal -->
+    <div id="planSelectModal" class="modal">
+        <div class="modal-content">
+            <h3 id="planModalTitle" style="color: var(--red-glow); font-size: 16px; margin-bottom: 15px;">Select Plan</h3>
+            <div id="plansListContainer" style="max-height: 250px; overflow-y: auto; margin-bottom: 15px;"></div>
+            <button onclick="closePlanModal()" style="width: 100%; padding: 8px; background: #222; color: #aaa; border: 1px solid #444; border-radius: 6px; cursor: pointer; font-size: 12px;">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Purchase Success Popup Modal -->
     <div id="buySuccessModal" class="modal">
         <div class="modal-content">
             <i class="fa-solid fa-circle-check" style="font-size: 40px; color: #00ffcc; margin-bottom: 10px;"></i>
@@ -281,47 +299,53 @@
                 let card = document.createElement("div");
                 card.className = "product-card";
                 
-                let initialPrice = p.variants[0].price;
-                let variantOptions = p.variants.map((v, idx) => 
-                    `<option value="${v.price}">${v.name} - ₹${v.price}</option>`
-                ).join('');
-
                 card.innerHTML = `
-                    <h3 class="product-title">${p.name}</h3>
-                    <ul class="feature-list">
-                        ${p.features.map(f => `<li>${f}</li>`).join('')}
-                    </ul>
-                    <div style="margin-bottom: 12px;">
-                        <label style="font-size: 11px; color: var(--text-sub); display: block; margin-bottom: 4px;">Select Plan:</label>
-                        <select id="variant-${p.id}" onchange="updatePriceDisplay(${p.id})" style="width: 100%; padding: 8px; background: rgba(0,0,0,0.8); border: 1px solid var(--border-neon); color: #fff; border-radius: 6px;">
-                            ${variantOptions}
-                        </select>
+                    <div>
+                        <h3 class="product-title">${p.name}</h3>
+                        <ul class="feature-list">
+                            ${p.features.map(f => `<li>${f}</li>`).join('')}
+                        </ul>
                     </div>
-                    <div id="price-display-${p.id}" style="font-weight:bold; color: var(--red-glow); font-size:16px; margin-bottom:12px; text-align:center;">₹${initialPrice}.00</div>
-                    <button class="buy-btn" onclick="buyProductWithVariant(${p.id}, '${p.name}')">BUY NOW</button>
+                    <button class="buy-btn" onclick="openPlanModal(${p.id})">BUY NOW</button>
                 `;
                 container.appendChild(card);
             });
         }
 
-        function updatePriceDisplay(prodId) {
-            let select = document.getElementById(`variant-${prodId}`);
-            let price = select.value;
-            document.getElementById(`price-display-${prodId}`).innerText = `₹${price}.00`;
+        function openPlanModal(productId) {
+            let prod = defaultProducts.find(p => p.id === productId);
+            if(!prod) return;
+
+            document.getElementById("planModalTitle").innerText = prod.name;
+            let container = document.getElementById("plansListContainer");
+            container.innerHTML = "";
+
+            prod.variants.forEach(v => {
+                let btn = document.createElement("button");
+                btn.className = "plan-option-btn";
+                btn.innerHTML = `<span>${v.name}</span> <span class="plan-price-tag">₹${v.price}.00</span>`;
+                btn.onclick = function() {
+                    closePlanModal();
+                    processPurchase(prod.name, v.name, v.price);
+                };
+                container.appendChild(btn);
+            });
+
+            document.getElementById("planSelectModal").style.display = "flex";
         }
 
-        function buyProductWithVariant(prodId, prodName) {
-            let select = document.getElementById(`variant-${prodId}`);
-            let selectedPrice = parseFloat(select.value);
-            let selectedVariantName = select.options[select.selectedIndex].text;
+        function closePlanModal() {
+            document.getElementById("planSelectModal").style.display = "none";
+        }
 
+        function processPurchase(prodName, variantName, price) {
             let currentBal = parseFloat(localStorage.getItem("walletBalance") || "0.00");
-            if(currentBal >= selectedPrice) {
-                currentBal -= selectedPrice;
+            if(currentBal >= price) {
+                currentBal -= price;
                 localStorage.setItem("walletBalance", currentBal.toFixed(2));
                 updateBalanceUI();
                 
-                document.getElementById("modalPurchasedItemText").innerText = `${prodName} (${selectedVariantName})`;
+                document.getElementById("modalPurchasedItemText").innerText = `${prodName} (${variantName})`;
                 document.getElementById("buySuccessModal").style.display = "flex";
             } else {
                 alert("Insufficient Wallet Balance!");
