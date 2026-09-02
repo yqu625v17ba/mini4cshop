@@ -3,117 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MINI4C X CHEATS - Official Store</title>
+    <title>MINI4C SHOP</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
         :root {
-            --bg-dark: #050508;
-            --card-bg: rgba(15, 15, 21, 0.95);
+            --bg-dark: #080808;
+            --card-bg: #121212;
             --red-glow: #ff003c;
-            --border-neon: rgba(255, 0, 60, 0.3);
+            --border-neon: #1a1a1a;
             --text-main: #ffffff;
-            --text-sub: #aaaaaa;
+            --text-sub: #a0a0a0;
         }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: var(--bg-dark); color: var(--text-main); overflow-x: hidden; min-height: 100vh; }
-        #bgCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; }
-
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); overflow-x: hidden; }
+        #bgCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
+        
         #loader-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: #050508; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; z-index: 99999;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background: #000; z-index: 99999; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; transition: opacity 0.5s ease;
         }
-
         .cyber-spinner {
-            width: 60px; height: 60px;
-            border: 4px solid rgba(255, 0, 60, 0.15);
-            border-top: 4px solid var(--red-glow);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite, glowPulse 1.5s ease-in-out infinite alternate;
+            width: 50px; height: 50px; border: 3px solid rgba(255, 0, 60, 0.2);
+            border-top-color: var(--red-glow); border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
-
-        .loader-title {
-            margin-top: 18px; color: #fff; font-size: 13px; font-weight: 700;
-            letter-spacing: 2px; text-shadow: 0 0 10px var(--red-glow);
-            animation: textFloat 1.5s ease-in-out infinite alternate;
-        }
-
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes glowPulse { from { box-shadow: 0 0 5px var(--red-glow); } to { box-shadow: 0 0 20px var(--red-glow); } }
-        @keyframes textFloat { 0% { transform: translateY(0px); } 100% { transform: translateY(-5px); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loader-title { margin-top: 15px; color: var(--red-glow); font-weight: bold; letter-spacing: 2px; }
 
         #loginScreen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(5, 5, 8, 0.95); backdrop-filter: blur(10px);
-            display: flex; justify-content: center; align-items: center; z-index: 10000;
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.95); z-index: 10000; display: flex;
+            justify-content: center; align-items: center; padding: 20px;
         }
-
         .login-card {
             background: var(--card-bg); border: 1px solid var(--red-glow);
-            padding: 30px; border-radius: 12px; width: 90%; max-width: 380px; text-align: center;
-            box-shadow: 0 0 20px rgba(255, 0, 60, 0.3); animation: floatCard 3s ease-in-out infinite alternate;
+            padding: 25px; border-radius: 10px; width: 100%; max-width: 350px;
+            box-shadow: 0 0 15px rgba(255, 0, 60, 0.3);
         }
-
-        @keyframes floatCard { 0% { transform: translateY(0px); } 100% { transform: translateY(-8px); } }
-        .login-card h2 { color: var(--red-glow); margin-bottom: 20px; font-size: 22px; text-transform: uppercase; }
-        .input-group { margin-bottom: 15px; text-align: left; }
+        .login-card h2 { text-align: center; color: var(--red-glow); margin-bottom: 20px; font-size: 18px; }
+        .input-group { margin-bottom: 15px; }
         .input-group label { display: block; font-size: 12px; color: var(--text-sub); margin-bottom: 5px; }
-        .input-group input { width: 100%; padding: 12px; background: rgba(0,0,0,0.7); border: 1px solid var(--border-neon); color: #fff; border-radius: 6px; outline: none; }
-        .login-btn { width: 100%; padding: 12px; background: var(--red-glow); color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; box-shadow: 0 0 10px rgba(255, 0, 60, 0.5); transition: 0.3s; }
-        .login-btn:hover { background: #e00035; }
+        .input-group input {
+            width: 100%; padding: 10px; background: #000; border: 1px solid var(--border-neon);
+            color: #fff; border-radius: 5px; outline: none;
+        }
+        .login-btn {
+            width: 100%; padding: 10px; background: var(--red-glow); color: #fff; border: none;
+            font-weight: bold; border-radius: 5px; cursor: pointer;
+        }
 
         .top-navbar {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 10px 14px; background: rgba(10, 10, 15, 0.95);
-            border-bottom: 1px solid var(--border-neon); position: sticky; top: 0; z-index: 1000;
+            padding: 12px 20px; background: rgba(18, 18, 18, 0.8); backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-neon); position: sticky; top:0; z-index: 1000;
         }
-
-        .menu-toggle { font-size: 20px; cursor: pointer; color: var(--red-glow); }
-        .logo { font-weight: bold; font-size: 16px; letter-spacing: 1px; color: #fff; display: flex; align-items: center; gap: 8px; }
-        .logo i { color: var(--red-glow); }
-        .wallet-section { display: flex; align-items: center; gap: 8px; }
-        .wallet-balance { background: rgba(255, 0, 60, 0.1); border: 1px solid var(--border-neon); padding: 5px 10px; border-radius: 20px; font-size: 13px; font-weight: bold; }
-        .add-fund-btn { background: var(--red-glow); border: none; color: #fff; padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; }
-
-        .profile-btn-img {
-            width: 34px; height: 34px; border-radius: 50%;
-            border: 1.5px solid var(--red-glow); object-fit: cover;
-            cursor: pointer; background-color: #111; flex-shrink: 0;
-        }
+        .logo { font-weight: bold; color: var(--red-glow); font-size: 16px; letter-spacing: 1px; }
+        .menu-toggle { cursor: pointer; font-size: 18px; }
+        .wallet-section { display: flex; align-items: center; gap: 10px; }
+        .wallet-balance { background: #000; padding: 4px 10px; border-radius: 12px; border: 1px solid var(--red-glow); font-size: 13px; color: #00ffcc; }
+        .add-fund-btn { background: var(--red-glow); color: #fff; border: none; padding: 5px 10px; border-radius: 5px; font-size: 11px; font-weight: bold; cursor: pointer; }
+        .profile-btn-img { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 1px solid var(--red-glow); }
 
         .sidebar {
-            position: fixed; top: 0; left: -280px; width: 260px; height: 100%;
-            background: #08080c; border-right: 1px solid var(--border-neon);
-            z-index: 9999; transition: 0.3s ease; padding: 20px;
+            position: fixed; top: 0; left: -260px; width: 250px; height: 100%;
+            background: var(--card-bg); z-index: 10001; transition: 0.3s ease; padding: 20px;
+            border-right: 1px solid var(--border-neon);
         }
-
         .sidebar.active { left: 0; }
-        .sidebar-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-neon); padding-bottom: 15px; margin-bottom: 20px; }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .sidebar-links { list-style: none; }
         .sidebar-links li { margin-bottom: 15px; }
-        .sidebar-links a { color: var(--text-sub); text-decoration: none; font-size: 14px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: 0.2s; }
-        .sidebar-links a:hover { color: var(--red-glow); }
+        .sidebar-links a { color: var(--text-main); text-decoration: none; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 10px; }
 
-        .container { padding: 20px; max-width: 800px; margin: auto; }
-        .section-title { font-size: 18px; color: var(--red-glow); border-bottom: 2px solid var(--red-glow); display: inline-block; padding-bottom: 4px; margin-bottom: 20px; text-transform: uppercase; }
-
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
-        .product-card { background: var(--card-bg); border: 1px solid var(--border-neon); border-radius: 12px; padding: 18px; position: relative; transition: 0.3s; }
-        .product-card:hover { border-color: var(--red-glow); box-shadow: 0 0 15px rgba(255,0,60,0.3); }
-        .product-title { font-size: 16px; margin-bottom: 12px; text-align: center; }
-        .feature-list { list-style: none; background: rgba(0,0,0,0.5); padding: 10px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; color: var(--text-sub); }
-        .feature-list li { margin-bottom: 5px; }
-        
-        .buy-btn { width: 100%; padding: 10px; background: var(--red-glow); border: none; color: #fff; font-weight: bold; border-radius: 6px; cursor: pointer; }
-
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10001; justify-content: center; align-items: center; }
-        .modal-content { background: var(--card-bg); border: 1px solid var(--red-glow); padding: 20px; border-radius: 12px; width: 90%; max-width: 350px; text-align: center; }
-
+        .container { padding: 20px; max-width: 1200px; margin: 0 auto; }
         .section { display: none; }
         .section.active { display: block; }
+        .section-title { font-size: 16px; color: var(--red-glow); border-left: 3px solid var(--red-glow); padding-left: 10px; margin-bottom: 20px; text-transform: uppercase; }
+
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .product-card {
+            background: var(--card-bg); border: 1px solid var(--border-neon);
+            border-radius: 8px; padding: 15px; position: relative; transition: 0.2s;
+        }
+        .product-card:hover { border-color: var(--red-glow); transform: translateY(-3px); }
+        .product-title { font-size: 14px; color: #fff; margin-bottom: 10px; text-align: center; }
+        .feature-list { list-style: none; margin-bottom: 15px; font-size: 12px; color: var(--text-sub); }
+        .feature-list li { margin-bottom: 4px; }
+        .buy-btn {
+            width: 100%; padding: 8px; background: var(--red-glow); color: #fff;
+            border: none; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 12px;
+        }
+
+        .modal {
+            display: none; position: fixed; top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.8); z-index: 20000; justify-content: center; align-items: center; padding: 20px;
+        }
+        .modal-content {
+            background: var(--card-bg); border: 1px solid var(--red-glow);
+            padding: 20px; border-radius: 10px; width: 100%; max-width: 340px; text-align: center;
+        }
+        .support-btn {
+            display: inline-block; width: 100%; padding: 10px; margin-top: 8px; border-radius: 6px;
+            font-weight: bold; text-decoration: none; text-align: center; font-size: 13px;
+        }
+        .btn-tg { background: #0088cc; color: #fff; }
+        .btn-dc { background: #5865F2; color: #fff; }
     </style>
 </head>
 <body>
@@ -161,6 +156,7 @@
             <li><a onclick="openAddFundModal(); toggleSidebar();"><i class="fa-solid fa-wallet"></i> Add Funds</a></li>
             <li><a onclick="switchTab('history')"><i class="fa-solid fa-clock-rotate-left"></i> Transaction History</a></li>
             <li id="adminTabLink" style="display: none;"><a onclick="switchTab('adminPanel')" style="color: #00ffcc; font-weight: bold;"><i class="fa-solid fa-user-shield"></i> Admin Dashboard</a></li>
+            <li><a href="https://t.me/ankittt_03" target="_blank"><i class="fa-brands fa-telegram"></i> Telegram Support</a></li>
             <li><a href="https://discord.gg/Yttbf69xx" target="_blank"><i class="fa-brands fa-discord"></i> Discord Support</a></li>
             <li><a onclick="handleLogout()" style="color: var(--red-glow);"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
         </ul>
@@ -174,35 +170,42 @@
 
         <div id="myKeysSection" class="section">
             <h2 class="section-title">MY PURCHASED KEYS</h2>
-            <div id="keysVaultContainer" style="background: var(--card-bg); padding: 15px; border-radius: 8px; border: 1px solid var(--border-neon);">
+            <div style="background: var(--card-bg); padding: 15px; border-radius: 8px; border: 1px solid var(--border-neon);">
                 <p style="color:var(--text-sub); font-size:13px;">No active license keys generated yet.</p>
             </div>
         </div>
 
         <div id="historySection" class="section">
             <h2 class="section-title">TRANSACTION HISTORY</h2>
-            <div id="historyLogsContainer" style="background: var(--card-bg); padding: 15px; border-radius: 8px; border: 1px solid var(--border-neon);">
+            <div style="background: var(--card-bg); padding: 15px; border-radius: 8px; border: 1px solid var(--border-neon);">
                 <p style="color:var(--text-sub); font-size:13px;">No prior transactions recorded.</p>
             </div>
         </div>
 
         <div id="adminPanelSection" class="section">
             <h2 class="section-title" style="color: #00ffcc; border-color: #00ffcc;"><i class="fa-solid fa-user-shield"></i> Admin Dashboard</h2>
-            
             <div style="background: var(--card-bg); border: 1px solid var(--border-neon); padding: 18px; border-radius: 12px; margin-bottom: 20px;">
                 <h3 style="color: var(--red-glow); font-size: 15px; margin-bottom: 12px;">Credit Funds to User</h3>
-                <input type="text" id="adminTargetUser" placeholder="Target Username (e.g. ADX ANKIT)" style="width: 100%; padding: 10px; background: rgba(0,0,0,0.7); border: 1px solid var(--border-neon); color: #fff; border-radius: 6px; margin-bottom: 10px;">
+                <input type="text" id="adminTargetUser" placeholder="Target Username" style="width: 100%; padding: 10px; background: rgba(0,0,0,0.7); border: 1px solid var(--border-neon); color: #fff; border-radius: 6px; margin-bottom: 10px;">
                 <input type="number" id="adminAddBalance" placeholder="Amount (INR)" style="width: 100%; padding: 10px; background: rgba(0,0,0,0.7); border: 1px solid var(--border-neon); color: #fff; border-radius: 6px; margin-bottom: 10px;">
                 <button onclick="adminAddFunds()" style="width: 100%; padding: 10px; background: #00ffcc; color: #000; border: none; font-weight: bold; border-radius: 6px; cursor: pointer;">CREDIT WALLET</button>
             </div>
-
-            <div style="background: var(--card-bg); border: 1px solid var(--border-neon); padding: 18px; border-radius: 12px;">
-                <h3 style="color: var(--red-glow); font-size: 15px; margin-bottom: 12px;">Publish New Product to Store</h3>
-                <input type="text" id="adminProdName" placeholder="Product Title" style="width: 100%; padding: 10px; background: rgba(0,0,0,0.7); border: 1px solid var(--border-neon); color: #fff; border-radius: 6px; margin-bottom: 10px;">
-                <input type="text" id="adminProdFeatures" placeholder="Features (Comma Separated)" style="width: 100%; padding: 10px; background: rgba(0,0,0,0.7); border: 1px solid var(--border-neon); color: #fff; border-radius: 6px; margin-bottom: 10px;">
-                <input type="number" id="adminProdPrice" placeholder="Price (INR)" style="width: 100%; padding: 10px; background: rgba(0,0,0,0.7); border: 1px solid var(--border-neon); color: #fff; border-radius: 6px; margin-bottom: 10px;">
-                <button onclick="adminAddProduct()" style="width: 100%; padding: 10px; background: var(--red-glow); color: #fff; border: none; font-weight: bold; border-radius: 6px; cursor: pointer;">PUBLISH TO STORE</button>
+        </div>
+    </div>
+        <!-- Purchase Success Popup Modal -->
+    <div id="buySuccessModal" class="modal">
+        <div class="modal-content">
+            <i class="fa-solid fa-circle-check" style="font-size: 40px; color: #00ffcc; margin-bottom: 10px;"></i>
+            <h3 style="color: #fff; font-size: 16px; margin-bottom: 8px;">Order Placed Successfully!</h3>
+            <p id="modalPurchasedItemText" style="color: var(--red-glow); font-weight: bold; font-size: 13px; margin-bottom: 12px;"></p>
+            <div style="background: rgba(0,0,0,0.6); padding: 12px; border-radius: 8px; border: 1px dashed var(--red-glow); margin-bottom: 15px;">
+                <p style="font-size: 12px; color: #fff; line-height: 1.4;">
+                    <strong>Note:</strong> Order complete hone ke baad apni <b>Real Key</b> claim karne ke liye humare Customer Support se contact karein.
+                </p>
             </div>
+            <a href="https://t.me/ankittt_03" target="_blank" class="support-btn btn-tg"><i class="fa-brands fa-telegram"></i> Contact Telegram Support</a>
+            <a href="https://discord.gg/Yttbf69xx" target="_blank" class="support-btn btn-dc"><i class="fa-brands fa-discord"></i> Contact Discord Support</a>
+            <button onclick="closeBuySuccessModal()" style="width: 100%; padding: 8px; background: #222; color: #aaa; border: 1px solid #444; border-radius: 6px; cursor: pointer; margin-top: 10px; font-size: 12px;">Close</button>
         </div>
     </div>
 
@@ -212,7 +215,6 @@
             <p style="font-size: 12px; color: var(--text-sub); margin-bottom: 12px;">Amount daalein QR generate karne ke liye</p>
             
             <input type="number" id="fundAmountInput" placeholder="Amount (e.g. 100)" style="width: 100%; padding: 10px; background: rgba(0,0,0,0.7); border: 1px solid var(--border-neon); color: #fff; border-radius: 6px; margin-bottom: 12px; text-align: center; font-size: 15px;">
-            
             <button onclick="generateAddFundQR()" style="width: 100%; padding: 10px; background: var(--red-glow); color: #fff; border: none; font-weight: bold; border-radius: 6px; cursor: pointer; margin-bottom: 15px;">GENERATE QR CODE</button>
             
             <div id="qrCodeContainer" style="display: none; background: #fff; padding: 12px; border-radius: 8px; margin-bottom: 12px;">
@@ -224,29 +226,30 @@
             <button onclick="closeAddFundModal()" style="width: 100%; padding: 8px; background: #333; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Close</button>
         </div>
     </div>
-        <script>
+
+    <script>
         const defaultProducts = [
-            { id: 1, name: "DELTA PROXY IOS IPHONE", features: ["⚡ Body Proxy - Full Red", "⚡ Neck Proxy V1", "⚡ Neck Proxy V2"], price: 250 },
-            { id: 2, name: "MIGUL IPHONE IOS FF", features: ["⚡ Silent Aim", "⚡ AimBot", "⚡ Speed Hack"], price: 300 },
-            { id: 3, name: "XYZ CHEATS FF ROOT ANDROID", features: ["⚡ Silent Aim", "⚡ Aim Magnet", "⚡ Headshot 100%"], price: 200 },
-            { id: 4, name: "BRUTAL VIP MOD MENU", features: ["⚡ ESP Line", "⚡ Auto Headshot", "⚡ Safe Main ID"], price: 350 },
-            { id: 5, name: "ZERO RECOIL PANEL", features: ["⚡ 100% Less Recoil", "⚡ High Damage", "⚡ Fast Reload"], price: 150 },
-            { id: 6, name: "INJECTOR PRO ANDROID", features: ["⚡ Anti-Ban Bypass", "⚡ Magic Bullet", "⚡ Antenna Head"], price: 180 },
-            { id: 7, name: "GHOST VIP IOS MOD", features: ["⚡ Wallhack", "⚡ Speed Run", "⚡ Black Sky"], price: 400 },
-            { id: 8, name: "COBRA REGEDIT FF", features: ["⚡ Aim Assist", "⚡ Sensitivity Boost", "⚡ No Lag"], price: 120 },
-            { id: 9, name: "SKIN VIP BUNDLE UNLOCK", features: ["⚡ All Emotes Unlocked", "⚡ Evo Gun Skins", "⚡ Cobra MP40"], price: 100 },
-            { id: 10, name: "NINJA BYPASS V2", features: ["⚡ Anti Shield", "⚡ Emulator Bypass", "⚡ Rank Working"], price: 280 },
-            { id: 11, name: "ULTRA AIMBOT PANEL", features: ["⚡ Auto Lock Aim", "⚡ 360 Degree FOV", "⚡ Smooth Drag"], price: 220 },
-            { id: 12, name: "TITAN PANEL NON-ROOT", features: ["⚡ No Root Needed", "⚡ Anti Detect", "⚡ CS Rank Match"], price: 190 },
-            { id: 13, name: "IPHONE SENSITIVITY GLITCH", features: ["⚡ Super Fast Motion", "⚡ One Tap Headshot", "⚡ Smooth Touch"], price: 130 },
-            { id: 14, name: "VIP LOBBY CRASH PROTECT", features: ["⚡ Crash Immunity", "⚡ Anti Blacklist", "⚡ Server Safe"], price: 500 },
-            { id: 15, name: "VIP GHOST MODE INJECTOR", features: ["⚡ Invisible Player", "⚡ Teleport Kill", "⚡ Fly Hack"], price: 450 },
-            { id: 16, name: "DRAGON PANEL ROOT FF", features: ["⚡ KernelSU Safe", "⚡ APatch Supported", "⚡ Unlimited Range"], price: 260 },
-            { id: 17, name: "SPEED HACK RUNNER", features: ["⚡ 2X Movement", "⚡ Quick Medkit", "⚡ Fast Land"], price: 160 },
-            { id: 18, name: "AMAZING ESP LINE PRO", features: ["⚡ Distance Info", "⚡ Enemy Name", "⚡ Health Bar"], price: 210 },
-            { id: 19, name: "HEADSHOT REGEDIT VIP", features: ["⚡ Touch Response 100ms", "⚡ Head Lock File", "⚡ Easy Drag"], price: 140 },
-            { id: 20, name: "PRO AIMBOT PANEL IOS", features: ["⚡ iOS Non-Jailbreak", "⚡ Smooth Aim", "⚡ Tournament Safe"], price: 380 },
-            { id: 21, name: "MINI4C PRIVATE BYPASS", features: ["⚡ Private Server Key", "⚡ 100% Anti Ban", "⚡ Direct VIP Support"], price: 600 }
+            { id: 1, name: "DELTA PROXY IOS IPHONE", features: ["⚡ Body Proxy - Full Red", "⚡ Neck Proxy V1", "⚡ Neck Proxy V2"], variants: [{ name: "1 Days", price: 150 }, { name: "7 Days", price: 350 }, { name: "30 Days", price: 700 }] },
+            { id: 2, name: "MIGUL IPHONE IOS FF", features: ["⚡ Silent Aim", "⚡ AimBot", "⚡ Speed"], variants: [{ name: "1 Day's Basic", price: 250 }, { name: "7 Day's Basic", price: 600 }, { name: "30 Day's Basic", price: 1200 }, { name: "1 Day's PRO", price: 250 }, { name: "7 Day's PRO", price: 600 }, { name: "30 Day's PRO", price: 1200 }] },
+            { id: 3, name: "XYZ CHEATS FF ROOT ANDROID", features: ["⚡ Silent Aim", "⚡ Aim Magnet", "⚡ Aimbot"], variants: [{ name: "1 Days", price: 70 }, { name: "2 Days", price: 150 }] },
+            { id: 4, name: "PRIME HOOK FF NONROOT ANDROID", features: ["⚡ Aim Magnet", "⚡ Silent Aim", "⚡ Aimbot"], variants: [{ name: "1 Days Nonroot", price: 50 }, { name: "3 Days Nonroot", price: 100 }, { name: "7 Days Nonroot", price: 270 }, { name: "10 Days Nonroot", price: 300 }] },
+            { id: 5, name: "BALA MOD XYZ - V2 FF NONROOT", features: ["⚡ NONROOT", "⚡ Headshot", "⚡ Location"], variants: [{ name: "1 Hours", price: 15 }, { name: "3 Hours", price: 35 }, { name: "6 Hours", price: 60 }, { name: "12 Hours", price: 120 }, { name: "1 Days", price: 230 }, { name: "2 Days", price: 400 }, { name: "3 Days", price: 550 }, { name: "5 Days", price: 950 }, { name: "7 Days", price: 1300 }] },
+            { id: 6, name: "HG CHEATS PRIME PROXY FF NONROOT", features: ["⚡ Aimsafe", "⚡ Aimbot", "⚡ Headshot"], variants: [{ name: "1 Days", price: 70 }, { name: "7 Days", price: 250 }, { name: "10 Days", price: 300 }] },
+            { id: 7, name: "DRIPCLIENT FF NONROOT APKMOD", features: ["⚡ Aimkill", "⚡ Silent Aim", "⚡ Underkill"], variants: [{ name: "1 Day's Nonroot", price: 60 }, { name: "3 Day's Nonroot", price: 140 }, { name: "7 Day's Nonroot", price: 250 }, { name: "15 Day's Nonroot", price: 400 }, { name: "30 Day's Nonroot", price: 600 }] },
+            { id: 8, name: "HG CHEATS ANDROID PROXY FF NONROOT", features: ["⚡ AIMBOT", "⚡ PRECISAO", "⚡ HS ALTO"], variants: [{ name: "1 Day's", price: 70 }, { name: "7 Day's", price: 270 }, { name: "10 Day's", price: 300 }, { name: "30 Day's", price: 500 }] },
+            { id: 9, name: "HG CHEATS FF APKMOD NONROOT+ROOT", features: ["⚡ Aim Magnet", "⚡ Silent Aim", "⚡ Aimbot"], variants: [{ name: "1 Day's Root + Nonroot", price: 70 }, { name: "7 Day's Root + Nonroot", price: 270 }, { name: "10 Day's Root + Nonroot", price: 300 }, { name: "30 Day's Root + Nonroot", price: 500 }] },
+            { id: 10, name: "HAXX-CKER PRO FF ROOT", features: ["⚡ Aimsafe Main Id Root", "⚡ Aimbot", "⚡ Headshot"], variants: [{ name: "3 Day's", price: 180 }, { name: "5 Day's", price: 280 }, { name: "10 Day's", price: 550 }, { name: "20 Day's", price: 1050 }, { name: "30 Day's", price: 1450 }, { name: "60 Day's", price: 2800 }] },
+            { id: 11, name: "SILENT CHEAT FF ROOT ANDROID", features: ["⚡ Safe Main Id", "⚡ Silent Aim", "⚡ Underkill"], variants: [{ name: "1 Day's SAFE", price: 90 }, { name: "3 Day's SAFE", price: 180 }, { name: "7 Day's SAFE", price: 350 }, { name: "14 Day's SAFE", price: 600 }, { name: "28 Day's SAFE", price: 900 }, { name: "1 Day's BRUTAL", price: 90 }, { name: "3 Day's BRUTAL", price: 180 }, { name: "7 Day's BRUTAL", price: 350 }, { name: "14 Day's BRUTAL", price: 600 }, { name: "28 Day's BRUTAL", price: 900 }] },
+            { id: 12, name: "PATO TEAM FF ALL ANDROID", features: ["⚡ Silent Aim", "⚡ Aim Magnet", "⚡ Speed"], variants: [{ name: "3 Day's All Colours Mix", price: 150 }, { name: "7 Day's All Colours Mix", price: 300 }, { name: "15 Day's All Colours Mix", price: 500 }, { name: "30 Day's All Colours Mix", price: 700 }] },
+            { id: 13, name: "BR MOD FF PC VERSION", features: ["⚡ Silent Aim", "⚡ Aim Magnet", "⚡ Speed"], variants: [{ name: "1 Day Pc Aim Silent", price: 79 }, { name: "10 Days Pc Aim Silent", price: 479 }, { name: "20 Days Pc Aim Silent", price: 799 }, { name: "10 Days Pc Bypass + Silent", price: 519 }, { name: "1 Day Pc Modmenu x86", price: 79 }, { name: "10 Day Pc Modmenu x86", price: 479 }, { name: "30 Day Pc Modmenu x86", price: 799 }] },
+            { id: 14, name: "INVISIBLE X (STREAMER PANEL)", features: ["⚡ Streamer Panel", "⚡ All Devices Support"], variants: [{ name: "1 Day", price: 99 }, { name: "7 Days", price: 399 }, { name: "15 Days", price: 599 }, { name: "31 Days", price: 999 }] },
+            { id: 15, name: "RAPID CORE", features: ["⚡ Rapid Core Engine", "⚡ Anti-Cheat Bypass"], variants: [{ name: "1 Day", price: 89 }, { name: "7 Days", price: 279 }, { name: "15 Days", price: 459 }, { name: "30 Days", price: 799 }] },
+            { id: 16, name: "SKB MOD (SPECIAL OFFER)", features: ["⚡ Special Offer", "⚡ High Headshot"], variants: [{ name: "1 Day", price: 99 }, { name: "7 Days", price: 299 }, { name: "15 Days", price: 499 }, { name: "30 Days", price: 799 }] },
+            { id: 17, name: "INVISABLE X", features: ["⚡ High Performance", "⚡ Safe Aim"], variants: [{ name: "1 Day", price: 99 }, { name: "7 Days", price: 349 }, { name: "15 Days", price: 599 }, { name: "30 Days", price: 999 }] },
+            { id: 18, name: "P20 ROOT DEVICE", features: ["⚡ Root Device Special"], variants: [{ name: "30 Days Plan", price: 600 }] },
+            { id: 19, name: "P20 NON ROOT", features: ["⚡ Non-Root Supported"], variants: [{ name: "30 Days Plan", price: 800 }] },
+            { id: 20, name: "PHONE TO PHONE ROOTING SERVICE", features: ["⚡ Xiaomi HyperOS (₹1500)", "⚡ POCO HyperOS (₹1500)", "⚡ Redmi MIUI / Moto / Infinix / Tecno / Samsung / Nothing / OnePlus (₹1000)"], variants: [{ name: "HyperOS Device Root", price: 1500 }, { name: "Other Brands Root", price: 1000 }] },
+            { id: 21, name: "NINE X INJECTOR", features: ["⚡ High Precision Injector"], variants: [{ name: "10 Days", price: 400 }] }
         ];
 
         window.addEventListener("load", function() {
@@ -257,6 +260,7 @@
         });
 
         window.onload = function() {
+            localStorage.removeItem("storeProducts");
             let currentUser = localStorage.getItem("loggedInUser");
             if(localStorage.getItem("isLoggedIn") === "true") {
                 document.getElementById("loginScreen").style.display = "none";
@@ -269,33 +273,64 @@
             initCanvas();
         };
 
-        function getProducts() {
-            let stored = localStorage.getItem("storeProducts");
-            if(!stored) {
-                localStorage.setItem("storeProducts", JSON.stringify(defaultProducts));
-                return defaultProducts;
-            }
-            return JSON.parse(stored);
-        }
-
         function renderProducts() {
             let container = document.getElementById("productContainer");
-            let productsList = getProducts();
             container.innerHTML = "";
 
-            productsList.forEach(p => {
+            defaultProducts.forEach(p => {
                 let card = document.createElement("div");
                 card.className = "product-card";
+                
+                let initialPrice = p.variants[0].price;
+                let variantOptions = p.variants.map((v, idx) => 
+                    `<option value="${v.price}">${v.name} - ₹${v.price}</option>`
+                ).join('');
+
                 card.innerHTML = `
                     <h3 class="product-title">${p.name}</h3>
                     <ul class="feature-list">
                         ${p.features.map(f => `<li>${f}</li>`).join('')}
                     </ul>
-                    <div style="font-weight:bold; color: var(--red-glow); font-size:15px; margin-bottom:10px; text-align:center;">₹${p.price}.00</div>
-                    <button class="buy-btn" onclick="buyProduct('${p.name}', ${p.price})">BUY NOW</button>
+                    <div style="margin-bottom: 12px;">
+                        <label style="font-size: 11px; color: var(--text-sub); display: block; margin-bottom: 4px;">Select Plan:</label>
+                        <select id="variant-${p.id}" onchange="updatePriceDisplay(${p.id})" style="width: 100%; padding: 8px; background: rgba(0,0,0,0.8); border: 1px solid var(--border-neon); color: #fff; border-radius: 6px;">
+                            ${variantOptions}
+                        </select>
+                    </div>
+                    <div id="price-display-${p.id}" style="font-weight:bold; color: var(--red-glow); font-size:16px; margin-bottom:12px; text-align:center;">₹${initialPrice}.00</div>
+                    <button class="buy-btn" onclick="buyProductWithVariant(${p.id}, '${p.name}')">BUY NOW</button>
                 `;
                 container.appendChild(card);
             });
+        }
+
+        function updatePriceDisplay(prodId) {
+            let select = document.getElementById(`variant-${prodId}`);
+            let price = select.value;
+            document.getElementById(`price-display-${prodId}`).innerText = `₹${price}.00`;
+        }
+
+        function buyProductWithVariant(prodId, prodName) {
+            let select = document.getElementById(`variant-${prodId}`);
+            let selectedPrice = parseFloat(select.value);
+            let selectedVariantName = select.options[select.selectedIndex].text;
+
+            let currentBal = parseFloat(localStorage.getItem("walletBalance") || "0.00");
+            if(currentBal >= selectedPrice) {
+                currentBal -= selectedPrice;
+                localStorage.setItem("walletBalance", currentBal.toFixed(2));
+                updateBalanceUI();
+                
+                document.getElementById("modalPurchasedItemText").innerText = `${prodName} (${selectedVariantName})`;
+                document.getElementById("buySuccessModal").style.display = "flex";
+            } else {
+                alert("Insufficient Wallet Balance!");
+                openAddFundModal();
+            }
+        }
+
+        function closeBuySuccessModal() {
+            document.getElementById("buySuccessModal").style.display = "none";
         }
 
         function handleLogin() {
@@ -336,19 +371,6 @@
             document.getElementById("userBalance").innerText = bal.toFixed(2);
         }
 
-        function buyProduct(prodName, price) {
-            let currentBal = parseFloat(localStorage.getItem("walletBalance") || "0.00");
-            if(currentBal >= price) {
-                currentBal -= price;
-                localStorage.setItem("walletBalance", currentBal.toFixed(2));
-                updateBalanceUI();
-                alert(`Successfully purchased ${prodName}!`);
-            } else {
-                alert("Insufficient Wallet Balance!");
-                openAddFundModal();
-            }
-        }
-
         function adminAddFunds() {
             let targetUser = document.getElementById("adminTargetUser").value.trim();
             let amt = parseFloat(document.getElementById("adminAddBalance").value);
@@ -359,23 +381,6 @@
             localStorage.setItem("walletBalance", currentBal.toFixed(2));
             updateBalanceUI();
             alert(`Credited ₹${amt} to ${targetUser}!`);
-        }
-
-        function adminAddProduct() {
-            let name = document.getElementById("adminProdName").value.trim();
-            let featRaw = document.getElementById("adminProdFeatures").value.trim();
-            let price = parseFloat(document.getElementById("adminProdPrice").value);
-
-            if(!name || !featRaw || isNaN(price)) { alert("Fill all details!"); return; }
-
-            let featuresArr = featRaw.split(",").map(f => "⚡ " + f.trim());
-            let currentProds = getProducts();
-            currentProds.unshift({ id: Date.now(), name: name, features: featuresArr, price: price });
-            localStorage.setItem("storeProducts", JSON.stringify(currentProds));
-            
-            renderProducts();
-            alert("New Product published!");
-            switchTab('buyKey');
         }
 
         function generateAddFundQR() {
