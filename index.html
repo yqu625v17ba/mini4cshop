@@ -1,344 +1,122 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MINI4C SHOP - Cyber Store</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-dark: #050508;
-            --card-bg: rgba(18, 18, 26, 0.75);
-            --red-glow: #ff003c;
-            --neon-blue: #00f0ff;
-            --border-neon: rgba(255, 0, 60, 0.25);
-            --text-main: #ffffff;
-            --text-sub: #b0b5c0;
-        }
-        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Rajdhani', sans-serif; }
-        body { background-color: var(--bg-dark); color: var(--text-main); overflow-x: hidden; }
-        #bgCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
-
-        .top-navbar {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 14px 24px; background: rgba(10, 10, 16, 0.85); backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--border-neon); position: sticky; top:0; z-index: 1000;
-        }
-        .logo { font-family: 'Orbitron', sans-serif; font-weight: 900; color: var(--red-glow); font-size: 18px; letter-spacing: 2px; }
-        .menu-toggle { cursor: pointer; font-size: 20px; transition: 0.2s; }
-        .menu-toggle:hover { color: var(--red-glow); }
-        .wallet-section { display: flex; align-items: center; gap: 12px; }
-        .wallet-balance { background: rgba(0, 0, 0, 0.8); padding: 5px 12px; border-radius: 20px; border: 1px solid var(--neon-blue); font-size: 14px; color: var(--neon-blue); font-weight: 700; font-family: 'Orbitron', sans-serif; }
-        .add-fund-btn { background: var(--red-glow); color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; }
-
-        .sidebar {
-            position: fixed; top: 0; left: -280px; width: 270px; height: 100%;
-            background: rgba(10, 10, 16, 0.95); backdrop-filter: blur(20px); z-index: 10001; transition: 0.3s ease; padding: 25px 20px;
-            border-right: 1px solid var(--border-neon);
-        }
-        .sidebar.active { left: 0; }
-        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .sidebar-header h3 { font-family: 'Orbitron', sans-serif; font-size: 15px; color: var(--red-glow); }
-        .sidebar-links { list-style: none; }
-        .sidebar-links li { margin-bottom: 18px; }
-        .sidebar-links a { color: var(--text-main); text-decoration: none; font-size: 15px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 12px; }
-        .sidebar-links a:hover { color: var(--red-glow); }
-
-        .container { padding: 25px 20px; max-width: 1200px; margin: 0 auto; }
-        .section-title { font-family: 'Orbitron', sans-serif; font-size: 18px; color: var(--red-glow); border-left: 4px solid var(--red-glow); padding-left: 12px; margin-bottom: 25px; }
-
-        .search-wrapper { margin-bottom: 25px; position: relative; }
-        .search-input {
-            width: 100%; padding: 12px 18px 12px 45px; background: rgba(15, 15, 22, 0.8);
-            border: 1px solid var(--border-neon); border-radius: 8px; color: #fff; outline: none; font-size: 15px;
-        }
-        .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-sub); }
-
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; }
-        .product-card {
-            background: var(--card-bg); border: 1px solid var(--border-neon); border-radius: 10px; padding: 20px;
-            display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s;
-        }
-        .product-card:hover { border-color: var(--red-glow); transform: translateY(-3px); }
-        .product-title { font-family: 'Orbitron', sans-serif; font-size: 14px; color: #fff; margin-bottom: 12px; font-weight: 700; }
-        
-        .cyber-btn {
-            width: 100%; padding: 12px; background: linear-gradient(135deg, var(--red-glow), #b3002d);
-            color: #fff; border: none; font-family: 'Orbitron', sans-serif; font-weight: 700;
-            border-radius: 6px; cursor: pointer; font-size: 13px; text-transform: uppercase;
-        }
-
-        .modal {
-            display: none; position: fixed; top:0; left:0; width:100%; height:100%;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 20000; justify-content: center; align-items: center; padding: 20px;
-        }
-        .modal-content {
-            background: var(--card-bg); border: 1px solid var(--red-glow);
-            padding: 25px; border-radius: 12px; width: 100%; max-width: 400px; text-align: center;
-        }
-        .plan-option-btn {
-            width: 100%; padding: 12px; margin-bottom: 10px; background: rgba(0,0,0,0.6);
-            border: 1px solid var(--border-neon); color: #fff; border-radius: 6px;
-            display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 600;
-        }
-        .plan-price-tag { color: var(--neon-blue); font-family: 'Orbitron', sans-serif; }
-    </style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MINI4C SHOP</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050508;--card:rgba(18,18,26,0.85);--red:#ff003c;--neon:#00f0ff;--border:rgba(255,0,60,0.3);--text:#fff}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Rajdhani',sans-serif}
+body{background:var(--bg);color:var(--text);overflow-x:hidden}
+.top-navbar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:rgba(10,10,16,0.9);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.logo{font-family:'Orbitron',sans-serif;color:var(--red);font-size:16px;font-weight:700}
+.wallet{background:#000;padding:4px 10px;border-radius:15px;border:1px solid var(--neon);color:var(--neon);font-family:'Orbitron';font-size:13px}
+.btn{background:var(--red);color:#fff;border:none;padding:6px 12px;border-radius:5px;font-weight:700;cursor:pointer}
+.container{padding:20px;max-width:1000px;margin:auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:15px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:15px;display:flex;flex-direction:column;justify-content:space-between}
+.card h3{font-family:'Orbitron';font-size:13px;margin-bottom:10px}
+.cyber-btn{width:100%;padding:10px;background:var(--red);color:#fff;border:none;border-radius:5px;font-family:'Orbitron';font-weight:700;cursor:pointer;font-size:12px}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:1000;justify-content:center;align-items:center;padding:15px}
+.modal-content{background:var(--card);border:1px solid var(--red);padding:20px;border-radius:10px;width:100%;max-width:360px;text-align:center}
+.p-btn{width:100%;padding:10px;margin-bottom:8px;background:rgba(0,0,0,0.5);border:1px solid var(--border);color:#fff;border-radius:5px;display:flex;justify-content:space-between;cursor:pointer;font-weight:600}
+</style>
 </head>
 <body>
-
-    <canvas id="bgCanvas"></canvas>
-
-    <header class="top-navbar">
-        <div class="menu-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></div>
-        <div class="logo"><i class="fa-solid fa-skull"></i> MINI4C X STORE</div>
-        <div class="wallet-section">
-            <span class="wallet-balance">₹<span id="userBalance">0.00</span></span>
-            <button class="add-fund-btn" onclick="openAddFundModal()">+ FUND</button>
-        </div>
-    </header>
-
-    <nav id="sidebar" class="sidebar">
-        <div class="sidebar-header">
-            <h3><i class="fa-solid fa-gamepad"></i> DASHBOARD</h3>
-            <i class="fa-solid fa-xmark" onclick="toggleSidebar()" style="cursor:pointer; font-size: 18px;"></i>
-        </div>
-        <ul class="sidebar-links">
-            <li><a onclick="toggleSidebar()"><i class="fa-solid fa-key"></i> Marketplace Stock</a></li>
-            <li><a onclick="openMyKeysModal(); toggleSidebar();"><i class="fa-solid fa-box-archive"></i> My Purchased Keys</a></li>
-            <li><a onclick="openAddFundModal(); toggleSidebar();"><i class="fa-solid fa-wallet"></i> Add Wallet Money</a></li>
-            <li><a href="https://t.me/+Ga2FZ1QnY8VjN2Y1" target="_blank"><i class="fa-brands fa-telegram"></i> Telegram Channel</a></li>
-            <li><a href="https://discord.gg/Yttbf69xx" target="_blank"><i class="fa-brands fa-discord"></i> Discord Community</a></li>
-        </ul>
-    </nav>
-
-    <div class="container">
-        <div class="section active">
-            <h2 class="section-title">MARKETPLACE / PRODUCTS</h2>
-            <div class="search-wrapper">
-                <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                <input type="text" id="productSearchInput" class="search-input" placeholder="Search hacks, cheats or mods..." onkeyup="filterProducts()">
-            </div>
-            <div id="productContainer" class="product-grid"></div>
-        </div>
+<header class="top-navbar">
+    <div class="logo"><i class="fa-solid fa-skull"></i> MINI4C</div>
+    <div style="display:flex;align-items:center;gap:10px;">
+        <div class="wallet">₹<span id="bal">0.00</span></div>
+        <button class="btn" onclick="openModal('fundModal')">+ FUND</button>
     </div>
+</header>
+<div class="container">
+    <input type="text" id="search" placeholder="Search products..." onkeyup="filterP()" style="width:100%;padding:10px;background:#111;border:1px solid var(--border);color:#fff;border-radius:6px;margin-bottom:20px;outline:none;">
+    <div id="pContainer" class="grid"></div>
+</div>
 
-    <!-- Plan Selection Modal -->
-    <div id="planSelectModal" class="modal">
-        <div class="modal-content">
-            <h3 id="planModalTitle" style="color: var(--red-glow); font-family:'Orbitron', sans-serif; font-size: 16px; margin-bottom: 15px;">Select Plan</h3>
-            <div id="plansListContainer" style="max-height: 260px; overflow-y: auto; margin-bottom: 15px;"></div>
-            <button onclick="closePlanModal()" style="width: 100%; padding: 10px; background: #1a1a24; color: #aaa; border: 1px solid var(--border-neon); border-radius: 6px; cursor: pointer;">Cancel</button>
-        </div>
-    </div>
+<div id="planModal" class="modal"><div class="modal-content"><h3 id="mTitle" style="color:var(--red);margin-bottom:12px">Select Plan</h3><div id="planList" style="max-height:220px;overflow-y:auto;margin-bottom:12px"></div><button onclick="closeModal('planModal')" class="btn" style="background:#222;width:100%">Cancel</button></div></div>
 
-    <!-- Order Success / Purchased Key Modal -->
-    <div id="orderSuccessModal" class="modal">
-        <div class="modal-content">
-            <div style="font-size: 40px; color: #00ff66; margin-bottom: 10px;"><i class="fa-solid fa-circle-check"></i></div>
-            <h3 style="color: #fff; font-family:'Orbitron', sans-serif; margin-bottom: 8px;">Order Placed Successfully!</h3>
-            <p id="successProductDetails" style="color: var(--red-glow); font-weight: bold; font-size: 14px; margin-bottom: 15px;"></p>
-            <div style="background: rgba(0,0,0,0.5); padding: 10px; border-radius: 6px; border: 1px solid var(--neon-blue); margin-bottom: 15px;">
-                <p style="font-size: 12px; color: var(--text-sub);">Your License Key:</p>
-                <p id="generatedKeyText" style="font-family:'Orbitron', sans-serif; color: var(--neon-blue); font-size: 14px; font-weight: bold; user-select: all;"></p>
-            </div>
-            <button onclick="closeOrderSuccessModal()" class="cyber-btn" style="background: var(--neon-blue); color: #000; margin-bottom: 10px;">DONE</button>
-        </div>
-    </div>
+<div id="succModal" class="modal"><div class="modal-content"><h3 style="color:#00ff66;margin-bottom:8px">Success!</h3><p id="succText" style="color:var(--red);font-size:13px;margin-bottom:10px"></p><div style="background:#000;padding:8px;border-radius:5px;border:1px solid var(--neon);margin-bottom:12px"><span id="keyText" style="color:var(--neon);font-family:'Orbitron';font-size:12px;user-select:all"></span></div><button onclick="closeModal('succModal')" class="cyber-btn" style="background:var(--neon);color:#000">DONE</button></div></div>
 
-    <!-- My Keys Modal -->
-    <div id="myKeysModal" class="modal">
-        <div class="modal-content" style="max-width: 450px;">
-            <h3 style="color: var(--red-glow); font-family:'Orbitron', sans-serif; margin-bottom: 15px;"><i class="fa-solid fa-key"></i> My Purchased Keys</h3>
-            <div id="myKeysListContainer" style="max-height: 280px; overflow-y: auto; margin-bottom: 15px; text-align: left;"></div>
-            <button onclick="closeMyKeysModal()" style="width: 100%; padding: 9px; background: #222; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Close</button>
-        </div>
-    </div>
+<div id="fundModal" class="modal"><div class="modal-content"><h3 style="color:var(--red);margin-bottom:10px">Add Funds</h3><input type="number" id="fAmt" placeholder="Amount (INR)" style="width:100%;padding:10px;background:#000;border:1px solid var(--border);color:#fff;border-radius:5px;text-align:center;margin-bottom:10px"><button onclick="genQR()" class="cyber-btn" style="margin-bottom:10px">GENERATE QR</button><div id="qrBox" style="display:none;background:#fff;padding:10px;border-radius:5px;margin-bottom:10px"><img id="qrImg" style="width:150px;height:150px"><p id="qrAmt" style="color:#000;font-weight:bold;font-size:13px;margin-top:5px"></p><p style="color:#333;font-size:11px">UPI: ankittt.3@fam</p></div><input type="text" id="utr" placeholder="Enter UTR Number" style="width:100%;padding:8px;background:#000;border:1px solid var(--border);color:#fff;border-radius:5px;text-align:center;margin-bottom:10px;display:none"><button id="vBtn" onclick="addMoney()" class="cyber-btn" style="background:var(--neon);color:#000;display:none;margin-bottom:8px">VERIFY & ADD</button><button onclick="closeModal('fundModal')" class="btn" style="background:#222;width:100%">Close</button></div></div>
 
-    <!-- Add Funds UPI Modal with UTR Input -->
-    <div id="addFundModal" class="modal">
-        <div class="modal-content">
-            <h3 style="color: var(--red-glow); font-family:'Orbitron', sans-serif; margin-bottom: 10px;">Add Wallet Money</h3>
-            <input type="number" id="fundAmountInput" placeholder="Enter Amount (INR)" style="width: 100%; padding: 12px; background: rgba(0,0,0,0.7); border: 1px solid var(--border-neon); color: #fff; border-radius: 6px; margin-bottom: 12px; text-align: center; font-size: 16px; font-weight: bold; outline: none;">
-            <button onclick="generateAddFundQR()" class="cyber-btn" style="margin-bottom: 15px;">GENERATE QR CODE</button>
-            
-            <div id="qrCodeContainer" style="display: none; background: #fff; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
-                <img id="generatedQRImg" src="" alt="Dynamic UPI QR" style="width: 170px; height: 170px;">
-                <p id="displayAmountText" style="color: #000; font-weight: bold; font-size: 15px; margin-top: 8px; font-family:'Orbitron', sans-serif;"></p>
-                <p style="color: #333; font-size: 12px; font-weight: 600;">UPI VPA: <b>ankittt.3@fam</b></p>
-            </div>
-
-            <!-- UTR Verification Box -->
-            <div id="utrVerificationContainer" style="margin-bottom: 15px; display: none;">
-                <input type="text" id="utrInputId" placeholder="Enter 12-digit UTR / Ref Number" style="width: 100%; padding: 10px; background: rgba(0,0,0,0.7); border: 1px solid var(--border-neon); color: #fff; border-radius: 6px; margin-bottom: 10px; text-align: center; font-size: 14px; outline: none;">
-                <button onclick="submitUtrForAutoCredit()" class="cyber-btn" style="background: var(--neon-blue); color: #000;">VERIFY UTR & ADD MONEY</button>
-            </div>
-            <button onclick="closeAddFundModal()" style="width: 100%; padding: 9px; background: #222; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Close</button>
-        </div>
-    </div>
-
-    <!-- Linked External JavaScript File -->
-    <script src="script.js"></script>
-</body>
-                 </html>
-                 const defaultProducts = [
-    { id: 1, name: "DELTA PROXY IOS IPHONE", variants: [{ name: "1 Days", price: 150 }, { name: "3 Days", price: 350 }, { name: "30 Days", price: 700 }] },
-    { id: 2, name: "MIGUL IPHONE IOS FF", variants: [{ name: "1 Day's Basic", price: 250 }, { name: "7 Day's Basic", price: 600 }, { name: "30 Day's Basic", price: 1200 }, { name: "1 Day's PRO", price: 250 }, { name: "7 Day's PRO", price: 600 }, { name: "30 Day's PRO", price: 1200 }] },
-    { id: 3, name: "XYZ CHEATS FF ROOT ANDROID", variants: [{ name: "1 Days", price: 70 }, { name: "2 Days", price: 150 }] },
-    { id: 4, name: "PRIME HOOK FF NONROOT ANDROID", variants: [{ name: "1 Days Nonroot", price: 50 }, { name: "3 Days Nonroot", price: 100 }, { name: "7 Days Nonroot", price: 270 }, { name: "10 Days Nonroot", price: 300 }] },
-    { id: 5, name: "BALA MOD XYZ - V2 FF NONROOT", variants: [{ name: "1 Hours", price: 15 }, { name: "3 Hours", price: 35 }, { name: "6 Hours", price: 60 }, { name: "12 Hours", price: 120 }, { name: "1 Days", price: 230 }, { name: "3 Days", price: 400 }, { name: "5 Days", price: 550 }, { name: "7 Days", price: 950 }, { name: "14 Days", price: 1300 }] },
-    { id: 6, name: "HG CHEATS PRIME PROXY FF NONROOT", variants: [{ name: "1 Days", price: 70 }, { name: "7 Days", price: 250 }, { name: "10 Days", price: 300 }] },
-    { id: 7, name: "DRIPCLIENT FF NONROOT APKMOD", variants: [{ name: "1 Day's Nonroot", price: 60 }, { name: "3 Day's Nonroot", price: 140 }, { name: "7 Day's Nonroot", price: 250 }, { name: "15 Day's Nonroot", price: 400 }, { name: "30 Day's Nonroot", price: 600 }] },
-    { id: 8, name: "HG CHEATS ANDROID PROXY FF NONROOT", variants: [{ name: "1 Day's", price: 70 }, { name: "7 Day's", price: 270 }, { name: "10 Day's", price: 300 }, { name: "30 Day's", price: 500 }] },
-    { id: 9, name: "HG CHEATS FF APKMOD NONROOT+ROOT", variants: [{ name: "1 Day's Root + Nonroot", price: 70 }, { name: "3 Days Root+Nonroot", price: 270 }, { name: "10 Days Root+Nonroot", price: 300 }, { name: "30 Day's Root+Nonroot", price: 500 }] },
-    { id: 10, name: "HAXX-CKER PRO FF ROOT", variants: [{ name: "3 Days", price: 180 }, { name: "7 Days", price: 280 }, { name: "10 Days", price: 550 }, { name: "20 Days", price: 1050 }, { name: "30 Days", price: 1450 }, { name: "60 Days", price: 2800 }] },
-    { id: 11, name: "SILENT CHEAT FF ROOT ANDROID", variants: [{ name: "1 Day's SAFE", price: 90 }, { name: "3 Days SAFE", price: 180 }, { name: "7 Days SAFE", price: 350 }, { name: "14 Days SAFE", price: 600 }, { name: "30 Days SAFE", price: 900 }, { name: "1 Day's BRUTAL", price: 90 }, { name: "3 Days BRUTAL", price: 180 }, { name: "7 Days BRUTAL", price: 350 }, { name: "14 Days BRUTAL", price: 600 }, { name: "30 Days BRUTAL", price: 900 }] },
-    { id: 12, name: "PATO TEAM FF ALL ANDROID", variants: [{ name: "3 Day's All Colours Mix", price: 150 }, { name: "7 Day's All Colours Mix", price: 300 }, { name: "15 Day's All Colours Mix", price: 500 }, { name: "30 Day's All Colours Mix", price: 700 }] },
-    { id: 13, name: "BR MOD FF PC VERSION", variants: [{ name: "1 Day Pc Aim Silent", price: 79 }, { name: "10 Days Pc Aim Silent", price: 479 }, { name: "30 Days Pc Aim Silent", price: 799 }, { name: "10 Days Pc Bypass + Silent", price: 519 }, { name: "1 Day Pc Modxena x86", price: 70 }, { name: "10 Days Pc Modxena x86", price: 479 }, { name: "30 Days Pc Modxena x86", price: 799 }] },
-    { id: 14, name: "NINE X INJECTER", variants: [{ name: "10 Days", price: 400 }] },
-    { id: 15, name: "SKB MOD", variants: [{ name: "1 Day", price: 150 }, { name: "7 Days", price: 400 }, { name: "15 Days", price: 800 }, { name: "30 Days", price: 1500 }] },
-    { id: 16, name: "INVISABLE X", variants: [{ name: "1 Day", price: 150 }, { name: "7 Days", price: 400 }, { name: "15 Days", price: 800 }, { name: "30 Days", price: 1500 }] },
-    { id: 17, name: "P20 ROOT DEVICE", variants: [{ name: "30 Days Plan", price: 800 }] },
-    { id: 18, name: "P20 NON ROOT", variants: [{ name: "30 Days Plan", price: 1000 }] },
-    { id: 19, name: "RAPID CORE", variants: [{ name: "1 Day", price: 89 }, { name: "7 Days", price: 279 }, { name: "15 Days", price: 459 }, { name: "30 Days", price: 799 }] },
-    { id: 20, name: "DOLPHIN", variants: [{ name: "1 Days", price: 180 }, { name: "7 Days", price: 500 }, { name: "15 Days", price: 800 }, { name: "31 Days", price: 1600 }] },
-    { id: 21, name: "BR MOD ROOT", variants: [{ name: "1 Day", price: 80 }, { name: "3 Days", price: 250 }, { name: "7 Days", price: 500 }, { name: "30 Days", price: 1000 }] },
-    { id: 22, name: "AIM HACK FF NONROOT", variants: [{ name: "1 HR", price: 15 }, { name: "3 HR", price: 30 }, { name: "6 HR", price: 50 }, { name: "12 HR", price: 80 }, { name: "1 Day", price: 100 }, { name: "7 Days", price: 250 }, { name: "30 Days", price: 700 }] }
+<script>
+const products=[
+{id:1,name:"DELTA PROXY IOS IPHONE",variants:[{name:"1 Days",price:150},{name:"3 Days",price:350},{name:"30 Days",price:700}]},
+{id:2,name:"MIGUL IPHONE IOS FF",variants:[{name:"1 Day's Basic",price:250},{name:"7 Day's Basic",price:600},{name:"30 Day's Basic",price:1200}]},
+{id:3,name:"XYZ CHEATS FF ROOT ANDROID",variants:[{name:"1 Days",price:70},{name:"2 Days",price:150}]},
+{id:4,name:"PRIME HOOK FF NONROOT ANDROID",variants:[{name:"1 Days Nonroot",price:50},{name:"3 Days Nonroot",price:100},{name:"7 Days Nonroot",price:270}]},
+{id:5,name:"BALA MOD XYZ - V2 FF NONROOT",variants:[{name:"1 Hours",price:15},{name:"1 Days",price:230},{name:"7 Days",price:950}]},
+{id:6,name:"HG CHEATS PRIME PROXY FF NONROOT",variants:[{name:"1 Days",price:70},{name:"7 Days",price:250}]},
+{id:7,name:"DRIPCLIENT FF NONROOT APKMOD",variants:[{name:"1 Day's Nonroot",price:60},{name:"30 Day's Nonroot",price:600}]},
+{id:8,name:"HG CHEATS ANDROID PROXY FF NONROOT",variants:[{name:"1 Day's",price:70},{name:"30 Day's",price:500}]},
+{id:9,name:"HG CHEATS FF APKMOD NONROOT+ROOT",variants:[{name:"1 Day's Root + Nonroot",price:70},{name:"30 Day's Root+Nonroot",price:500}]},
+{id:10,name:"HAXX-CKER PRO FF ROOT",variants:[{name:"3 Days",price:180},{name:"30 Days",price:1450}]},
+{id:11,name:"SILENT CHEAT FF ROOT ANDROID",variants:[{name:"1 Day's SAFE",price:90},{name:"30 Days SAFE",price:900}]},
+{id:12,name:"PATO TEAM FF ALL ANDROID",variants:[{name:"3 Day's All Colours Mix",price:150},{name:"30 Day's All Colours Mix",price:700}]},
+{id:13,name:"BR MOD FF PC VERSION",variants:[{name:"1 Day Pc Aim Silent",price:79},{name:"30 Days Pc Aim Silent",price:799}]},
+{id:14,name:"NINE X INJECTER",variants:[{name:"10 Days",price:400}]},
+{id:15,name:"SKB MOD",variants:[{name:"1 Day",price:150},{name:"30 Days",price:1500}]},
+{id:16,name:"INVISABLE X",variants:[{name:"1 Day",price:150},{name:"30 Days",price:1500}]},
+{id:17,name:"P20 ROOT DEVICE",variants:[{name:"30 Days Plan",price:800}]},
+{id:18,name:"P20 NON ROOT",variants:[{name:"30 Days Plan",price:1000}]},
+{id:19,name:"RAPID CORE",variants:[{name:"1 Day",price:89},{name:"30 Days",price:799}]},
+{id:20,name:"DOLPHIN",variants:[{name:"1 Days",price:180},{name:"31 Days",price:1600}]},
+{id:21,name:"BR MOD ROOT",variants:[{name:"1 Day",price:80},{name:"30 Days",price:1000}]},
+{id:22,name:"AIM HACK FF NONROOT",variants:[{name:"1 HR",price:15},{name:"30 Days",price:700}]}
 ];
-
-window.onload = function() {
-    renderProducts(defaultProducts);
-    updateBalanceUI();
-};
-
-function renderProducts(productsList) {
-    let container = document.getElementById("productContainer");
-    container.innerHTML = "";
-    productsList.forEach(p => {
-        let card = document.createElement("div");
-        card.className = "product-card";
-        card.innerHTML = `
-            <div>
-                <h3 class="product-title">${p.name}</h3>
-            </div>
-            <button class="cyber-btn" onclick="openPlanModal(${p.id})">BUY NOW</button>
-        `;
-        container.appendChild(card);
-    });
+window.onload=()=>{render(products);updateBal()};
+function render(list){
+let html="";
+list.forEach(p=>{html+=`<div class="card"><h3>${p.name}</h3><button class="cyber-btn" onclick="openPlan(${p.id})">BUY NOW</button></div>`;});
+document.getElementById("pContainer").innerHTML=html;
 }
-
-function filterProducts() {
-    let query = document.getElementById("productSearchInput").value.toLowerCase();
-    let filtered = defaultProducts.filter(p => p.name.toLowerCase().includes(query));
-    renderProducts(filtered);
+function filterP(){
+let q=document.getElementById("search").value.toLowerCase();
+render(products.filter(p=>p.name.toLowerCase().includes(q)));
 }
-
-function openPlanModal(productId) {
-    let prod = defaultProducts.find(p => p.id === productId);
-    if(!prod) return;
-    document.getElementById("planModalTitle").innerText = prod.name;
-    let container = document.getElementById("plansListContainer");
-    container.innerHTML = "";
-    prod.variants.forEach(v => {
-        let btn = document.createElement("button");
-        btn.className = "plan-option-btn";
-        btn.innerHTML = `<span>${v.name}</span> <span class="plan-price-tag">₹${v.price}.00</span>`;
-        btn.onclick = function() {
-            closePlanModal();
-            processPurchase(prod.name, v.name, v.price);
-        };
-        container.appendChild(btn);
-    });
-    document.getElementById("planSelectModal").style.display = "flex";
+function openPlan(id){
+let p=products.find(x=>x.id===id);
+document.getElementById("mTitle").innerText=p.name;
+let html="";
+p.variants.forEach(v=>{html+=`<div class="p-btn" onclick="buy('${p.name}','${v.name}',${v.price})"><span>${v.name}</span><span style="color:var(--neon)">₹${v.price}</span></div>`;});
+document.getElementById("planList").innerHTML=html;
+document.getElementById("planModal").style.display="flex";
 }
-
-function closePlanModal() { document.getElementById("planSelectModal").style.display = "none"; }
-
-function processPurchase(productName, variantName, price) {
-    let currentBal = parseFloat(localStorage.getItem("walletBalance") || "0");
-    if(currentBal < price) {
-        alert(`Insufficient Balance! You need ₹${price}, but have ₹${currentBal}. Please add funds.`);
-        openAddFundModal();
-        document.getElementById("fundAmountInput").value = price - currentBal;
-        return;
-    }
-    
-    currentBal -= price;
-    localStorage.setItem("walletBalance", currentBal.toFixed(2));
-    updateBalanceUI();
-
-    let randomKey = "MINI4C-" + Math.random().toString(36).substring(2, 8).toUpperCase() + "-" + Math.random().toString(36).substring(2, 6).toUpperCase();
-    
-    let myKeys = JSON.parse(localStorage.getItem("myPurchasedKeys") || "[]");
-    myKeys.unshift({ product: productName, variant: variantName, key: randomKey, date: new Date().toLocaleString() });
-    localStorage.setItem("myPurchasedKeys", JSON.stringify(myKeys));
-
-    document.getElementById("successProductDetails").innerText = `${productName} (${variantName})`;
-    document.getElementById("generatedKeyText").innerText = randomKey;
-    document.getElementById("orderSuccessModal").style.display = "flex";
+function buy(pName,vName,price){
+let bal=parseFloat(localStorage.getItem("bal")||"0");
+if(bal<price){alert("Low balance! Add funds.");openModal('fundModal');document.getElementById("fAmt").value=price-bal;return;}
+bal-=price;localStorage.setItem("bal",bal.toFixed(2));updateBal();
+let key="MINI4C-"+Math.random().toString(36).substring(2,8).toUpperCase();
+document.getElementById("succText").innerText=`${pName} (${vName})`;
+document.getElementById("keyText").innerText=key;
+closeModal('planModal');document.getElementById("succModal").style.display="flex";
 }
-
-function closeOrderSuccessModal() {
-    document.getElementById("orderSuccessModal").style.display = "none";
+function genQR(){
+let amt=parseFloat(document.getElementById("fAmt").value);
+if(!amt||amt<10){alert("Min ₹10 required");return;}
+document.getElementById("qrImg").src=`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent('upi://pay?pa=ankittt.3@fam&pn=MINI4C&am='+amt+'&cu=INR')}`;
+document.getElementById("qrAmt").innerText=`Pay: ₹${amt}`;
+document.getElementById("qrBox").style.display="block";
+document.getElementById("utr").style.display="block";
+document.getElementById("vBtn").style.display="block";
 }
-
-function openMyKeysModal() {
-    let container = document.getElementById("myKeysListContainer");
-    let myKeys = JSON.parse(localStorage.getItem("myPurchasedKeys") || "[]");
-    if(myKeys.length === 0) {
-        container.innerHTML = `<p style="color: #888; text-align:center; padding: 20px;">No keys purchased yet!</p>`;
-    } else {
-        container.innerHTML = "";
-        myKeys.forEach(k => {
-            let item = document.createElement("div");
-            item.style.cssText = "background: rgba(0,0,0,0.6); border: 1px solid var(--border-neon); padding: 10px; border-radius: 6px; margin-bottom: 10px;";
-            item.innerHTML = `
-                <div style="font-size: 13px; font-weight: bold; color: #fff;">${k.product}</div>
-                <div style="font-size: 11px; color: var(--text-sub);">${k.variant} | ${k.date}</div>
-                <div style="font-family:'Orbitron', sans-serif; font-size: 12px; color: var(--neon-blue); margin-top: 5px; user-select: all;">Key: ${k.key}</div>
-            `;
-            container.appendChild(item);
-        });
-    }
-    document.getElementById("myKeysModal").style.display = "flex";
+function addMoney(){
+let utr=document.getElementById("utr").value.trim();
+let amt=parseFloat(document.getElementById("fAmt").value);
+if(utr.length<8){alert("Enter valid UTR");return;}
+let bal=parseFloat(localStorage.getItem("bal")||"0")+amt;
+localStorage.setItem("bal",bal.toFixed(2));updateBal();
+alert("Added successfully!");closeModal('fundModal');
 }
-
-function closeMyKeysModal() {
-    document.getElementById("myKeysModal").style.display = "none";
+function updateBal(){document.getElementById("bal").innerText=parseFloat(localStorage.getItem("bal")||"0").toFixed(2);}
+function openModal(id){document.getElementById(id).style.display="flex";}
+function closeModal(id){
+document.getElementById(id).style.display="none";
+if(id==='fundModal'){document.getElementById("qrBox").style.display="none";document.getElementById("utr").style.display="none";document.getElementById("vBtn").style.display="none";document.getElementById("fAmt").value="";document.getElementById("utr").value="";}
 }
-
-function generateAddFundQR() {
-    let amt = parseFloat(document.getElementById("fundAmountInput").value);
-    if(!amt || amt < 10) { alert("Enter valid amount (Min ₹10)"); return; }
-    let upiUrl = `upi://pay?pa=ankittt.3@fam&pn=MINI4C&am=${amt}&cu=INR`;
-    document.getElementById("generatedQRImg").src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
-    document.getElementById("displayAmountText").innerText = `Pay: ₹${amt}.00`;
-    document.getElementById("qrCodeContainer").style.display = "block";
-    document.getElementById("utrVerificationContainer").style.display = "block";
-}
-
-function submitUtrForAutoCredit() {
-    let utr = document.getElementById("utrInputId").value.trim();
-    let amt = parseFloat(document.getElementById("fundAmountInput").value);
-    if(utr.length < 8) { alert("Please enter a valid UTR number!"); return; }
-    let bal = parseFloat(localStorage.getItem("walletBalance") || "0") + amt;
-    localStorage.setItem("walletBalance", bal.toFixed(2));
-    updateBalanceUI();
-    alert(`Success! ₹${amt} added to your wallet automatically.`);
-    closeAddFundModal();
-}
-
-function updateBalanceUI() {
-    document.getElementById("userBalance").innerText = parseFloat(localStorage.getItem("walletBalance") || "0").toFixed(2);
-}
-
-function openAddFundModal() { document.getElementById("addFundModal").style.display = "flex"; }
-function closeAddFundModal() { 
-    document.getElementById("addFundModal").style.display = "none"; 
-    document.getElementById("qrCodeContainer").style.display = "none";
-    document.getElementById("utrVerificationContainer").style.display = "none";
-    document.getElementById("fundAmountInput").value = "";
-    document.getElementById("utrInputId").value = "";
-}
-function toggleSidebar() { document.getElementById("sidebar").classList.toggle("active"); }
-     
+</script>
+</body>
+</html>
