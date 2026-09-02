@@ -1,4 +1,322 @@
-        // Pure LocalStorage Mode for GitHub Pages
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MINI4C SHOP - Cyber Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #050508;
+            --card-bg: rgba(18, 18, 26, 0.75);
+            --red-glow: #ff003c;
+            --red-bright: #ff2a5f;
+            --neon-blue: #00f0ff;
+            --border-neon: rgba(255, 0, 60, 0.25);
+            --text-main: #ffffff;
+            --text-sub: #b0b5c0;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Rajdhani', sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); overflow-x: hidden; }
+        
+        /* Particle Background */
+        #bgCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
+
+        /* Authentication Modal Overlay */
+        #authScreen {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background: rgba(3, 3, 6, 0.92); backdrop-filter: blur(12px);
+            z-index: 10000; display: flex; justify-content: center; align-items: center; padding: 20px;
+        }
+        .auth-card {
+            background: var(--card-bg); border: 1px solid var(--red-glow);
+            padding: 30px 25px; border-radius: 12px; width: 100%; max-width: 380px;
+            box-shadow: 0 0 30px rgba(255, 0, 60, 0.25); backdrop-filter: blur(20px);
+            position: relative; animation: cardGlow 3s infinite alternate;
+        }
+        @keyframes cardGlow {
+            0% { box-shadow: 0 0 20px rgba(255,0,60,0.2); }
+            100% { box-shadow: 0 0 35px rgba(255,0,60,0.45); }
+        }
+        .auth-header { display: flex; justify-content: space-around; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .auth-tab {
+            font-family: 'Orbitron', sans-serif; font-size: 14px; padding: 8px 15px; cursor: pointer;
+            color: var(--text-sub); transition: 0.3s; position: relative; border: none; background: none;
+        }
+        .auth-tab.active { color: var(--red-glow); text-shadow: 0 0 8px var(--red-glow); }
+        .auth-tab.active::after {
+            content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 2px;
+            background: var(--red-glow); box-shadow: 0 0 10px var(--red-glow);
+        }
+
+        .auth-form { display: none; }
+        .auth-form.active { display: block; }
+        
+        .input-group { margin-bottom: 18px; position: relative; }
+        .input-group label { display: block; font-size: 13px; color: var(--text-sub); margin-bottom: 6px; font-weight: 600; }
+        .input-wrapper { position: relative; }
+        .input-wrapper input {
+            width: 100%; padding: 12px 40px 12px 14px; background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--border-neon); color: #fff; border-radius: 6px;
+            outline: none; font-size: 14px; transition: 0.3s;
+        }
+        .input-wrapper input:focus { border-color: var(--red-glow); box-shadow: 0 0 10px rgba(255, 0, 60, 0.3); }
+        .password-toggle {
+            position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+            color: var(--text-sub); cursor: pointer; font-size: 14px; transition: 0.2s;
+        }
+        .password-toggle:hover { color: var(--red-glow); }
+
+        .cyber-btn {
+            width: 100%; padding: 12px; background: linear-gradient(135deg, var(--red-glow), #b3002d);
+            color: #fff; border: none; font-family: 'Orbitron', sans-serif; font-weight: 700;
+            border-radius: 6px; cursor: pointer; font-size: 13px; letter-spacing: 1px;
+            transition: 0.3s; text-transform: uppercase; box-shadow: 0 0 15px rgba(255, 0, 60, 0.4);
+        }
+        .cyber-btn:hover { background: linear-gradient(135deg, #ff2a5f, var(--red-glow)); transform: translateY(-2px); box-shadow: 0 0 25px rgba(255, 0, 60, 0.7); }
+
+        /* Navbar */
+        .top-navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 24px; background: rgba(10, 10, 16, 0.85); backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border-neon); position: sticky; top:0; z-index: 1000;
+        }
+        .logo { font-family: 'Orbitron', sans-serif; font-weight: 900; color: var(--red-glow); font-size: 18px; letter-spacing: 2px; text-shadow: 0 0 12px var(--red-glow); }
+        .menu-toggle { cursor: pointer; font-size: 20px; transition: 0.2s; }
+        .menu-toggle:hover { color: var(--red-glow); }
+        .wallet-section { display: flex; align-items: center; gap: 12px; }
+        .wallet-balance { background: rgba(0, 0, 0, 0.8); padding: 5px 12px; border-radius: 20px; border: 1px solid var(--neon-blue); font-size: 14px; color: var(--neon-blue); font-weight: 700; font-family: 'Orbitron', sans-serif; }
+        .add-fund-btn { background: var(--red-glow); color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .add-fund-btn:hover { box-shadow: 0 0 12px var(--red-glow); transform: scale(1.05); }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed; top: 0; left: -280px; width: 270px; height: 100%;
+            background: rgba(10, 10, 16, 0.95); backdrop-filter: blur(20px); z-index: 10001; transition: 0.3s ease; padding: 25px 20px;
+            border-right: 1px solid var(--border-neon);
+        }
+        .sidebar.active { left: 0; }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .sidebar-header h3 { font-family: 'Orbitron', sans-serif; font-size: 15px; letter-spacing: 1px; color: var(--red-glow); }
+        .sidebar-links { list-style: none; }
+        .sidebar-links li { margin-bottom: 18px; }
+        .sidebar-links a { color: var(--text-main); text-decoration: none; font-size: 15px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: 0.2s; }
+        .sidebar-links a:hover { color: var(--red-glow); transform: translateX(5px); }
+
+        /* Container & Grid */
+        .container { padding: 25px 20px; max-width: 1200px; margin: 0 auto; }
+        .section { display: none; }
+        .section.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .section-title { font-family: 'Orbitron', sans-serif; font-size: 18px; color: var(--red-glow); border-left: 4px solid var(--red-glow); padding-left: 12px; margin-bottom: 25px; letter-spacing: 1px; }
+              /* Search Filter Bar */
+        .search-wrapper { margin-bottom: 25px; position: relative; }
+        .search-input {
+            width: 100%; padding: 12px 18px 12px 45px; background: rgba(15, 15, 22, 0.8);
+            border: 1px solid var(--border-neon); border-radius: 8px; color: #fff;
+            outline: none; font-size: 15px; transition: 0.3s;
+        }
+        .search-input:focus { border-color: var(--red-glow); box-shadow: 0 0 15px rgba(255, 0, 60, 0.2); }
+        .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-sub); font-size: 16px; }
+
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; }
+        .product-card {
+            background: var(--card-bg); border: 1px solid var(--border-neon); backdrop-filter: blur(10px);
+            border-radius: 10px; padding: 20px; position: relative; transition: all 0.3s ease; display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .product-card:hover { border-color: var(--red-glow); transform: translateY(-5px); box-shadow: 0 10px 25px rgba(255, 0, 60, 0.25); }
+        .product-title { font-family: 'Orbitron', sans-serif; font-size: 14px; color: #fff; margin-bottom: 12px; text-align: center; font-weight: 700; letter-spacing: 0.5px; }
+        .feature-list { list-style: none; margin-bottom: 20px; font-size: 13px; color: var(--text-sub); }
+        .feature-list li { margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+        .feature-list li i { color: var(--red-glow); font-size: 11px; }
+
+        /* Modals */
+        .modal {
+            display: none; position: fixed; top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 20000; justify-content: center; align-items: center; padding: 20px;
+        }
+        .modal-content {
+            background: var(--card-bg); border: 1px solid var(--red-glow);
+            padding: 25px; border-radius: 12px; width: 100%; max-width: 400px; text-align: center; position: relative;
+            box-shadow: 0 0 30px rgba(255, 0, 60, 0.3);
+        }
+        .support-btn {
+            display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 11px; margin-top: 10px; border-radius: 6px;
+            font-weight: bold; text-decoration: none; font-size: 14px; transition: 0.2s;
+        }
+        .btn-tg { background: #0088cc; color: #fff; }
+        .btn-tg:hover { background: #00a0f0; box-shadow: 0 0 12px #0088cc; }
+        .btn-dc { background: #5865F2; color: #fff; }
+        .btn-dc:hover { background: #6975ff; box-shadow: 0 0 12px #5865F2; }
+
+        .plan-option-btn {
+            width: 100%; padding: 12px 15px; margin-bottom: 10px; background: rgba(0,0,0,0.6);
+            border: 1px solid var(--border-neon); color: #fff; border-radius: 6px;
+            display: flex; justify-content: space-between; align-items: center;
+            cursor: pointer; transition: 0.2s; font-size: 14px; font-weight: 600;
+        }
+        .plan-option-btn:hover { border-color: var(--red-glow); background: rgba(255, 0, 60, 0.15); transform: scale(1.02); }
+        .plan-price-tag { color: var(--neon-blue); font-family: 'Orbitron', sans-serif; font-weight: 700; }
+    </style>
+</head>
+<body>
+
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- Multi-Auth Modal System -->
+    <div id="authScreen">
+        <div class="auth-card">
+            <div class="auth-header">
+                <button class="auth-tab active" id="tabLoginBtn" onclick="toggleAuthTab('login')">LOGIN</button>
+                <button class="auth-tab" id="tabRegisterBtn" onclick="toggleAuthTab('register')">CREATE ACCOUNT</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form active" onsubmit="event.preventDefault(); handleAuthSubmit('login');">
+                <div class="input-group">
+                    <label><i class="fa-solid fa-user"></i> Username</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="loginUsername" placeholder="Enter Username" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label><i class="fa-solid fa-lock"></i> Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="loginPassword" placeholder="Enter Password" required>
+                        <i class="fa-solid fa-eye password-toggle" onclick="togglePasswordVisibility('loginPassword', this)"></i>
+                    </div>
+                </div>
+                <button type="submit" class="cyber-btn"><i class="fa-solid fa-right-to-bracket"></i> ACCESS STORE</button>
+            </form>
+
+            <!-- Registration Form -->
+            <form id="registerForm" class="auth-form" onsubmit="event.preventDefault(); handleAuthSubmit('register');">
+                <div class="input-group">
+                    <label><i class="fa-solid fa-user-plus"></i> Choose Username</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="regUsername" placeholder="Create Username" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label><i class="fa-solid fa-key"></i> Create Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="regPassword" placeholder="Create Password" required>
+                        <i class="fa-solid fa-eye password-toggle" onclick="togglePasswordVisibility('regPassword', this)"></i>
+                    </div>
+                </div>
+                <button type="submit" class="cyber-btn"><i class="fa-solid fa-user-check"></i> REGISTER ACCOUNT</button>
+            </form>
+        </div>
+    </div>
+
+    <header class="top-navbar">
+        <div class="menu-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></div>
+        <div class="logo"><i class="fa-solid fa-skull"></i> MINI4C X STORE</div>
+        <div class="wallet-section">
+            <span class="wallet-balance">₹<span id="userBalance">0.00</span></span>
+            <button class="add-fund-btn" onclick="openAddFundModal()">+ FUND</button>
+        </div>
+    </header>
+
+    <nav id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h3><i class="fa-solid fa-gamepad"></i> DASHBOARD</h3>
+            <i class="fa-solid fa-xmark" onclick="toggleSidebar()" style="cursor:pointer; font-size: 18px;"></i>
+        </div>
+        <ul class="sidebar-links">
+            <li><a onclick="switchTab('buyKey')"><i class="fa-solid fa-key"></i> Marketplace Stock</a></li>
+            <li><a onclick="switchTab('myKeys')"><i class="fa-solid fa-box-archive"></i> My Purchased Keys</a></li>
+            <li><a onclick="openAddFundModal(); toggleSidebar();"><i class="fa-solid fa-wallet"></i> Add Wallet Money</a></li>
+            <li><a onclick="switchTab('history')"><i class="fa-solid fa-clock-rotate-left"></i> Payment Log History</a></li>
+            <li id="adminTabLink" style="display: none;"><a onclick="switchTab('adminPanel')" style="color: var(--neon-blue); font-weight: bold;"><i class="fa-solid fa-user-shield"></i> Admin Dashboard</a></li>
+            <li><a href="https://t.me/+Ga2FZ1QnY8VjN2Y1" target="_blank"><i class="fa-brands fa-telegram"></i> Telegram Channel</a></li>
+            <li><a href="https://discord.gg/Yttbf69xx" target="_blank"><i class="fa-brands fa-discord"></i> Discord Community</a></li>
+            <li><a onclick="handleLogout()" style="color: var(--red-glow);"><i class="fa-solid fa-right-from-bracket"></i> Logout Session</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div id="buyKeySection" class="section active">
+            <h2 class="section-title">MARKETPLACE / PRODUCTS</h2>
+            <div class="search-wrapper">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="productSearchInput" class="search-input" placeholder="Search hacks, cheats or mods (e.g. iOS, Root, Nonroot, PC)..." onkeyup="filterProducts()">
+            </div>
+            <div id="productContainer" class="product-grid"></div>
+        </div>
+
+        <div id="myKeysSection" class="section">
+            <h2 class="section-title">MY PURCHASED KEYS</h2>
+            <div style="background: var(--card-bg); padding: 20px; border-radius: 8px; border: 1px solid var(--border-neon);">
+                <p style="color:var(--text-sub); font-size:14px;">No active key transactions logged yet.</p>
+            </div>
+        </div>
+
+        <div id="historySection" class="section">
+            <h2 class="section-title">TRANSACTION HISTORY</h2>
+            <div style="background: var(--card-bg); padding: 20px; border-radius: 8px; border: 1px solid var(--border-neon);">
+                <p style="color:var(--text-sub); font-size:14px;">No prior deposit/purchase logs found.</p>
+            </div>
+        </div>
+
+        <div id="adminPanelSection" class="section">
+            <h2 class="section-title" style="color: var(--neon-blue); border-color: var(--neon-blue);"><i class="fa-solid fa-user-shield"></i> Admin Panel</h2>
+            <div style="background: var(--card-bg); border: 1px solid var(--border-neon); padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+                <h3 style="color: var(--red-glow); font-size: 16px; margin-bottom: 15px; font-family:'Orbitron', sans-serif;">Credit Funds To Account</h3>
+                <input type="text" id="adminTargetUser" placeholder="Username" style="width: 100%; padding: 10px; background: rgba(0,0,0,0.7); border: 1px solid var(--border-neon); color: #fff; border-radius: 6px; margin-bottom: 10px;">
+                <input type="number" id="adminAddBalance" placeholder="Amount (INR)" style="width: 100%; padding: 10px; background: rgba(0,0,0,0.7); border: 1px solid var(--border-neon); color: #fff; border-radius: 6px; margin-bottom: 10px;">
+                <button onclick="adminAddFunds()" style="width: 100%; padding: 10px; background: var(--neon-blue); color: #000; border: none; font-weight: bold; font-family:'Orbitron', sans-serif; border-radius: 6px; cursor: pointer;">CREDIT BALANCE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Select Plan Modal -->
+    <div id="planSelectModal" class="modal">
+        <div class="modal-content">
+            <h3 id="planModalTitle" style="color: var(--red-glow); font-family:'Orbitron', sans-serif; font-size: 16px; margin-bottom: 15px;">Select Plan</h3>
+            <div id="plansListContainer" style="max-height: 260px; overflow-y: auto; margin-bottom: 15px;"></div>
+            <button onclick="closePlanModal()" style="width: 100%; padding: 10px; background: #1a1a24; color: #aaa; border: 1px solid var(--border-neon); border-radius: 6px; cursor: pointer; font-size: 13px;">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Purchase Success Modal -->
+    <div id="buySuccessModal" class="modal">
+        <div class="modal-content">
+            <i class="fa-solid fa-circle-check" style="font-size: 45px; color: var(--neon-blue); margin-bottom: 12px; filter: drop-shadow(0 0 10px var(--neon-blue));"></i>
+            <h3 style="color: #fff; font-size: 17px; margin-bottom: 8px; font-family:'Orbitron', sans-serif;">Order Placed Successfully!</h3>
+            <p id="modalPurchasedItemText" style="color: var(--red-glow); font-weight: bold; font-size: 14px; margin-bottom: 15px;"></p>
+            <div style="background: rgba(0,0,0,0.6); padding: 14px; border-radius: 8px; border: 1px dashed var(--red-glow); margin-bottom: 15px;">
+                <p style="font-size: 13px; color: #fff; line-height: 1.4;">
+                    <strong>Note:</strong> Transaction record ho chuka hai. Apni <b>Real License Key</b> activate / claim karne ke liye Customer Support team se contact karein.
+                </p>
+            </div>
+            <a href="https://t.me/+Ga2FZ1QnY8VjN2Y1" target="_blank" class="support-btn btn-tg"><i class="fa-brands fa-telegram"></i> Telegram Support</a>
+            <a href="https://discord.gg/Yttbf69xx" target="_blank" class="support-btn btn-dc"><i class="fa-brands fa-discord"></i> Discord Support</a>
+            <button onclick="closeBuySuccessModal()" style="width: 100%; padding: 9px; background: #1f1f2e; color: #aaa; border: 1px solid #333; border-radius: 6px; cursor: pointer; margin-top: 10px; font-size: 12px;">Close</button>
+        </div>
+    </div>
+
+    <!-- Add Funds UPI Modal -->
+    <div id="addFundModal" class="modal">
+        <div class="modal-content">
+            <h3 style="color: var(--red-glow); font-family:'Orbitron', sans-serif; margin-bottom: 10px;">Add Wallet Money</h3>
+            <p style="font-size: 13px; color: var(--text-sub); margin-bottom: 15px;">Amount fill karke dynamic QR code generate karein</p>
+            
+            <input type="number" id="fundAmountInput" placeholder="Enter Amount (INR)" style="width: 100%; padding: 12px; background: rgba(0,0,0,0.7); border: 1px solid var(--border-neon); color: #fff; border-radius: 6px; margin-bottom: 12px; text-align: center; font-size: 16px; font-weight: bold; outline: none;">
+            <button onclick="generateAddFundQR()" class="cyber-btn" style="margin-bottom: 15px;">GENERATE QR CODE</button>
+            
+            <div id="qrCodeContainer" style="display: none; background: #fff; padding: 15px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 0 15px rgba(255,255,255,0.2);">
+                <img id="generatedQRImg" src="" alt="Dynamic UPI QR" style="width: 170px; height: 170px;">
+                <p id="displayAmountText" style="color: #000; font-weight: bold; font-size: 15px; margin-top: 8px; font-family:'Orbitron', sans-serif;"></p>
+                <p style="color: #333; font-size: 12px; font-weight: 600;">UPI VPA: <b>ankittt.3@fam</b></p>
+            </div>
+
+            <button onclick="closeAddFundModal()" style="width: 100%; padding: 9px; background: #222; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Close</button>
+        </div>
+    </div>
+
+    <script>
         const defaultProducts = [
             { id: 1, name: "DELTA PROXY IOS IPHONE", features: ["Body Proxy - Full Red", "Neck Proxy V1", "Neck Proxy V2"], variants: [{ name: "1 Days", price: 150 }, { name: "7 Days", price: 350 }, { name: "30 Days", price: 700 }] },
             { id: 2, name: "MIGUL IPHONE IOS FF", features: ["Silent Aim", "AimBot", "Speed Hack"], variants: [{ name: "1 Day's Basic", price: 250 }, { name: "7 Day's Basic", price: 600 }, { name: "30 Day's Basic", price: 1200 }, { name: "1 Day's PRO", price: 250 }, { name: "7 Day's PRO", price: 600 }, { name: "30 Day's PRO", price: 1200 }] },
@@ -22,13 +340,6 @@
             { id: 20, name: "PHONE TO PHONE ROOTING SERVICE", features: ["Xiaomi HyperOS (₹1500)", "POCO HyperOS (₹1500)", "Redmi MIUI / Moto / Infinix / Tecno / Samsung / Nothing / OnePlus (₹1000)"], variants: [{ name: "HyperOS Device Root", price: 1500 }, { name: "Other Brands Root", price: 1000 }] },
             { id: 21, name: "NINE X INJECTOR", features: ["High Precision Injector"], variants: [{ name: "10 Days", price: 400 }] }
         ];
-
-        window.addEventListener("load", function() {
-            setTimeout(() => {
-                const loader = document.getElementById("loader-overlay");
-                if(loader) { loader.style.opacity = "0"; loader.style.visibility = "hidden"; }
-            }, 500);
-        });
 
         window.onload = function() {
             let activeUser = localStorage.getItem("loggedInUser");
@@ -100,8 +411,7 @@
                 }
             }
         }
-
-        function loginUserSuccess(username, initialBal) {
+            function loginUserSuccess(username, initialBal) {
             localStorage.setItem("isLoggedIn", "true");
             localStorage.setItem("loggedInUser", username);
             let userDb = JSON.parse(localStorage.getItem("registeredUsers") || "{}");
@@ -269,8 +579,7 @@
 
         function openAddFundModal() { document.getElementById("addFundModal").style.display = "flex"; }
         function closeAddFundModal() { document.getElementById("addFundModal").style.display = "none"; }
-
-        function initCanvas() {
+            function initCanvas() {
             const canvas = document.getElementById("bgCanvas");
             const ctx = canvas.getContext("2d");
             canvas.width = window.innerWidth;
@@ -313,4 +622,6 @@
             }
             animate();
         }
-                     
+    </script>
+</body>
+</html>
