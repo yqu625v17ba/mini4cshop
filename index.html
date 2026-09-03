@@ -7,1818 +7,1930 @@
 
 <style>
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial,Helvetica,sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
 :root{
-  --cyan:#00d9ff;
-  --blue:#008cff;
-  --dark:#020912;
-  --card:#071722;
-  --border:rgba(0,217,255,.25);
-  --text:#ecfbff;
-  --muted:#8ba8b7;
+    --bg:#020b12;
+    --card:#061722;
+    --card2:#081e2d;
+    --cyan:#00d9ff;
+    --blue:#1aa7ff;
+    --text:#eafaff;
+    --muted:#8ba9b8;
+    --border:rgba(0,217,255,.25);
+    --danger:#ff5268;
 }
 
 body{
-  min-height:100vh;
-  background:
-  radial-gradient(circle at 20% 10%,rgba(0,217,255,.13),transparent 30%),
-  radial-gradient(circle at 80% 90%,rgba(0,140,255,.12),transparent 30%),
-  var(--dark);
-  color:var(--text);
+    background:
+        radial-gradient(circle at 20% 10%,rgba(0,217,255,.12),transparent 30%),
+        radial-gradient(circle at 80% 80%,rgba(26,167,255,.10),transparent 30%),
+        var(--bg);
+    color:var(--text);
+    min-height:100vh;
 }
 
-button,input,select{
-  font:inherit;
+button,input{
+    font:inherit;
 }
 
 button{
-  cursor:pointer;
+    cursor:pointer;
 }
 
 .hidden{
-  display:none!important;
+    display:none!important;
 }
 
 /* AUTH */
 
-#authSection{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
+.auth-wrap{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
 }
 
-.auth-box{
-  width:100%;
-  max-width:430px;
-  padding:30px 24px;
-  border:1px solid var(--border);
-  border-radius:22px;
-  background:rgba(4,17,28,.95);
-  box-shadow:0 0 40px rgba(0,217,255,.12);
+.auth-card{
+    width:100%;
+    max-width:430px;
+    background:rgba(6,23,34,.94);
+    border:1px solid var(--border);
+    border-radius:24px;
+    padding:30px;
+    box-shadow:0 0 45px rgba(0,217,255,.10);
 }
 
 .logo{
-  text-align:center;
-  margin-bottom:25px;
+    text-align:center;
+    margin-bottom:25px;
 }
 
 .logo h1{
-  color:var(--cyan);
-  font-size:32px;
-  letter-spacing:2px;
-  text-shadow:0 0 20px rgba(0,217,255,.55);
+    color:var(--cyan);
+    font-size:32px;
+    letter-spacing:3px;
+    text-shadow:0 0 18px rgba(0,217,255,.5);
 }
 
 .logo p{
-  color:var(--muted);
-  font-size:12px;
-  margin-top:6px;
-  letter-spacing:1px;
+    color:var(--muted);
+    margin-top:7px;
+    font-size:13px;
+    letter-spacing:2px;
 }
 
-.auth-title{
-  text-align:center;
-  margin-bottom:20px;
+.form-title{
+    text-align:center;
+    margin-bottom:20px;
+    font-size:22px;
 }
 
 .input-group{
-  margin-bottom:14px;
+    margin-bottom:15px;
 }
 
 .input-group label{
-  display:block;
-  color:#b8dce7;
-  font-size:13px;
-  margin-bottom:7px;
+    display:block;
+    color:var(--muted);
+    font-size:13px;
+    margin-bottom:7px;
 }
 
 .input-group input{
-  width:100%;
-  padding:13px;
-  border:1px solid var(--border);
-  border-radius:11px;
-  outline:none;
-  color:white;
-  background:#03101a;
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    background:#03111a;
+    color:white;
+    outline:none;
 }
 
 .input-group input:focus{
-  border-color:var(--cyan);
-  box-shadow:0 0 12px rgba(0,217,255,.15);
+    border-color:var(--cyan);
+    box-shadow:0 0 12px rgba(0,217,255,.12);
 }
 
-.main-btn{
-  width:100%;
-  padding:13px;
-  border:0;
-  border-radius:11px;
-  background:linear-gradient(90deg,var(--cyan),#5cecff);
-  color:#001018;
-  font-weight:900;
+.primary-btn{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:12px;
+    background:linear-gradient(90deg,var(--cyan),var(--blue));
+    color:#001018;
+    font-weight:bold;
+    margin-top:5px;
 }
 
-.google-btn{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:11px;
-  background:#0a1824;
-  color:white;
-  font-weight:700;
+.secondary-btn{
+    width:100%;
+    padding:13px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:#061923;
+    color:white;
+    margin-top:10px;
 }
 
-.auth-link{
-  display:block;
-  text-align:center;
-  color:var(--cyan);
-  margin-top:15px;
-  font-size:13px;
-  cursor:pointer;
+.text-btn{
+    border:0;
+    background:none;
+    color:var(--cyan);
+    margin-top:14px;
 }
 
-.auth-msg{
-  min-height:20px;
-  text-align:center;
-  margin-top:12px;
-  font-size:13px;
+.auth-switch{
+    text-align:center;
+    margin-top:18px;
+    color:var(--muted);
+    font-size:14px;
+}
+
+.message{
+    text-align:center;
+    font-size:13px;
+    margin-top:12px;
+    min-height:18px;
 }
 
 /* APP */
 
+#appSection{
+    min-height:100vh;
+}
+
 .topbar{
-  position:sticky;
-  top:0;
-  z-index:50;
-  height:64px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 18px;
-  background:rgba(2,12,20,.95);
-  border-bottom:1px solid var(--border);
-  backdrop-filter:blur(12px);
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 18px;
+    border-bottom:1px solid var(--border);
+    background:rgba(2,11,18,.88);
+    position:sticky;
+    top:0;
+    z-index:20;
+    backdrop-filter:blur(12px);
 }
 
 .brand{
-  color:var(--cyan);
-  font-weight:900;
-  letter-spacing:1.5px;
+    color:var(--cyan);
+    font-weight:bold;
+    letter-spacing:2px;
 }
 
-.user-mini{
-  color:#b8dce7;
-  font-size:13px;
-  margin-right:10px;
+.user-balance{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.balance-box{
+    border:1px solid var(--border);
+    padding:8px 12px;
+    border-radius:10px;
+    color:var(--cyan);
 }
 
 .menu-btn{
-  width:42px;
-  height:42px;
-  border:1px solid var(--border);
-  border-radius:10px;
-  background:#061622;
-  color:var(--cyan);
-  font-size:22px;
+    width:42px;
+    height:42px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:#061923;
+    color:var(--cyan);
+    font-size:22px;
 }
 
 .page{
-  display:none;
-  max-width:1100px;
-  margin:auto;
-  padding:28px 16px;
+    display:none;
+    max-width:1100px;
+    margin:auto;
+    padding:30px 18px 50px;
 }
 
 .page.active{
-  display:block;
-}
-
-.page-title{
-  color:var(--cyan);
-  margin-bottom:20px;
+    display:block;
 }
 
 .hero{
-  padding:28px 20px;
-  border:1px solid var(--border);
-  border-radius:20px;
-  background:linear-gradient(
-    145deg,
-    rgba(0,217,255,.08),
-    rgba(0,140,255,.02)
-  );
-  margin-bottom:20px;
+    padding:35px 20px;
+    border:1px solid var(--border);
+    border-radius:22px;
+    background:linear-gradient(145deg,rgba(0,217,255,.08),rgba(26,167,255,.03));
+    margin-bottom:22px;
 }
 
 .hero h2{
-  font-size:29px;
-  margin-bottom:10px;
+    font-size:30px;
+    color:var(--cyan);
+    margin-bottom:10px;
 }
 
 .hero p{
-  color:var(--muted);
-  line-height:1.6;
+    color:var(--muted);
+    line-height:1.6;
 }
 
-.balance-card{
-  margin-top:20px;
-  padding:18px;
-  border-radius:15px;
-  background:#061522;
-  border:1px solid var(--border);
+.section-title{
+    margin-bottom:18px;
+    color:var(--cyan);
 }
 
-.balance-label{
-  color:var(--muted);
-  font-size:13px;
-}
-
-.balance-value{
-  color:var(--cyan);
-  font-size:28px;
-  font-weight:900;
-  margin-top:5px;
-}
-
-/* PRODUCTS */
-
-.search-box{
-  margin-bottom:18px;
-}
-
-.search-box input{
-  width:100%;
-  padding:13px;
-  border:1px solid var(--border);
-  border-radius:11px;
-  background:#03101a;
-  color:white;
-  outline:none;
-}
+/* CARDS */
 
 .grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:15px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:16px;
 }
 
 .card{
-  padding:19px;
-  border:1px solid var(--border);
-  border-radius:17px;
-  background:#061522;
-}
-
-.product-img{
-  width:70px;
-  height:70px;
-  object-fit:contain;
-  display:block;
-  margin:0 auto 14px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:20px;
 }
 
 .card h3{
-  text-align:center;
-  margin-bottom:8px;
+    margin-bottom:10px;
 }
 
 .card p{
-  text-align:center;
-  color:var(--muted);
-  font-size:13px;
-}
-
-.variant{
-  margin-top:15px;
-}
-
-.variant select{
-  width:100%;
-  padding:11px;
-  border:1px solid var(--border);
-  border-radius:9px;
-  background:#03101a;
-  color:white;
-  outline:none;
+    color:var(--muted);
+    line-height:1.5;
 }
 
 .price{
-  text-align:center;
-  color:var(--cyan);
-  font-size:22px;
-  font-weight:900;
-  margin:14px 0;
+    color:var(--cyan);
+    font-size:22px;
+    font-weight:bold;
+    margin:15px 0;
 }
 
-.small-btn{
-  width:100%;
-  padding:11px;
-  border:1px solid var(--cyan);
-  border-radius:10px;
-  background:transparent;
-  color:var(--cyan);
-  font-weight:800;
+.search{
+    width:100%;
+    padding:14px;
+    margin-bottom:18px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    background:#03111a;
+    color:white;
+    outline:none;
 }
 
-.small-btn:hover{
-  background:rgba(0,217,255,.08);
-}
-
-/* MENU */
+/* SIDE MENU */
 
 .overlay{
-  position:fixed;
-  inset:0;
-  z-index:90;
-  background:rgba(0,0,0,.55);
-  display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.6);
+    display:none;
+    z-index:30;
 }
 
 .overlay.show{
-  display:block;
+    display:block;
 }
 
 .side-menu{
-  position:fixed;
-  top:0;
-  right:-310px;
-  z-index:100;
-  width:290px;
-  max-width:85%;
-  height:100vh;
-  padding:20px;
-  background:#03101a;
-  border-left:1px solid var(--border);
-  transition:.25s;
-  overflow-y:auto;
+    position:fixed;
+    top:0;
+    right:-310px;
+    width:290px;
+    height:100%;
+    background:#03131e;
+    border-left:1px solid var(--border);
+    z-index:40;
+    padding:20px;
+    transition:.3s;
 }
 
 .side-menu.open{
-  right:0;
-}
-
-.menu-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding-bottom:18px;
-  margin-bottom:10px;
-  border-bottom:1px solid var(--border);
-}
-
-.menu-head h3{
-  color:var(--cyan);
+    right:0;
 }
 
 .close-menu{
-  border:0;
-  background:none;
-  color:white;
-  font-size:26px;
+    display:block;
+    margin-left:auto;
+    border:0;
+    background:none;
+    color:white;
+    font-size:25px;
+}
+
+.menu-user{
+    padding:20px 0;
+    border-bottom:1px solid var(--border);
+    margin-bottom:10px;
+}
+
+.menu-user strong{
+    color:var(--cyan);
 }
 
 .menu-item{
-  width:100%;
-  padding:13px 12px;
-  margin:3px 0;
-  border:0;
-  border-radius:9px;
-  background:transparent;
-  color:#cce8ef;
-  text-align:left;
+    width:100%;
+    padding:13px;
+    margin:4px 0;
+    text-align:left;
+    border:0;
+    border-radius:10px;
+    background:transparent;
+    color:white;
 }
 
 .menu-item:hover{
-  background:rgba(0,217,255,.08);
-  color:var(--cyan);
+    background:rgba(0,217,255,.08);
+    color:var(--cyan);
 }
 
 .logout{
-  color:#ff8585;
+    color:#ff6577;
 }
 
-/* LISTS */
+/* CREDIT */
 
-.list-box{
-  padding:17px;
-  margin-bottom:12px;
-  border:1px solid var(--border);
-  border-radius:14px;
-  background:#061522;
+.credit-box{
+    max-width:600px;
+    margin:auto;
 }
 
-.empty{
-  padding:30px;
-  text-align:center;
-  color:var(--muted);
+.payment-info{
+    background:#041923;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:18px;
+    margin:15px 0;
 }
 
-/* ACCOUNT */
-
-.account-row{
-  padding:14px 0;
-  border-bottom:1px solid rgba(255,255,255,.07);
+.upi{
+    color:var(--cyan);
+    font-size:18px;
+    font-weight:bold;
+    word-break:break-all;
 }
 
-.account-label{
-  color:var(--muted);
-  font-size:12px;
-  margin-bottom:5px;
+.status{
+    margin-top:15px;
+    padding:12px;
+    border-radius:10px;
+    background:rgba(0,217,255,.07);
+    color:var(--cyan);
+    display:none;
 }
 
-.account-value{
-  word-break:break-word;
+/* MODAL */
+
+.modal-wrap{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.7);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:100;
 }
 
-/* MOBILE */
+.modal-wrap.show{
+    display:flex;
+}
 
-@media(max-width:600px){
-  .auth-box{
-    padding:25px 18px;
-  }
+.modal{
+    width:100%;
+    max-width:430px;
+    background:#061722;
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:25px;
+}
 
-  .logo h1{
-    font-size:28px;
-  }
+.modal h2{
+    color:var(--cyan);
+    margin-bottom:15px;
+}
 
-  .hero h2{
-    font-size:24px;
-  }
+.modal-close{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:1px solid var(--border);
+    background:#061923;
+    color:white;
+    border-radius:10px;
+}
 
-  .page{
-    padding:22px 13px;
-  }
+.list-empty{
+    text-align:center;
+    color:var(--muted);
+    padding:30px;
+}
+
+@media(max-width:500px){
+    .auth-card{
+        padding:22px;
+    }
+
+    .hero h2{
+        font-size:24px;
+    }
+
+    .brand{
+        font-size:14px;
+    }
+
+    .balance-box{
+        font-size:12px;
+    }
 }
 </style>
 </head>
-
 <body>
 
-<section id="authSection">
+<!-- AUTH SECTION -->
+<section id="authSection" class="auth-wrap">
 
-<div class="auth-box">
+    <div class="auth-card">
 
-<div class="logo">
-<h1>MINI4C X</h1>
-<p>ADX ANKIT • PREMIUM STORE</p>
-</div>
+        <div class="logo">
+            <h1>MINI4C X</h1>
+            <p>ADX ANKIT</p>
+        </div>
 
-<!-- LOGIN -->
+        <!-- LOGIN -->
+        <div id="loginForm">
 
-<div id="loginForm">
+            <h2 class="form-title">Login</h2>
 
-<h2 class="auth-title">Welcome Back</h2>
+            <div class="input-group">
+                <label>Email</label>
+                <input id="loginEmail" type="email" placeholder="Enter your email">
+            </div>
 
-<div class="input-group">
-<label>Email</label>
-<input id="loginEmail"
-type="email"
-placeholder="Enter your email">
-</div>
+            <div class="input-group">
+                <label>Password</label>
+                <input id="loginPassword" type="password" placeholder="Enter your password">
+            </div>
 
-<div class="input-group">
-<label>Password</label>
-<input id="loginPassword"
-type="password"
-placeholder="Enter your password">
-</div>
+            <button id="loginBtn" class="primary-btn">
+                Login
+            </button>
 
-<button id="loginBtn" class="main-btn">
-LOGIN
-</button>
+            <button id="googleLogin" class="secondary-btn">
+                Continue with Google
+            </button>
 
-<button id="googleLogin" class="google-btn">
-Continue with Google
-</button>
+            <button id="forgotBtn" class="text-btn">
+                Forgot Password?
+            </button>
 
-<span id="forgotBtn" class="auth-link">
-Forgot Password?
-</span>
+            <div id="loginMsg" class="message"></div>
 
-<span id="toRegister" class="auth-link">
-Create New Account
-</span>
+            <div class="auth-switch">
+                Don't have an account?
+                <button id="toRegister" class="text-btn">
+                    Create Account
+                </button>
+            </div>
 
-<div id="loginMsg" class="auth-msg"></div>
-
-</div>
+        </div>
 
 
-<!-- REGISTER -->
+        <!-- REGISTER -->
+        <div id="registerForm" class="hidden">
 
-<div id="registerForm" class="hidden">
+            <h2 class="form-title">Create Account</h2>
 
-<h2 class="auth-title">Create Account</h2>
+            <div class="input-group">
+                <label>Username</label>
+                <input id="registerUsername" type="text" placeholder="Choose username">
+            </div>
 
-<div class="input-group">
-<label>Username</label>
-<input id="registerUsername"
-type="text"
-placeholder="Choose username">
-</div>
+            <div class="input-group">
+                <label>Gmail / Email</label>
+                <input id="registerEmail" type="email" placeholder="Enter your email">
+            </div>
 
-<div class="input-group">
-<label>Email</label>
-<input id="registerEmail"
-type="email"
-placeholder="Enter your email">
-</div>
+            <div class="input-group">
+                <label>Password</label>
+                <input id="registerPassword" type="password" placeholder="Create password">
+            </div>
 
-<div class="input-group">
-<label>Password</label>
-<input id="registerPassword"
-type="password"
-placeholder="Create password">
-</div>
+            <div class="input-group">
+                <label>Confirm Password</label>
+                <input id="registerConfirm" type="password" placeholder="Confirm password">
+            </div>
 
-<div class="input-group">
-<label>Confirm Password</label>
-<input id="registerConfirm"
-type="password"
-placeholder="Confirm password">
-</div>
+            <button id="registerBtn" class="primary-btn">
+                Create Account
+            </button>
 
-<button id="registerBtn" class="main-btn">
-CREATE ACCOUNT
-</button>
+            <button id="googleRegister" class="secondary-btn">
+                Continue with Google
+            </button>
 
-<button id="googleRegister" class="google-btn">
-Continue with Google
-</button>
+            <div id="registerMsg" class="message"></div>
 
-<span id="toLogin" class="auth-link">
-Already have an account? Login
-</span>
+            <div class="auth-switch">
+                Already have an account?
+                <button id="toLogin" class="text-btn">
+                    Login
+                </button>
+            </div>
 
-<div id="registerMsg" class="auth-msg"></div>
+        </div>
 
-</div>
-
-</div>
+    </div>
 </section>
 
 
-<!-- APP -->
-
+<!-- APP SECTION -->
 <section id="appSection" class="hidden">
 
-<header class="topbar">
+    <header class="topbar">
 
-<div class="brand">MINI4C X</div>
+        <div class="brand">
+            MINI4C X
+        </div>
 
-<div>
-<span id="currentUsername" class="user-mini">User</span>
-<button id="menuBtn" class="menu-btn">☰</button>
-</div>
+        <div class="user-balance">
+            <div class="balance-box">
+                ₹<span id="balance">0.00</span>
+            </div>
 
-</header>
+            <button id="menuBtn" class="menu-btn">
+                ☰
+            </button>
+        </div>
 
-<div id="menuOverlay" class="overlay"></div>
+    </header>
 
+
+    <!-- HOME -->
+    <section id="home" class="page active">
+
+        <div class="hero">
+            <h2>Welcome, <span id="currentUsername">User</span></h2>
+            <p>
+                Welcome to MINI4C X. Manage your account,
+                credits, purchases and transactions from one place.
+            </p>
+        </div>
+
+        <div class="grid">
+
+            <div class="card">
+                <h3>Account</h3>
+                <p>View your account information and login details.</p>
+                <button class="primary-btn" onclick="showPage('account')">
+                    My Account
+                </button>
+            </div>
+
+            <div class="card">
+                <h3>Add Credits</h3>
+                <p>Add credits through the available payment process.</p>
+                <button class="primary-btn" onclick="showPage('credits')">
+                    Add Credits
+                </button>
+            </div>
+
+            <div class="card">
+                <h3>Purchases</h3>
+                <p>View your purchase records.</p>
+                <button class="primary-btn" onclick="showPage('purchases')">
+                    My Purchases
+                </button>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- BUY -->
+    <section id="buy" class="page">
+
+        <h2 class="section-title">Buy</h2>
+
+        <input
+            id="productSearch"
+            class="search"
+            type="text"
+            placeholder="Search products..."
+        >
+
+        <div id="productGrid" class="grid"></div>
+
+    </section>
+
+
+    <!-- PURCHASES -->
+    <section id="purchases" class="page">
+
+        <h2 class="section-title">My Purchases</h2>
+
+        <div id="purchaseList" class="grid">
+            <div class="list-empty">
+                No purchases found.
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- ADD CREDITS -->
+    <section id="credits" class="page">
+
+        <div class="credit-box">
+
+            <h2 class="section-title">Add Credits</h2>
+
+            <div class="card">
+
+                <div class="input-group">
+                    <label>Amount</label>
+
+                    <input
+                        id="creditAmount"
+                        type="number"
+                        min="1"
+                        step="1"
+                        placeholder="Enter amount"
+                    >
+                </div>
+
+                <div class="payment-info">
+
+                    <p style="color:var(--muted);margin-bottom:8px;">
+                        Payment UPI ID
+                    </p>
+
+                    <div class="upi">
+                        ankittt.3@fam
+                    </div>
+
+                    <p style="color:var(--muted);margin-top:10px;font-size:13px;">
+                        After completing your payment, enter the UTR/reference
+                        number below for verification.
+                    </p>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>UTR / Transaction Reference</label>
+
+                    <input
+                        id="utrInput"
+                        type="text"
+                        maxlength="80"
+                        placeholder="Enter UTR / reference number"
+                    >
+
+                </div>
+
+                <button id="submitCreditBtn" class="primary-btn">
+                    Submit for Verification
+                </button>
+
+                <div id="creditStatus" class="status"></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- TRANSACTIONS -->
+    <section id="transactions" class="page">
+
+        <h2 class="section-title">Transaction History</h2>
+
+        <div id="transactionList" class="grid">
+
+            <div class="list-empty">
+                No transactions found.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ACCOUNT -->
+    <section id="account" class="page">
+
+        <h2 class="section-title">My Account</h2>
+
+        <div class="card">
+
+            <div class="input-group">
+                <label>Username</label>
+                <input id="accountUsername" readonly>
+            </div>
+
+            <div class="input-group">
+                <label>Email</label>
+                <input id="accountEmail" readonly>
+            </div>
+
+            <div class="input-group">
+                <label>User ID</label>
+                <input id="accountUid" readonly>
+            </div>
+
+            <button id="logoutBtn2" class="secondary-btn">
+                Logout
+            </button>
+
+        </div>
+
+    </section>
+
+</section>
+
+
+<!-- OVERLAY -->
+<div id="overlay" class="overlay"></div>
+
+
+<!-- SIDE MENU -->
 <aside id="sideMenu" class="side-menu">
 
-<div class="menu-head">
-<h3>MENU</h3>
-<button id="closeMenu" class="close-menu">×</button>
-</div>
+    <button id="closeMenu" class="close-menu">
+        ×
+    </button>
 
-<button class="menu-item" data-page="home">Home</button>
-<button class="menu-item" data-page="buy">Buy</button>
-<button class="menu-item" data-page="purchases">My Purchases</button>
-<button class="menu-item" data-page="credits">Add Credits</button>
-<button class="menu-item" data-page="transactions">Transaction History</button>
-<button class="menu-item" data-page="account">My Account</button>
+    <div class="menu-user">
+        <div style="color:var(--muted);font-size:12px;">
+            Logged in as
+        </div>
 
-<button id="contactOwner" class="menu-item">
-Contact Owner
-</button>
+        <strong id="menuUsername">
+            User
+        </strong>
+    </div>
 
-<button id="discordBtn" class="menu-item">
-Discord
-</button>
+    <button class="menu-item" data-page="home">
+        Home
+    </button>
 
-<button id="logoutBtn" class="menu-item logout">
-Logout
-</button>
+    <button class="menu-item" data-page="buy">
+        Buy
+    </button>
+
+    <button class="menu-item" data-page="purchases">
+        My Purchases
+    </button>
+
+    <button class="menu-item" data-page="credits">
+        Add Credits
+    </button>
+
+    <button class="menu-item" data-page="transactions">
+        Transaction History
+    </button>
+
+    <button class="menu-item" data-page="account">
+        My Account
+    </button>
+
+    <button
+        class="menu-item"
+        onclick="window.open('https://t.me/ADXANKIT','_blank')"
+    >
+        Contact Owner
+    </button>
+
+    <button
+        class="menu-item"
+        onclick="window.open('https://discord.gg/Yttbf69xx','_blank')"
+    >
+        Discord
+    </button>
+
+    <button id="logoutBtn" class="menu-item logout">
+        Logout
+    </button>
 
 </aside>
 
 
-<!-- HOME -->
+<!-- PRODUCT MODAL -->
+<div id="productModal" class="modal-wrap">
 
-<main id="home" class="page active">
+    <div class="modal">
 
-<div class="hero">
+        <h2 id="modalProductName">
+            Product
+        </h2>
 
-<h2>Welcome to MINI4C X</h2>
+        <p id="modalProductInfo" style="color:var(--muted);line-height:1.6;">
+        </p>
 
-<p>
-Welcome to the ADX ANKIT digital store.
-Manage your account, browse products and view
-your account activity.
-</p>
+        <div class="price">
+            ₹<span id="modalProductPrice">0</span>
+        </div>
 
-<div class="balance-card">
-
-<div class="balance-label">
-Available Balance
-</div>
-
-<div id="balance" class="balance-value">
-₹0.00
-</div>
-
-</div>
-
-</div>
-
-<div class="grid">
-
-<div class="card">
-<h3>Store</h3>
-<p>Browse all available products.</p>
-<br>
-<button class="small-btn" data-page="buy">
-OPEN STORE
-</button>
-</div>
-
-<div class="card">
-<h3>My Purchases</h3>
-<p>View your purchase records.</p>
-<br>
-<button class="small-btn" data-page="purchases">
-VIEW PURCHASES
-</button>
-</div>
-
-<div class="card">
-<h3>My Account</h3>
-<p>View your account information.</p>
-<br>
-<button class="small-btn" data-page="account">
-ACCOUNT
-</button>
-</div>
-
-</div>
-
-</main>
-
-
-<!-- BUY -->
-
-<main id="buy" class="page">
-
-<h2 class="page-title">Store</h2>
-
-<div class="search-box">
-<input id="productSearch"
-type="search"
-placeholder="Search products...">
-</div>
-
-<div id="productGrid" class="grid"></div>
-
-</main>
-
-
-<!-- PURCHASES -->
-
-<main id="purchases" class="page">
-
-<h2 class="page-title">My Purchases</h2>
-
-<div id="purchaseList">
-<div class="empty">No purchases yet.</div>
-</div>
-
-</main>
-
-
-<!-- CREDITS -->
-
-<main id="credits" class="page">
-
-<h2 class="page-title">Add Credits</h2>
-
-<div class="card">
-
-<h3>Credit Request</h3>
-
-<p>
-For account/payment support, contact the owner.
-Any credit update should be verified before
-being added to an account.
-</p>
-
-<br>
-
-<button id="telegramCreditBtn" class="small-btn">
-CONTACT ON TELEGRAM
-</button>
-
-<br><br>
-
-<button id="discordCreditBtn" class="small-btn">
-CONTACT ON DISCORD
-</button>
-
-</div>
-
-</main>
-
-
-<!-- TRANSACTIONS -->
-
-<main id="transactions" class="page">
-
-<h2 class="page-title">Transaction History</h2>
-
-<div id="transactionList">
-<div class="empty">No transactions yet.</div>
-</div>
-
-</main>
-
-
-<!-- ACCOUNT -->
-
-<main id="account" class="page">
-
-<h2 class="page-title">My Account</h2>
-
-<div class="card">
-
-<div class="account-row">
-<div class="account-label">Username</div>
-<div id="accountUsername" class="account-value">—</div>
-</div>
-
-<div class="account-row">
-<div class="account-label">Email</div>
-<div id="accountEmail" class="account-value">—</div>
-</div>
-
-<div class="account-row">
-<div class="account-label">User ID</div>
-<div id="accountUid" class="account-value">—</div>
-</div>
-
-<br>
-
-<button id="logoutBtn2" class="small-btn">
-LOGOUT
-</button>
-
-</div>
-
-</main>
-<!-- ================= PART 2 / 3 ================= -->
-
+        <button id="modalClose" class="modal-close">
+            Close
+        </button>
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
 import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  sendPasswordResetEmail,
-  onAuthStateChanged,
-  signOut,
-  updateProfile
-}
-from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    GoogleAuthProvider,
+    signInWithPopup,
+    sendPasswordResetEmail,
+    onAuthStateChanged,
+    signOut,
+    updateProfile
+} from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
 import {
-  getFirestore,
-  doc,
-  setDoc,
-  getDoc
-}
-from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+    getFirestore,
+    doc,
+    setDoc,
+    getDoc,
+    addDoc,
+    collection,
+    serverTimestamp,
+    query,
+    where,
+    orderBy,
+    getDocs
+} from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
-
-/* ================= FIREBASE CONFIG ================= */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAIRd6GaQ_Hczk8RQm-dY2WdcBTqOMNNSE",
-  authDomain: "mini4c-3962c.firebaseapp.com",
-  projectId: "mini4c-3962c",
-  storageBucket: "mini4c-3962c.firebasestorage.app",
-  messagingSenderId: "675135759481",
-  appId: "1:675135759481:web:fd49b233966412020c20a8",
-  measurementId: "G-JYF4M873QW"
+    apiKey: "AIzaSyAIRd6GaQ_Hczk8RQm-dY2WdcBTqOMNNSE",
+    authDomain: "mini4c-3962.firebaseapp.com",
+    projectId: "mini4c-3962",
+    storageBucket: "mini4c-3962.firebasestorage.app",
+    messagingSenderId: "675135759481",
+    appId: "1:675135759481:web:fd49b233966412020c20a8",
+    measurementId: "G-JYF4M873QW"
 };
 
 
-const firebaseApp = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-const auth = getAuth(firebaseApp);
-
-const db = getFirestore(firebaseApp);
-
-
-/* ================= ELEMENTS ================= */
-
-const authSection =
-  document.getElementById("authSection");
-
-const appSection =
-  document.getElementById("appSection");
-
-const loginForm =
-  document.getElementById("loginForm");
-
-const registerForm =
-  document.getElementById("registerForm");
-
-const loginMsg =
-  document.getElementById("loginMsg");
-
-const registerMsg =
-  document.getElementById("registerMsg");
+const googleProvider = new GoogleAuthProvider();
 
 
-/* ================= HELPERS ================= */
+const $ = id => document.getElementById(id);
 
-function setMessage(element,text,type="error"){
 
-  element.textContent = text;
+function message(element, text, good = false){
 
-  if(type === "success"){
-    element.style.color = "#7dffb2";
-  }
-  else if(type === "warning"){
-    element.style.color = "#ffd36a";
-  }
-  else{
-    element.style.color = "#ff8585";
-  }
+    element.textContent = text;
+
+    element.style.color =
+        good ? "#00e6a8" : "#ff6577";
 }
 
 
-/* ================= SWITCH LOGIN ================= */
+function cleanUsername(value){
 
-document.getElementById("toRegister")
-.addEventListener("click",()=>{
+    return value
+        .trim()
+        .replace(/\s+/g," ")
+        .slice(0,30);
+}
 
-  loginForm.classList.add("hidden");
 
-  registerForm.classList.remove("hidden");
+/* AUTH SWITCH */
 
-  loginMsg.textContent = "";
-});
+$("toRegister").onclick = () => {
 
+    $("loginForm").classList.add("hidden");
+    $("registerForm").classList.remove("hidden");
 
-/* ================= SWITCH REGISTER ================= */
+};
 
-document.getElementById("toLogin")
-.addEventListener("click",()=>{
 
-  registerForm.classList.add("hidden");
+$("toLogin").onclick = () => {
 
-  loginForm.classList.remove("hidden");
+    $("registerForm").classList.add("hidden");
+    $("loginForm").classList.remove("hidden");
 
-  registerMsg.textContent = "";
-});
+};
 
 
-/* ================= CREATE ACCOUNT ================= */
+/* REGISTER */
 
-document.getElementById("registerBtn")
-.addEventListener("click",async()=>{
+$("registerBtn").onclick = async () => {
 
-  const username =
-    document.getElementById("registerUsername")
-    .value.trim();
+    const username =
+        cleanUsername($("registerUsername").value);
 
-  const email =
-    document.getElementById("registerEmail")
-    .value.trim();
+    const email =
+        $("registerEmail").value.trim();
 
-  const password =
-    document.getElementById("registerPassword")
-    .value;
+    const password =
+        $("registerPassword").value;
 
-  const confirmPassword =
-    document.getElementById("registerConfirm")
-    .value;
+    const confirm =
+        $("registerConfirm").value;
 
 
-  registerMsg.textContent = "";
+    if(!username || !email || !password || !confirm){
 
+        message(
+            $("registerMsg"),
+            "Please fill all fields."
+        );
 
-  if(username.length < 3){
+        return;
+    }
 
-    setMessage(
-      registerMsg,
-      "Username kam se kam 3 characters ka hona chahiye."
-    );
 
-    return;
-  }
+    if(password !== confirm){
 
+        message(
+            $("registerMsg"),
+            "Passwords do not match."
+        );
 
-  if(!email){
+        return;
+    }
 
-    setMessage(
-      registerMsg,
-      "Email enter karo."
-    );
 
-    return;
-  }
+    if(password.length < 6){
 
+        message(
+            $("registerMsg"),
+            "Password must contain at least 6 characters."
+        );
 
-  if(password.length < 6){
+        return;
+    }
 
-    setMessage(
-      registerMsg,
-      "Password kam se kam 6 characters ka hona chahiye."
-    );
 
-    return;
-  }
+    $("registerBtn").disabled = true;
+    $("registerBtn").textContent = "Creating...";
 
 
-  if(password !== confirmPassword){
+    try{
 
-    setMessage(
-      registerMsg,
-      "Dono passwords match nahi kar rahe."
-    );
+        const credential =
+            await createUserWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
 
-    return;
-  }
 
+        await updateProfile(
+            credential.user,
+            {
+                displayName: username
+            }
+        );
 
-  const button =
-    document.getElementById("registerBtn");
 
-  button.disabled = true;
+        await setDoc(
+            doc(db,"users",credential.user.uid),
+            {
+                username: username,
+                email: email,
+                uid: credential.user.uid,
+                balance: 0,
+                createdAt: serverTimestamp()
+            },
+            { merge:true }
+        );
 
-  button.textContent = "CREATING...";
 
+        message(
+            $("registerMsg"),
+            "Account created successfully.",
+            true
+        );
 
-  try{
 
-    const result =
-      await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+    }catch(error){
 
+        console.error(error);
 
-    const user = result.user;
+        let text = "Unable to create account.";
 
+        if(error.code === "auth/email-already-in-use")
+            text = "This email is already registered.";
 
-    await updateProfile(user,{
-      displayName: username
-    });
+        if(error.code === "auth/invalid-email")
+            text = "Invalid email address.";
 
+        if(error.code === "auth/weak-password")
+            text = "Password is too weak.";
 
-    await setDoc(
-      doc(db,"users",user.uid),
-      {
-        uid: user.uid,
-        username: username,
-        email: email,
-        balance: 0,
-        createdAt: new Date().toISOString()
-      }
-    );
+        message($("registerMsg"),text);
 
+    }finally{
 
-    setMessage(
-      registerMsg,
-      "Account successfully created!",
-      "success"
-    );
+        $("registerBtn").disabled = false;
+        $("registerBtn").textContent = "Create Account";
 
+    }
 
-  }
-  catch(error){
+};
 
-    console.error(error);
 
-    setMessage(
-      registerMsg,
-      getFirebaseError(error)
-    );
+/* LOGIN */
 
-  }
-  finally{
+$("loginBtn").onclick = async () => {
 
-    button.disabled = false;
+    const email =
+        $("loginEmail").value.trim();
 
-    button.textContent = "CREATE ACCOUNT";
+    const password =
+        $("loginPassword").value;
 
-  }
 
-});
+    if(!email || !password){
 
+        message(
+            $("loginMsg"),
+            "Enter email and password."
+        );
 
-/* ================= LOGIN ================= */
+        return;
+    }
 
-document.getElementById("loginBtn")
-.addEventListener("click",async()=>{
 
-  const email =
-    document.getElementById("loginEmail")
-    .value.trim();
+    $("loginBtn").disabled = true;
+    $("loginBtn").textContent = "Logging in...";
 
-  const password =
-    document.getElementById("loginPassword")
-    .value;
 
+    try{
 
-  loginMsg.textContent = "";
+        await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
 
 
-  if(!email || !password){
+        message(
+            $("loginMsg"),
+            "Login successful.",
+            true
+        );
 
-    setMessage(
-      loginMsg,
-      "Email aur password enter karo."
-    );
 
-    return;
-  }
+    }catch(error){
 
+        console.error(error);
 
-  const button =
-    document.getElementById("loginBtn");
+        let text = "Login failed.";
 
-  button.disabled = true;
+        if(
+            error.code === "auth/invalid-credential" ||
+            error.code === "auth/wrong-password" ||
+            error.code === "auth/user-not-found"
+        ){
 
-  button.textContent = "LOGGING IN...";
+            text = "Invalid email or password.";
 
+        }
 
-  try{
+        if(error.code === "auth/too-many-requests")
+            text = "Too many attempts. Try again later.";
 
-    await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+        message($("loginMsg"),text);
 
+    }finally{
 
-    setMessage(
-      loginMsg,
-      "Login successful!",
-      "success"
-    );
+        $("loginBtn").disabled = false;
+        $("loginBtn").textContent = "Login";
 
+    }
 
-  }
-  catch(error){
+};
 
-    console.error(error);
 
-    setMessage(
-      loginMsg,
-      getFirebaseError(error)
-    );
+/* GOOGLE LOGIN */
 
-  }
-  finally{
+async function googleLogin(){
 
-    button.disabled = false;
+    try{
 
-    button.textContent = "LOGIN";
+        await signInWithPopup(
+            auth,
+            googleProvider
+        );
 
-  }
+    }catch(error){
 
-});
+        console.error(error);
 
+        let text = "Google login failed.";
 
-/* ================= GOOGLE DISPLAY ONLY ================= */
+        if(error.code === "auth/popup-closed-by-user")
+            text = "Google login was cancelled.";
 
-document.getElementById("googleLogin")
-.addEventListener("click",()=>{
+        if(error.code === "auth/popup-blocked")
+            text = "Popup was blocked by the browser.";
 
-  setMessage(
-    loginMsg,
-    "Google Login abhi disabled hai.",
-    "warning"
-  );
+        if(error.code === "auth/unauthorized-domain")
+            text = "This website is not authorized in Firebase.";
 
-});
+        message($("loginMsg"),text);
 
+    }
 
-document.getElementById("googleRegister")
-.addEventListener("click",()=>{
+}
 
-  setMessage(
-    registerMsg,
-    "Google Login abhi disabled hai.",
-    "warning"
-  );
 
-});
+$("googleLogin").onclick = googleLogin;
+$("googleRegister").onclick = googleLogin;
 
 
-/* ================= FORGOT PASSWORD ================= */
+/* FORGOT PASSWORD */
 
-document.getElementById("forgotBtn")
-.addEventListener("click",async()=>{
+$("forgotBtn").onclick = async () => {
 
-  const email =
-    document.getElementById("loginEmail")
-    .value.trim();
+    const email =
+        $("loginEmail").value.trim();
 
 
-  if(!email){
+    if(!email){
 
-    setMessage(
-      loginMsg,
-      "Password reset ke liye email enter karo."
-    );
+        message(
+            $("loginMsg"),
+            "Enter your email first."
+        );
 
-    return;
-  }
+        return;
+    }
 
 
-  try{
+    try{
 
-    await sendPasswordResetEmail(
-      auth,
-      email
-    );
+        await sendPasswordResetEmail(
+            auth,
+            email
+        );
 
 
-    setMessage(
-      loginMsg,
-      "Password reset email bhej diya gaya.",
-      "success"
-    );
+        message(
+            $("loginMsg"),
+            "Password reset email sent.",
+            true
+        );
 
-  }
-  catch(error){
 
-    console.error(error);
+    }catch(error){
 
-    setMessage(
-      loginMsg,
-      getFirebaseError(error)
-    );
+        console.error(error);
 
-  }
+        message(
+            $("loginMsg"),
+            "Unable to send reset email."
+        );
 
-});
+    }
 
+};
 
-/* ================= AUTH STATE ================= */
 
-onAuthStateChanged(
-  auth,
-  async(user)=>{
+/* LOAD USER */
+
+async function loadUser(user){
+
+    if(!user) return;
+
+
+    let username =
+        user.displayName || "User";
+
+
+    try{
+
+        const snap =
+            await getDoc(
+                doc(db,"users",user.uid)
+            );
+
+
+        if(snap.exists()){
+
+            const data = snap.data();
+
+            username =
+                data.username ||
+                user.displayName ||
+                "User";
+
+            $("balance").textContent =
+                Number(data.balance || 0).toFixed(2);
+
+        }else{
+
+            await setDoc(
+                doc(db,"users",user.uid),
+                {
+                    username: username,
+                    email: user.email || "",
+                    uid: user.uid,
+                    balance: 0,
+                    createdAt: serverTimestamp()
+                },
+                { merge:true }
+            );
+
+            $("balance").textContent = "0.00";
+
+        }
+
+
+    }catch(error){
+
+        console.error("User data error:",error);
+
+    }
+
+
+    $("currentUsername").textContent = username;
+    $("menuUsername").textContent = username;
+
+    $("accountUsername").value = username;
+    $("accountEmail").value = user.email || "";
+    $("accountUid").value = user.uid;
+
+}
+
+
+/* AUTH STATE */
+
+onAuthStateChanged(auth,async user => {
 
     if(user){
 
-      authSection.classList.add("hidden");
+        $("authSection").classList.add("hidden");
+        $("appSection").classList.remove("hidden");
 
-      appSection.classList.remove("hidden");
+        await loadUser(user);
 
-      await loadUserData(user);
+        renderProducts();
+        loadCreditRequests();
 
-      showPage("home");
+    }else{
 
-    }
-    else{
-
-      authSection.classList.remove("hidden");
-
-      appSection.classList.add("hidden");
+        $("authSection").classList.remove("hidden");
+        $("appSection").classList.add("hidden");
 
     }
 
-  }
-);
+});
 
 
-/* ================= LOAD USER ================= */
+/* LOGOUT */
 
-async function loadUserData(user){
+async function logout(){
 
-  let username =
-    user.displayName || "User";
+    try{
 
-  let balance = 0;
+        await signOut(auth);
 
+    }catch(error){
 
-  try{
-
-    const userRef =
-      doc(db,"users",user.uid);
-
-    const snapshot =
-      await getDoc(userRef);
-
-
-    if(snapshot.exists()){
-
-      const data = snapshot.data();
-
-      username =
-        data.username ||
-        user.displayName ||
-        "User";
-
-      balance =
-        Number(data.balance || 0);
+        console.error(error);
 
     }
-
-  }
-  catch(error){
-
-    console.error(
-      "Profile loading error:",
-      error
-    );
-
-  }
-
-
-  document.getElementById(
-    "currentUsername"
-  ).textContent = username;
-
-
-  document.getElementById(
-    "accountUsername"
-  ).textContent = username;
-
-
-  document.getElementById(
-    "accountEmail"
-  ).textContent =
-    user.email || "—";
-
-
-  document.getElementById(
-    "accountUid"
-  ).textContent =
-    user.uid;
-
-
-  document.getElementById(
-    "balance"
-  ).textContent =
-    "₹" + balance.toFixed(2);
 
 }
 
 
-/* ================= PAGE SYSTEM ================= */
-
-function showPage(pageName){
-
-  document
-  .querySelectorAll(".page")
-  .forEach(page=>{
-
-    page.classList.remove("active");
-
-  });
+$("logoutBtn").onclick = logout;
+$("logoutBtn2").onclick = logout;
 
 
-  const page =
-    document.getElementById(pageName);
+/* PAGE NAVIGATION */
 
+window.showPage = function(pageId){
 
-  if(page){
+    document
+        .querySelectorAll(".page")
+        .forEach(page => page.classList.remove("active"));
 
-    page.classList.add("active");
-
-  }
-
-}
-
-
-/* ================= PAGE BUTTONS ================= */
-
-document
-.querySelectorAll("[data-page]")
-.forEach(button=>{
-
-  button.addEventListener("click",()=>{
 
     const page =
-      button.getAttribute("data-page");
-
-    showPage(page);
-
-    closeMenu();
-
-  });
-
-});
+        $(pageId);
 
 
-/* ================= MENU ================= */
-
-const sideMenu =
-  document.getElementById("sideMenu");
-
-const menuOverlay =
-  document.getElementById("menuOverlay");
+    if(page)
+        page.classList.add("active");
 
 
-document.getElementById("menuBtn")
-.addEventListener("click",()=>{
+    $("sideMenu").classList.remove("open");
+    $("overlay").classList.remove("show");
 
-  sideMenu.classList.add("open");
-
-  menuOverlay.classList.add("show");
-
-});
+};
 
 
-function closeMenu(){
+/* MENU */
 
-  sideMenu.classList.remove("open");
+$("menuBtn").onclick = () => {
 
-  menuOverlay.classList.remove("show");
+    $("sideMenu").classList.add("open");
+    $("overlay").classList.add("show");
 
-}
-
-
-document.getElementById("closeMenu")
-.addEventListener("click",closeMenu);
+};
 
 
-menuOverlay.addEventListener(
-  "click",
-  closeMenu
-);
+$("closeMenu").onclick = () => {
+
+    $("sideMenu").classList.remove("open");
+    $("overlay").classList.remove("show");
+
+};
 
 
-/* ================= LOGOUT ================= */
+$("overlay").onclick = () => {
 
-async function logoutUser(){
+    $("sideMenu").classList.remove("open");
+    $("overlay").classList.remove("show");
 
-  try{
-
-    await signOut(auth);
-
-  }
-  catch(error){
-
-    console.error(error);
-
-  }
-
-}
+};
 
 
-document.getElementById("logoutBtn")
-.addEventListener(
-  "click",
-  logoutUser
-);
+document
+    .querySelectorAll(".menu-item[data-page]")
+    .forEach(button => {
+
+        button.onclick = () => {
+
+            showPage(
+                button.dataset.page
+            );
+
+        };
+
+    });
 
 
-document.getElementById("logoutBtn2")
-.addEventListener(
-  "click",
-  logoutUser
-);
-
-
-/* ================= FIREBASE ERRORS ================= */
-
-function getFirebaseError(error){
-
-  const code =
-    error?.code || "";
-
-
-  switch(code){
-
-    case "auth/invalid-email":
-      return "Email address valid nahi hai.";
-
-    case "auth/email-already-in-use":
-      return "Ye email already registered hai.";
-
-    case "auth/weak-password":
-      return "Password bahut weak hai.";
-
-    case "auth/user-not-found":
-      return "Is email ka account nahi mila.";
-
-    case "auth/wrong-password":
-      return "Password galat hai.";
-
-    case "auth/invalid-credential":
-      return "Email ya password galat hai.";
-
-    case "auth/network-request-failed":
-      return "Internet connection check karo.";
-
-    case "auth/operation-not-allowed":
-      return "Firebase Authentication mein Email/Password enable karo.";
-
-    case "auth/unauthorized-domain":
-      return "GitHub Pages domain Firebase mein authorized nahi hai.";
-
-    case "permission-denied":
-      return "Firestore permission denied.";
-
-    default:
-      return error?.message ||
-        "Something went wrong.";
-
-  }
-
-}
-
- </script>
- <!-- ================= PART 3 / 3 ================= -->
-
-<script>
-
-/* ================= PRODUCTS ================= */
+/* PRODUCTS */
 
 const products = [
-  {id:1,name:"Product 01",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:70},{days:"7 Days",price:250},{days:"30 Days",price:700}]},
-  {id:2,name:"Product 02",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:50},{days:"3 Days",price:100},{days:"7 Days",price:270},{days:"30 Days",price:750}]},
-  {id:3,name:"Product 03",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"3 Days",price:150},{days:"7 Days",price:300},{days:"30 Days",price:700}]},
-  {id:4,name:"Product 04",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:90},{days:"7 Days",price:300},{days:"30 Days",price:900}]},
-  {id:5,name:"Product 05",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:79},{days:"7 Days",price:250},{days:"30 Days",price:799}]},
-  {id:6,name:"Product 06",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:150},{days:"3 Days",price:350},{days:"7 Days",price:500},{days:"30 Days",price:700}]},
-  {id:7,name:"Product 07",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"3 Days",price:180},{days:"7 Days",price:400},{days:"30 Days",price:1450}]},
-  {id:8,name:"Product 08",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:70},{days:"7 Days",price:220},{days:"30 Days",price:500}]},
-  {id:9,name:"Product 09",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:70},{days:"7 Days",price:220},{days:"30 Days",price:500}]},
-  {id:10,name:"Product 10",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:250},{days:"3 Days",price:450},{days:"7 Days",price:600},{days:"30 Days",price:1200}]},
-  {id:11,name:"Product 11",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:70},{days:"2 Days",price:150},{days:"7 Days",price:300},{days:"30 Days",price:800}]},
-  {id:12,name:"Product 12",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Hr",price:15},{days:"1 Day",price:230},{days:"7 Days",price:950},{days:"30 Days",price:2000}]},
-  {id:13,name:"Product 13",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:70},{days:"3 Days",price:150},{days:"7 Days",price:250},{days:"30 Days",price:650}]},
-  {id:14,name:"Product 14",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:60},{days:"7 Days",price:200},{days:"30 Days",price:600}]},
-  {id:15,name:"Product 15",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:60},{days:"10 Days",price:400},{days:"30 Days",price:900}]},
-  {id:16,name:"Product 16",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:150},{days:"7 Days",price:500},{days:"30 Days",price:1500}]},
-  {id:17,name:"Product 17",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:150},{days:"7 Days",price:500},{days:"30 Days",price:1500}]},
-  {id:18,name:"Product 18",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"7 Days",price:300},{days:"30 Days",price:800}]},
-  {id:19,name:"Product 19",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"7 Days",price:350},{days:"30 Days",price:1000}]},
-  {id:20,name:"Product 20",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:89},{days:"7 Days",price:280},{days:"30 Days",price:799}]},
-  {id:21,name:"Product 21",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:80},{days:"7 Days",price:500},{days:"31 Days",price:1600}]}
+
+    {
+        name:"Digital Product 1",
+        description:"Premium digital product",
+        price:99
+    },
+
+    {
+        name:"Digital Product 2",
+        description:"Premium digital product",
+        price:149
+    },
+
+    {
+        name:"Digital Product 3",
+        description:"Premium digital product",
+        price:199
+    },
+
+    {
+        name:"Digital Product 4",
+        description:"Premium digital product",
+        price:249
+    },
+
+    {
+        name:"Digital Product 5",
+        description:"Premium digital product",
+        price:299
+    },
+
+    {
+        name:"Digital Product 6",
+        description:"Premium digital product",
+        price:399
+    }
+
 ];
 
 
-/* ================= PRODUCT GRID ================= */
+function renderProducts(search=""){
 
-const productGrid =
-  document.getElementById("productGrid");
-
-
-function renderProducts(list = products){
-
-  productGrid.innerHTML = "";
+    const grid =
+        $("productGrid");
 
 
-  if(list.length === 0){
-
-    productGrid.innerHTML = `
-      <div class="empty">
-        No products found.
-      </div>
-    `;
-
-    return;
-  }
-
-
-  list.forEach(product => {
-
-    const card =
-      document.createElement("div");
-
-    card.className = "card";
-
-
-    let options = "";
-
-    product.variants.forEach(
-      (variant,index) => {
-
-        options += `
-          <option value="${index}">
-            ${variant.days} — ₹${variant.price}
-          </option>
-        `;
-
-      }
-    );
-
-
-    const firstPrice =
-      product.variants[0].price;
-
-
-    card.innerHTML = `
-
-      <img
-        class="product-img"
-        src="${product.img}"
-        alt="${product.name}"
-        loading="lazy"
-      >
-
-      <h3>${product.name}</h3>
-
-      <p>
-        Premium digital product
-      </p>
-
-      <div class="variant">
-
-        <select class="variantSelect">
-          ${options}
-        </select>
-
-      </div>
-
-      <div class="price">
-        ₹<span class="productPrice">
-          ${firstPrice}
-        </span>
-      </div>
-
-      <button class="small-btn requestBtn">
-        REQUEST
-      </button>
-
-    `;
-
-
-    const select =
-      card.querySelector(".variantSelect");
-
-    const price =
-      card.querySelector(".productPrice");
-
-    const requestBtn =
-      card.querySelector(".requestBtn");
-
-
-    select.addEventListener(
-      "change",
-      () => {
-
-        const selected =
-          product.variants[
-            Number(select.value)
-          ];
-
-        price.textContent =
-          selected.price;
-
-      }
-    );
-
-
-    requestBtn.addEventListener(
-      "click",
-      () => {
-
-        const selected =
-          product.variants[
-            Number(select.value)
-          ];
-
-
-        const message =
-          `Hello ADX ANKIT, I want information about ${product.name} - ${selected.days} - ₹${selected.price}`;
-
-
-        window.open(
-          "https://t.me/ADXANKIT?text=" +
-          encodeURIComponent(message),
-          "_blank"
-        );
-
-      }
-    );
-
-
-    productGrid.appendChild(card);
-
-  });
-
-}
-
-
-renderProducts();
-
-
-/* ================= PRODUCT SEARCH ================= */
-
-const productSearch =
-  document.getElementById("productSearch");
-
-
-productSearch.addEventListener(
-  "input",
-  () => {
-
-    const search =
-      productSearch.value
-        .trim()
-        .toLowerCase();
+    grid.innerHTML = "";
 
 
     const filtered =
-      products.filter(product =>
-        product.name
-          .toLowerCase()
-          .includes(search)
-      );
+        products.filter(product =>
+            product.name
+                .toLowerCase()
+                .includes(search.toLowerCase())
+        );
 
 
-    renderProducts(filtered);
+    if(filtered.length === 0){
 
-  }
-);
+        grid.innerHTML =
+            `<div class="list-empty">
+                No products found.
+            </div>`;
 
-
-/* ================= SUPPORT ================= */
-
-document.getElementById("contactOwner")
-.addEventListener("click",()=>{
-
-  window.open(
-    "https://t.me/ADXANKIT",
-    "_blank"
-  );
-
-  closeMenu();
-
-});
+        return;
+    }
 
 
-document.getElementById("discordBtn")
-.addEventListener("click",()=>{
+    filtered.forEach(product => {
 
-  window.open(
-    "https://discord.gg/Yttbf69xx",
-    "_blank"
-  );
+        const card =
+            document.createElement("div");
 
-  closeMenu();
-
-});
+        card.className = "card";
 
 
-document.getElementById("telegramCreditBtn")
-.addEventListener("click",()=>{
+        card.innerHTML = `
 
-  window.open(
-    "https://t.me/ADXANKIT",
-    "_blank"
-  );
+            <h3>${product.name}</h3>
 
-});
+            <p>
+                ${product.description}
+            </p>
 
+            <div class="price">
+                ₹${product.price}
+            </div>
 
-document.getElementById("discordCreditBtn")
-.addEventListener("click",()=>{
+            <button class="primary-btn">
+                Buy Now
+            </button>
 
-  window.open(
-    "https://discord.gg/Yttbf69xx",
-    "_blank"
-  );
-
-});
+        `;
 
 
-/* ================= DEMO PURCHASES ================= */
+        card
+            .querySelector("button")
+            .onclick = () => {
 
-function showDemoPurchases(){
+                $("modalProductName")
+                    .textContent = product.name;
 
-  const list =
-    document.getElementById("purchaseList");
+                $("modalProductInfo")
+                    .textContent =
+                    product.description;
+
+                $("modalProductPrice")
+                    .textContent =
+                    product.price;
+
+                $("productModal")
+                    .classList.add("show");
+
+            };
 
 
-  list.innerHTML = `
-    <div class="list-box">
-      <strong>No purchases yet.</strong>
-      <br><br>
-      <span style="color:#8ba8b7;font-size:13px;">
-        Your purchase records will appear here
-        after a verified order.
-      </span>
-    </div>
-  `;
+        grid.appendChild(card);
+
+    });
 
 }
 
 
-showDemoPurchases();
+$("productSearch").addEventListener(
+    "input",
+    event => {
 
-
-/* ================= DEMO TRANSACTIONS ================= */
-
-function showDemoTransactions(){
-
-  const list =
-    document.getElementById("transactionList");
-
-
-  list.innerHTML = `
-    <div class="list-box">
-      <strong>No transactions yet.</strong>
-      <br><br>
-      <span style="color:#8ba8b7;font-size:13px;">
-        Verified account transactions will appear here.
-      </span>
-    </div>
-  `;
-
-}
-
-
-showDemoTransactions();
-
-
-/* ================= ENTER KEY LOGIN ================= */
-
-document
-.getElementById("loginPassword")
-.addEventListener("keydown",event=>{
-
-  if(event.key === "Enter"){
-
-    document
-      .getElementById("loginBtn")
-      .click();
-
-  }
-
-});
-
-
-/* ================= ENTER KEY REGISTER ================= */
-
-document
-.getElementById("registerConfirm")
-.addEventListener("keydown",event=>{
-
-  if(event.key === "Enter"){
-
-    document
-      .getElementById("registerBtn")
-      .click();
-
-  }
-
-});
-
-
-/* ================= INITIAL PAGE ================= */
-
-document
-.querySelectorAll("[data-page]")
-.forEach(button=>{
-
-  button.addEventListener(
-    "click",
-    () => {
-
-      const page =
-        button.getAttribute("data-page");
-
-      if(
-        typeof showPage === "function"
-      ){
-
-        showPage(page);
-
-      }
+        renderProducts(
+            event.target.value
+        );
 
     }
-  );
-
-});
-
-
-console.log(
-  "MINI4C X website loaded successfully."
 );
+
+
+/* MODAL */
+
+$("modalClose").onclick = () => {
+
+    $("productModal")
+        .classList.remove("show");
+
+};
+
+
+$("productModal").onclick = event => {
+
+    if(event.target === $("productModal")){
+
+        $("productModal")
+            .classList.remove("show");
+
+    }
+
+};
+
+
+/* EXPOSE USER */
+
+window.getCurrentUser = () => auth.currentUser;
+
+</script>
+     <script type="module">
+
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    serverTimestamp,
+    query,
+    where,
+    orderBy,
+    getDocs
+} from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+import {
+    getAuth
+} from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+import {
+    initializeApp,
+    getApps
+} from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+/*
+   Firebase app is already initialized in Part 3.
+   Reuse the existing Firebase app.
+*/
+
+const firebaseApp =
+    getApps()[0];
+
+const db =
+    getFirestore(firebaseApp);
+
+const auth =
+    getAuth(firebaseApp);
+
+
+/* ADD CREDIT REQUEST */
+
+const submitBtn =
+    document.getElementById(
+        "submitCreditBtn"
+    );
+
+
+submitBtn.onclick = async () => {
+
+    const user =
+        auth.currentUser;
+
+
+    if(!user){
+
+        alert("Please login first.");
+        return;
+
+    }
+
+
+    const amount =
+        Number(
+            document.getElementById(
+                "creditAmount"
+            ).value
+        );
+
+
+    const utr =
+        document.getElementById(
+            "utrInput"
+        ).value.trim();
+
+
+    const status =
+        document.getElementById(
+            "creditStatus"
+        );
+
+
+    if(!amount || amount <= 0){
+
+        status.style.display = "block";
+        status.textContent =
+            "Please enter a valid amount.";
+
+        return;
+
+    }
+
+
+    if(!utr || utr.length < 6){
+
+        status.style.display = "block";
+        status.textContent =
+            "Please enter a valid UTR/reference number.";
+
+        return;
+
+    }
+
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Submitting...";
+
+
+    try{
+
+        /*
+          IMPORTANT:
+          This only creates a verification request.
+          It does NOT increase the user's balance.
+        */
+
+        await addDoc(
+            collection(
+                db,
+                "creditRequests"
+            ),
+            {
+                uid: user.uid,
+                email: user.email || "",
+                amount: amount,
+                utr: utr,
+                status: "pending",
+                createdAt: serverTimestamp()
+            }
+        );
+
+
+        status.style.display = "block";
+
+        status.textContent =
+            "Verification Pending. Your request has been submitted.";
+
+
+        status.style.color =
+            "#00e6a8";
+
+
+        document.getElementById(
+            "creditAmount"
+        ).value = "";
+
+
+        document.getElementById(
+            "utrInput"
+        ).value = "";
+
+
+        loadCreditRequests();
+
+
+    }catch(error){
+
+        console.error(error);
+
+        status.style.display = "block";
+
+        status.textContent =
+            "Unable to submit request. Check Firebase Firestore rules.";
+
+        status.style.color =
+            "#ff6577";
+
+    }finally{
+
+        submitBtn.disabled = false;
+        submitBtn.textContent =
+            "Submit for Verification";
+
+    }
+
+};
+
+
+/* LOAD USER'S CREDIT REQUESTS */
+
+async function loadCreditRequests(){
+
+    const user =
+        auth.currentUser;
+
+
+    if(!user) return;
+
+
+    const transactionList =
+        document.getElementById(
+            "transactionList"
+        );
+
+
+    try{
+
+        const q =
+            query(
+                collection(
+                    db,
+                    "creditRequests"
+                ),
+                where(
+                    "uid",
+                    "==",
+                    user.uid
+                )
+            );
+
+
+        const snapshot =
+            await getDocs(q);
+
+
+        transactionList.innerHTML = "";
+
+
+        if(snapshot.empty){
+
+            transactionList.innerHTML =
+                `<div class="list-empty">
+                    No transactions found.
+                </div>`;
+
+            return;
+
+        }
+
+
+        const rows = [];
+
+
+        snapshot.forEach(item => {
+
+            rows.push({
+                id:item.id,
+                ...item.data()
+            });
+
+        });
+
+
+        rows.sort((a,b) => {
+
+            const aTime =
+                a.createdAt?.seconds || 0;
+
+            const bTime =
+                b.createdAt?.seconds || 0;
+
+            return bTime - aTime;
+
+        });
+
+
+        rows.forEach(data => {
+
+            const card =
+                document.createElement("div");
+
+            card.className = "card";
+
+
+            const date =
+                data.createdAt?.toDate
+                    ? data.createdAt
+                        .toDate()
+                        .toLocaleString()
+                    : "Pending";
+
+
+            let statusText =
+                data.status || "pending";
+
+
+            statusText =
+                statusText.charAt(0)
+                .toUpperCase()
+                +
+                statusText.slice(1);
+
+
+            card.innerHTML = `
+
+                <h3>
+                    Credit Request
+                </h3>
+
+                <p>
+                    Amount:
+                    <strong style="color:var(--cyan)">
+                        ₹${Number(data.amount || 0).toFixed(2)}
+                    </strong>
+                </p>
+
+                <p style="margin-top:8px">
+                    UTR:
+                    ${escapeHTML(data.utr || "")}
+                </p>
+
+                <p style="margin-top:8px">
+                    Status:
+                    <strong style="color:var(--cyan)">
+                        ${escapeHTML(statusText)}
+                    </strong>
+                </p>
+
+                <p style="margin-top:8px;font-size:12px">
+                    ${escapeHTML(date)}
+                </p>
+
+            `;
+
+
+            transactionList.appendChild(card);
+
+        });
+
+
+    }catch(error){
+
+        console.error(
+            "Transaction loading error:",
+            error
+        );
+
+        transactionList.innerHTML =
+            `<div class="list-empty">
+                Unable to load transactions.
+            </div>`;
+
+    }
+
+}
+
+
+function escapeHTML(value){
+
+    return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+/* REFRESH HISTORY WHEN PAGE OPENS */
+
+document
+    .querySelectorAll(
+        '.menu-item[data-page="transactions"]'
+    )
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => loadCreditRequests()
+        );
+
+    });
+
+
+/* INITIAL LOAD */
+
+if(auth.currentUser){
+
+    loadCreditRequests();
+
+}
 
 </script>
 
 </body>
-</html>
+    </html>
+    </div>
+
+</div>
