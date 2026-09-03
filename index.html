@@ -1,1378 +1,1601 @@
  <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MINI4C X | ADX ANKIT</title>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&display=swap');
-
-*{box-sizing:border-box;margin:0;padding:0}
-
-:root{
-  --blue:#00c8ff;
-  --cyan:#70edff;
-  --bg:#02070d;
-  --card:rgba(5,25,38,.78);
-  --muted:#7f949f;
-}
-
-body{
-  min-height:100vh;
-  font-family:Orbitron,sans-serif;
-  color:#fff;
-  background:
-    radial-gradient(circle at 50% 0%,#073d59 0%,#020910 38%,#010305 100%);
-  overflow-x:hidden;
-}
-
-body:before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  background-image:
-    linear-gradient(rgba(0,200,255,.045) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,200,255,.045) 1px,transparent 1px);
-  background-size:50px 50px;
-}
-
-button,input{
-  font-family:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-.hidden{display:none!important}
-
-/* AUTH */
-
-#auth{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.auth-box{
-  width:100%;
-  max-width:430px;
-  padding:38px 28px;
-  background:rgba(3,18,29,.9);
-  border:1px solid rgba(0,200,255,.4);
-  border-radius:25px;
-  text-align:center;
-  box-shadow:0 0 55px rgba(0,200,255,.15);
-  backdrop-filter:blur(20px);
-}
-
-.auth-logo{
-  font-size:28px;
-  font-weight:900;
-  letter-spacing:3px;
-}
-
-.auth-logo span,
-.logo span,
-.title small,
-.card-price,
-.balance{
-  color:var(--blue);
-}
-
-.auth-brand{
-  color:var(--cyan);
-  font-size:10px;
-  letter-spacing:5px;
-  margin:7px 0 30px;
-}
-
-.auth-title{
-  font-size:21px;
-  letter-spacing:2px;
-}
-
-.auth-text{
-  color:#78909c;
-  font:12px Arial;
-  margin:10px 0 22px;
-}
-
-input{
-  width:100%;
-  padding:14px;
-  margin-bottom:12px;
-  border-radius:10px;
-  border:1px solid rgba(0,200,255,.18);
-  background:#02080d;
-  color:#fff;
-  outline:none;
-}
-
-input:focus{
-  border-color:var(--blue);
-  box-shadow:0 0 18px rgba(0,200,255,.18);
-}
-
-.main-btn{
-  width:100%;
-  padding:14px;
-  border:0;
-  border-radius:10px;
-  background:linear-gradient(135deg,#00bfff,#70edff);
-  color:#001018;
-  font-weight:900;
-}
-
-.google-btn{
-  width:100%;
-  padding:14px;
-  border-radius:10px;
-  background:#fff;
-  color:#111;
-  border:1px solid #555;
-  font-weight:900;
-}
-
-.forgot{
-  margin:13px 0;
-  color:var(--cyan);
-  font:11px Arial;
-  cursor:pointer;
-}
-
-.or{
-  margin:17px 0;
-  color:#607680;
-  font:11px Arial;
-}
-
-.switch{
-  margin-top:18px;
-  color:#718590;
-  font:12px Arial;
-}
-
-.switch span{
-  color:var(--blue);
-  cursor:pointer;
-  font-weight:bold;
-}
-
-.msg{
-  min-height:18px;
-  margin-top:13px;
-  color:var(--cyan);
-  font:11px Arial;
-}
-
-/* APP */
-
-#app{
-  display:none;
-}
-
-nav{
-  position:fixed;
-  z-index:100;
-  top:0;
-  width:100%;
-  padding:15px 5%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  background:rgba(1,7,13,.82);
-  border-bottom:1px solid rgba(0,200,255,.16);
-  backdrop-filter:blur(18px);
-}
-
-.logo{
-  font-size:18px;
-  font-weight:900;
-  letter-spacing:2px;
-}
-
-.nav-right{
-  display:flex;
-  align-items:center;
-  gap:15px;
-}
-
-.user{
-  color:#8da1aa;
-  font:10px Arial;
-}
-
-.user b{
-  color:var(--cyan);
-}
-
-.menu-btn{
-  width:45px;
-  height:42px;
-  padding:0;
-  border-radius:9px;
-  border:1px solid rgba(0,200,255,.4);
-  background:#03141e;
-  color:var(--cyan);
-  font-size:21px;
-}
-
-.side{
-  position:fixed;
-  z-index:200;
-  top:0;
-  right:-300px;
-  width:280px;
-  height:100vh;
-  padding:90px 22px 30px;
-  background:rgba(2,12,20,.97);
-  border-left:1px solid rgba(0,200,255,.3);
-  box-shadow:-15px 0 45px rgba(0,200,255,.1);
-  transition:.3s;
-}
-
-.side.open{
-  right:0;
-}
-
-.side button{
-  width:100%;
-  margin-bottom:10px;
-  padding:14px;
-  border-radius:9px;
-  border:1px solid rgba(0,200,255,.18);
-  background:#04131d;
-  color:#ccebf2;
-  text-align:left;
-}
-
-.side button:hover{
-  border-color:var(--blue);
-  color:var(--cyan);
-}
-
-.close{
-  position:absolute;
-  top:20px;
-  right:20px;
-  background:none!important;
-  border:0!important;
-  color:var(--cyan)!important;
-  font-size:22px;
-  width:auto!important;
-}
-
-main{
-  padding-top:75px;
-}
-
-.page{
-  display:none;
-  min-height:calc(100vh - 75px);
-  padding:70px 6%;
-}
-
-.page.active{
-  display:block;
-}
-
-.hero{
-  min-height:calc(100vh - 75px);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-}
-
-.badge{
-  display:inline-block;
-  padding:9px 17px;
-  border:1px solid var(--blue);
-  border-radius:30px;
-  color:var(--cyan);
-  font-size:9px;
-  letter-spacing:3px;
-  box-shadow:0 0 20px rgba(0,200,255,.18);
-}
-
-.hero h1{
-  margin-top:25px;
-  font-size:clamp(45px,10vw,95px);
-  line-height:.9;
-  letter-spacing:3px;
-}
-
-.hero h1 span{
-  color:var(--blue);
-  text-shadow:0 0 15px var(--blue),0 0 40px rgba(0,200,255,.5);
-}
-
-.hero p{
-  max-width:650px;
-  margin:25px auto;
-  color:#8297a3;
-  font:13px/1.8 Arial;
-}
-
-.owner{
-  margin-top:22px;
-  letter-spacing:4px;
-  font-size:13px;
-}
-
-.owner b{
-  color:var(--blue);
-}
-
-.title{
-  text-align:center;
-  margin-bottom:38px;
-}
-
-.title h2{
-  margin-top:10px;
-  font-size:32px;
-}
-
-.grid{
-  max-width:1100px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:20px;
-}
-
-.card{
-  padding:23px;
-  border:1px solid rgba(0,200,255,.18);
-  border-radius:18px;
-  background:var(--card);
-  backdrop-filter:blur(14px);
-  transition:.3s;
-}
-
-.card:hover{
-  transform:translateY(-6px);
-  border-color:var(--blue);
-  box-shadow:0 12px 35px rgba(0,200,255,.13);
-}
-
-.card img{
-  width:70px;
-  height:70px;
-  object-fit:contain;
-  margin-bottom:15px;
-}
-
-.card h3{
-  font-size:13px;
-  line-height:1.5;
-}
-
-.card p{
-  color:var(--muted);
-  font:12px/1.7 Arial;
-  margin:10px 0;
-}
-
-.variant{
-  width:100%;
-  padding:11px;
-  margin-top:8px;
-  border-radius:8px;
-  border:1px solid rgba(0,200,255,.2);
-  background:#03111a;
-  color:#fff;
-}
-
-.buy-btn{
-  width:100%;
-  padding:12px;
-  margin-top:12px;
-  border:0;
-  border-radius:9px;
-  background:linear-gradient(135deg,#00bfff,#70edff);
-  color:#001018;
-  font-weight:900;
-}
-
-.info-box{
-  max-width:700px;
-  margin:auto;
-  padding:30px;
-  border-radius:20px;
-  background:var(--card);
-  border:1px solid rgba(0,200,255,.2);
-  text-align:center;
-}
-
-.balance{
-  font-size:30px;
-  margin:15px 0 25px;
-}
-
-.support{
-  margin-top:20px;
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-  justify-content:center;
-}
-
-.support a{
-  display:inline-block;
-  padding:13px 18px;
-  border-radius:9px;
-  text-decoration:none;
-  font-size:10px;
-  font-weight:900;
-}
-
-.telegram{
-  background:#70edff;
-  color:#001018;
-}
-
-.discord{
-  background:#fff;
-  color:#111;
-}
-
-.history-item{
-  max-width:850px;
-  margin:10px auto;
-  padding:18px;
-  border:1px solid rgba(0,200,255,.16);
-  border-radius:13px;
-  background:rgba(5,25,38,.7);
-  display:flex;
-  justify-content:space-between;
-  gap:15px;
-  flex-wrap:wrap;
-}
-
-.status{
-  color:var(--cyan);
-}
-
-.logout{
-  margin-top:25px;
-  padding:13px 25px;
-  border-radius:9px;
-  border:1px solid var(--blue);
-  background:transparent;
-  color:var(--cyan);
-}
-
-footer{
-  padding:30px;
-  text-align:center;
-  color:#52636d;
-  font-size:9px;
-  border-top:1px solid rgba(0,200,255,.12);
-}
-
-@media(max-width:600px){
-  .user{display:none}
-  .page{padding:55px 5%}
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>MINI4C X | ADX ANKIT</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial,Helvetica,sans-serif;
+    }
+
+    :root{
+      --cyan:#00d9ff;
+      --blue:#008cff;
+      --dark:#020912;
+      --card:#071522;
+      --border:rgba(0,217,255,.28);
+      --text:#eafaff;
+      --muted:#8da9b8;
+    }
+
+    body{
+      min-height:100vh;
+      background:
+        radial-gradient(circle at 20% 10%,rgba(0,217,255,.12),transparent 30%),
+        radial-gradient(circle at 80% 80%,rgba(0,140,255,.12),transparent 30%),
+        #020912;
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    button,input{
+      font:inherit;
+    }
+
+    button{
+      cursor:pointer;
+    }
+
+    .hidden{
+      display:none!important;
+    }
+
+    /* ================= AUTH ================= */
+
+    #authSection{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+
+    .auth-box{
+      width:100%;
+      max-width:430px;
+      padding:30px 24px;
+      background:rgba(5,18,30,.94);
+      border:1px solid var(--border);
+      border-radius:22px;
+      box-shadow:
+        0 0 35px rgba(0,217,255,.12),
+        inset 0 0 25px rgba(0,217,255,.025);
+    }
+
+    .logo{
+      text-align:center;
+      margin-bottom:25px;
+    }
+
+    .logo h1{
+      font-size:32px;
+      letter-spacing:2px;
+      color:var(--cyan);
+      text-shadow:0 0 18px rgba(0,217,255,.6);
+    }
+
+    .logo p{
+      margin-top:6px;
+      color:var(--muted);
+      font-size:13px;
+      letter-spacing:1px;
+    }
+
+    .auth-title{
+      text-align:center;
+      margin-bottom:20px;
+      font-size:22px;
+    }
+
+    .input-group{
+      margin-bottom:14px;
+    }
+
+    .input-group label{
+      display:block;
+      margin-bottom:7px;
+      color:#a9d7e5;
+      font-size:13px;
+    }
+
+    .input-group input{
+      width:100%;
+      padding:13px 14px;
+      color:white;
+      background:#03101b;
+      border:1px solid rgba(0,217,255,.25);
+      border-radius:11px;
+      outline:none;
+      transition:.2s;
+    }
+
+    .input-group input:focus{
+      border-color:var(--cyan);
+      box-shadow:0 0 12px rgba(0,217,255,.15);
+    }
+
+    .main-btn{
+      width:100%;
+      padding:13px;
+      border:0;
+      border-radius:11px;
+      color:#001019;
+      background:linear-gradient(90deg,var(--cyan),#55eaff);
+      font-weight:800;
+      margin-top:5px;
+      transition:.2s;
+    }
+
+    .main-btn:hover{
+      transform:translateY(-1px);
+      box-shadow:0 0 18px rgba(0,217,255,.35);
+    }
+
+    .google-btn{
+      width:100%;
+      padding:12px;
+      margin-top:10px;
+      border-radius:11px;
+      border:1px solid rgba(255,255,255,.15);
+      background:#0b1824;
+      color:white;
+      font-weight:700;
+    }
+
+    .google-btn:hover{
+      border-color:var(--cyan);
+    }
+
+    .auth-link{
+      display:block;
+      text-align:center;
+      margin-top:15px;
+      color:var(--cyan);
+      font-size:13px;
+      cursor:pointer;
+    }
+
+    .auth-link:hover{
+      text-decoration:underline;
+    }
+
+    .auth-msg{
+      min-height:20px;
+      text-align:center;
+      margin-top:12px;
+      color:#ffb7b7;
+      font-size:13px;
+    }
+
+    /* ================= APP ================= */
+
+    #appSection{
+      min-height:100vh;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      height:64px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 18px;
+      background:rgba(2,12,20,.94);
+      border-bottom:1px solid var(--border);
+      backdrop-filter:blur(12px);
+    }
+
+    .brand{
+      color:var(--cyan);
+      font-weight:900;
+      letter-spacing:1.5px;
+    }
+
+    .user-mini{
+      color:#b9dce7;
+      font-size:13px;
+      margin-right:12px;
+    }
+
+    .menu-btn{
+      width:42px;
+      height:42px;
+      border:1px solid var(--border);
+      border-radius:10px;
+      background:#061622;
+      color:var(--cyan);
+      font-size:22px;
+    }
+
+    .page{
+      display:none;
+      max-width:1100px;
+      margin:auto;
+      padding:28px 18px;
+    }
+
+    .page.active{
+      display:block;
+    }
+
+    .page-title{
+      margin-bottom:20px;
+      color:var(--cyan);
+      font-size:25px;
+    }
+
+    .hero{
+      padding:30px 22px;
+      border:1px solid var(--border);
+      border-radius:20px;
+      background:linear-gradient(
+        145deg,
+        rgba(0,217,255,.08),
+        rgba(0,140,255,.025)
+      );
+      margin-bottom:20px;
+    }
+
+    .hero h2{
+      font-size:30px;
+      margin-bottom:10px;
+    }
+
+    .hero p{
+      color:var(--muted);
+      line-height:1.6;
+    }
+
+    .balance-card{
+      margin-top:20px;
+      padding:20px;
+      border-radius:17px;
+      background:#061522;
+      border:1px solid var(--border);
+    }
+
+    .balance-label{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .balance-value{
+      margin-top:7px;
+      color:var(--cyan);
+      font-size:28px;
+      font-weight:900;
+    }
+
+    /* ================= CARDS ================= */
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+      gap:15px;
+    }
+
+    .card{
+      padding:20px;
+      background:#061522;
+      border:1px solid var(--border);
+      border-radius:17px;
+      box-shadow:0 0 20px rgba(0,217,255,.035);
+    }
+
+    .card h3{
+      margin-bottom:9px;
+      color:#dffaff;
+    }
+
+    .card p{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    .price{
+      margin:15px 0;
+      color:var(--cyan);
+      font-size:22px;
+      font-weight:900;
+    }
+
+    .small-btn{
+      width:100%;
+      padding:11px;
+      border:1px solid var(--cyan);
+      border-radius:10px;
+      background:transparent;
+      color:var(--cyan);
+      font-weight:700;
+    }
+
+    .small-btn:hover{
+      background:rgba(0,217,255,.1);
+    }
+
+    /* ================= SIDE MENU ================= */
+
+    .overlay{
+      position:fixed;
+      inset:0;
+      z-index:90;
+      background:rgba(0,0,0,.55);
+      display:none;
+    }
+
+    .overlay.show{
+      display:block;
+    }
+
+    .side-menu{
+      position:fixed;
+      top:0;
+      right:-310px;
+      z-index:100;
+      width:290px;
+      max-width:85%;
+      height:100vh;
+      padding:20px;
+      background:#03101a;
+      border-left:1px solid var(--border);
+      transition:.25s ease;
+      overflow-y:auto;
+    }
+
+    .side-menu.open{
+      right:0;
+    }
+
+    .menu-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding-bottom:20px;
+      margin-bottom:12px;
+      border-bottom:1px solid rgba(0,217,255,.16);
+    }
+
+    .menu-head h3{
+      color:var(--cyan);
+    }
+
+    .close-menu{
+      background:none;
+      border:0;
+      color:white;
+      font-size:26px;
+    }
+
+    .menu-item{
+      width:100%;
+      text-align:left;
+      padding:13px 12px;
+      margin:4px 0;
+      border:0;
+      border-radius:9px;
+      background:transparent;
+      color:#cce8ef;
+    }
+
+    .menu-item:hover{
+      background:rgba(0,217,255,.08);
+      color:var(--cyan);
+    }
+
+    .logout{
+      color:#ff8585;
+    }
+
+    /* ================= LISTS ================= */
+
+    .list-box{
+      padding:18px;
+      border:1px solid var(--border);
+      border-radius:15px;
+      background:#061522;
+      margin-bottom:12px;
+    }
+
+    .empty{
+      text-align:center;
+      color:var(--muted);
+      padding:30px 10px;
+    }
+
+    /* ================= ACCOUNT ================= */
+
+    .account-row{
+      padding:15px 0;
+      border-bottom:1px solid rgba(255,255,255,.07);
+    }
+
+    .account-row:last-child{
+      border-bottom:0;
+    }
+
+    .account-label{
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:5px;
+    }
+
+    .account-value{
+      color:#e9fbff;
+      word-break:break-word;
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media(max-width:600px){
+      .auth-box{
+        padding:25px 18px;
+      }
+
+      .logo h1{
+        font-size:28px;
+      }
+
+      .hero h2{
+        font-size:24px;
+      }
+
+      .page{
+        padding:22px 14px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- AUTH -->
-<div id="auth">
+  <!-- ================= AUTH SECTION ================= -->
+
+  <section id="authSection">
+
+    <div class="auth-box">
+
+      <div class="logo">
+        <h1>MINI4C X</h1>
+        <p>ADX ANKIT • PREMIUM STORE</p>
+      </div>
+
+      <!-- LOGIN -->
+
+      <div id="loginForm">
+
+        <h2 class="auth-title">Welcome Back</h2>
+
+        <div class="input-group">
+          <label>Email</label>
+          <input
+            id="loginEmail"
+            type="email"
+            placeholder="Enter your email"
+            autocomplete="email"
+          >
+        </div>
+
+        <div class="input-group">
+          <label>Password</label>
+          <input
+            id="loginPassword"
+            type="password"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+          >
+        </div>
 
-<div class="auth-box">
+        <button id="loginBtn" class="main-btn">
+          LOGIN
+        </button>
 
-<div class="auth-logo">
-MINI4C <span>X</span>
-</div>
+        <button id="googleLogin" class="google-btn">
+          Continue with Google
+        </button>
 
-<div class="auth-brand">ADX ANKIT</div>
+        <span id="forgotBtn" class="auth-link">
+          Forgot Password?
+        </span>
 
-<!-- LOGIN -->
-<div id="loginForm">
+        <span id="toRegister" class="auth-link">
+          Create New Account
+        </span>
 
-<div class="auth-title">WELCOME BACK</div>
+        <div id="loginMsg" class="auth-msg"></div>
 
-<p class="auth-text">
-Login to continue.
-</p>
+      </div>
 
-<input id="loginEmail"
-type="email"
-placeholder="Email address">
 
-<input id="loginPassword"
-type="password"
-placeholder="Password">
+      <!-- REGISTER -->
 
-<button class="main-btn" id="loginBtn">
-LOGIN
-</button>
+      <div id="registerForm" class="hidden">
 
-<div class="forgot" id="forgotBtn">
-FORGOT PASSWORD?
-</div>
+        <h2 class="auth-title">Create Account</h2>
 
-<div class="or">— OR —</div>
+        <div class="input-group">
+          <label>Username</label>
+          <input
+            id="registerUsername"
+            type="text"
+            placeholder="Choose username"
+            autocomplete="username"
+          >
+        </div>
 
-<button class="google-btn" id="googleLogin">
-🔵 CONTINUE WITH GOOGLE
-</button>
+        <div class="input-group">
+          <label>Gmail / Email</label>
+          <input
+            id="registerEmail"
+            type="email"
+            placeholder="Enter your email"
+            autocomplete="email"
+          >
+        </div>
 
-<div class="switch">
-Don't have an account?
-<span id="toRegister">CREATE ACCOUNT</span>
-</div>
+        <div class="input-group">
+          <label>Password</label>
+          <input
+            id="registerPassword"
+            type="password"
+            placeholder="Create password"
+            autocomplete="new-password"
+          >
+        </div>
 
-<div class="msg" id="loginMsg"></div>
+        <div class="input-group">
+          <label>Confirm Password</label>
+          <input
+            id="registerConfirm"
+            type="password"
+            placeholder="Confirm password"
+            autocomplete="new-password"
+          >
+        </div>
 
-</div>
+        <button id="registerBtn" class="main-btn">
+          CREATE ACCOUNT
+        </button>
 
-<!-- REGISTER -->
-<div id="registerForm" class="hidden">
+        <button id="googleRegister" class="google-btn">
+          Continue with Google
+        </button>
 
-<div class="auth-title">CREATE ACCOUNT</div>
+        <span id="toLogin" class="auth-link">
+          Already have an account? Login
+        </span>
 
-<p class="auth-text">
-Create your account.
-</p>
+        <div id="registerMsg" class="auth-msg"></div>
 
-<input id="registerUsername"
-type="text"
-placeholder="Username"
-maxlength="30">
+      </div>
 
-<input id="registerEmail"
-type="email"
-placeholder="Email address">
+    </div>
 
-<input id="registerPassword"
-type="password"
-placeholder="Create password">
+  </section>
 
-<input id="registerConfirm"
-type="password"
-placeholder="Confirm password">
 
-<button class="main-btn" id="registerBtn">
-CREATE ACCOUNT
-</button>
+  <!-- ================= APP SECTION ================= -->
 
-<div class="or">— OR —</div>
+  <section id="appSection" class="hidden">
 
-<button class="google-btn" id="googleRegister">
-🔵 CONTINUE WITH GOOGLE
-</button>
+    <!-- TOP BAR -->
 
-<div class="switch">
-Already have an account?
-<span id="toLogin">LOGIN</span>
-</div>
+    <header class="topbar">
 
-<div class="msg" id="registerMsg"></div>
+      <div class="brand">
+        MINI4C X
+      </div>
 
-</div>
+      <div>
+        <span id="currentUsername" class="user-mini">
+          User
+        </span>
 
-</div>
-</div>
+        <button id="menuBtn" class="menu-btn">
+          ☰
+        </button>
+      </div>
 
-<!-- APP -->
-<div id="app">
+    </header>
 
-<nav>
 
-<div class="logo">
-MINI4C <span>X</span>
-</div>
+    <!-- MENU OVERLAY -->
 
-<div class="nav-right">
-<div class="user">
-USER: <b id="currentUsername">USER</b>
-</div>
+    <div id="menuOverlay" class="overlay"></div>
 
-<button class="menu-btn" id="menuBtn">
-☰
-</button>
-</div>
 
-</nav>
+    <!-- SIDE MENU -->
 
-<!-- SIDE MENU -->
-<div class="side" id="sideMenu">
+    <aside id="sideMenu" class="side-menu">
 
-<button class="close" id="closeMenu">×</button>
+      <div class="menu-head">
 
-<button data-page="home">🏠 HOME</button>
-<button data-page="buy">🛒 BUY</button>
-<button data-page="purchases">📦 MY PURCHASES</button>
-<button data-page="credits">💳 ADD CREDITS</button>
-<button data-page="transactions">🧾 TRANSACTION HISTORY</button>
-<button data-page="account">👤 MY ACCOUNT</button>
+        <h3>MENU</h3>
 
-<button onclick="window.open('https://t.me/ADXANKIT','_blank')">
-✈️ CONTACT OWNER
-</button>
+        <button id="closeMenu" class="close-menu">
+          ×
+        </button>
 
-<button onclick="window.open('https://discord.gg/Yttbf69xx','_blank')">
-💬 DISCORD
-</button>
+      </div>
 
-<button id="logoutBtn">
-🚪 LOGOUT
-</button>
+      <button class="menu-item" data-page="home">
+        Home
+      </button>
 
-</div>
+      <button class="menu-item" data-page="buy">
+        Buy
+      </button>
 
-<main>
+      <button class="menu-item" data-page="purchases">
+        My Purchases
+      </button>
 
-<!-- HOME -->
-<section class="page active" id="home">
+      <button class="menu-item" data-page="credits">
+        Add Credits
+      </button>
 
-<div class="hero">
+      <button class="menu-item" data-page="transactions">
+        Transaction History
+      </button>
 
-<div>
+      <button class="menu-item" data-page="account">
+        My Account
+      </button>
 
-<div class="badge">
-WELCOME TO THE OFFICIAL EXPERIENCE
-</div>
+      <button id="contactOwner" class="menu-item">
+        Contact Owner
+      </button>
 
-<h1>
-MINI4C<br>
-<span>X</span>
-</h1>
+      <button id="discordBtn" class="menu-item">
+        Discord
+      </button>
 
-<div class="owner">
-OWNER — <b>ADX ANKIT</b>
-</div>
+      <button id="logoutBtn" class="menu-item logout">
+        Logout
+      </button>
 
-<p>
-Premium digital store interface with a smooth,
-modern and gaming-inspired identity.
-</p>
+    </aside>
 
-</div>
 
-</div>
+    <!-- ================= HOME ================= -->
 
-</section>
+    <main id="home" class="page active">
 
-<!-- BUY -->
-<section class="page" id="buy">
+      <div class="hero">
 
-<div class="title">
-<small>STORE</small>
-<h2>BUY PRODUCTS</h2>
-</div>
+        <h2>Welcome to MINI4C X</h2>
 
-<div class="grid" id="productGrid"></div>
+        <p>
+          Premium digital store powered by ADX ANKIT.
+          Manage your account, credits, purchases and
+          transaction history from one place.
+        </p>
 
-</section>
+        <div class="balance-card">
 
-<!-- PURCHASES -->
-<section class="page" id="purchases">
+          <div class="balance-label">
+            Available Balance
+          </div>
 
-<div class="title">
-<small>ACCOUNT</small>
-<h2>MY PURCHASES</h2>
-</div>
+          <div id="balance" class="balance-value">
+            ₹0
+          </div>
 
-<div id="purchaseList"></div>
+        </div>
 
-</section>
+      </div>
 
-<!-- CREDITS -->
-<section class="page" id="credits">
+      <div class="grid">
 
-<div class="title">
-<small>WALLET</small>
-<h2>ADD CREDITS</h2>
-</div>
+        <div class="card">
+          <h3>Quick Buy</h3>
+          <p>
+            Browse available digital products.
+          </p>
+          <br>
+          <button class="small-btn" data-page="buy">
+            OPEN STORE
+          </button>
+        </div>
 
-<div class="info-box">
+        <div class="card">
+          <h3>Add Credits</h3>
+          <p>
+            Follow the supported payment process
+            to request a credit update.
+          </p>
+          <br>
+          <button class="small-btn" data-page="credits">
+            ADD CREDITS
+          </button>
+        </div>
 
-<p>
-Your current balance
-</p>
+        <div class="card">
+          <h3>My Account</h3>
+          <p>
+            View your account information.
+          </p>
+          <br>
+          <button class="small-btn" data-page="account">
+            ACCOUNT
+          </button>
+        </div>
 
-<div class="balance" id="balance">
-₹0
-</div>
+      </div>
 
-<p>
-Payment verification is handled server-side.
-Do not trust client-side balance changes.
-</p>
+    </main>
 
-<div class="support">
 
-<a class="telegram"
-href="https://t.me/ADXANKIT"
-target="_blank">
-CONTACT OWNER
-</a>
+    <!-- ================= BUY ================= -->
 
-<a class="discord"
-href="https://discord.gg/Yttbf69xx"
-target="_blank">
-DISCORD SUPPORT
-</a>
+    <main id="buy" class="page">
 
-</div>
+      <h2 class="page-title">
+        Store
+      </h2>
 
-</div>
+      <div id="productGrid" class="grid">
 
-</section>
+        <!-- Products will be inserted by Part 2 -->
 
-<!-- TRANSACTIONS -->
-<section class="page" id="transactions">
+      </div>
 
-<div class="title">
-<small>WALLET</small>
-<h2>TRANSACTION HISTORY</h2>
-</div>
+    </main>
 
-<div id="transactionList"></div>
 
-</section>
+    <!-- ================= PURCHASES ================= -->
 
-<!-- ACCOUNT -->
-<section class="page" id="account">
+    <main id="purchases" class="page">
 
-<div class="title">
-<small>PROFILE</small>
-<h2>MY ACCOUNT</h2>
-</div>
+      <h2 class="page-title">
+        My Purchases
+      </h2>
 
-<div class="info-box">
+      <div id="purchaseList">
 
-<p>Username</p>
-<h2 id="accountUsername">USER</h2>
+        <div class="empty">
+          No purchases yet.
+        </div>
 
-<br>
+      </div>
 
-<p>Email</p>
-<p id="accountEmail">-</p>
+    </main>
 
-<button class="logout" id="logoutBtn2">
-LOGOUT
-</button>
 
-</div>
+    <!-- ================= CREDITS ================= -->
 
-</section>
+    <main id="credits" class="page">
 
-</main>
+      <h2 class="page-title">
+        Add Credits
+      </h2>
 
-<footer>
-© 2026 <b>MINI4C X</b> — OWNER ADX ANKIT
-</footer>
+      <div class="card">
 
-</div>
+        <h3>Credit Request</h3>
 
-<!-- FIREBASE -->
-<script type="module">
+        <p>
+          Use the official payment/support process.
+          Credit changes should be verified server-side
+          before your balance is updated.
+        </p>
 
-import {initializeApp}
-from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+        <br>
 
-import {
-getAuth,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword,
-GoogleAuthProvider,
-signInWithPopup,
-sendPasswordResetEmail,
-onAuthStateChanged,
-signOut,
-updateProfile
-}
-from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+        <button id="telegramCreditBtn" class="small-btn">
+          CONTACT ON TELEGRAM
+        </button>
 
-import {
-getFirestore,
-doc,
-setDoc,
-getDoc
-}
-from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+        <br><br>
 
+        <button id="discordCreditBtn" class="small-btn">
+          CONTACT ON DISCORD
+        </button>
 
-/* FIREBASE CONFIG */
+      </div>
 
-const firebaseConfig={
-  authDomain: "mini4c-3962c.firebaseapp.com",
-  projectId: "mini4c-3962c",
-  storageBucket: "mini4c-3962c.appspot.com",
-  messagingSenderId: "675135759481",
-  appId: "1:675135759481:web:35ad65da74e145ee2bca4b"
-};
+    </main>
 
 
-const firebaseApp=initializeApp(firebaseConfig);
+    <!-- ================= TRANSACTIONS ================= -->
 
-const auth=getAuth(firebaseApp);
+    <main id="transactions" class="page">
 
-const db=getFirestore(firebaseApp);
+      <h2 class="page-title">
+        Transaction History
+      </h2>
 
-const googleProvider=new GoogleAuthProvider();
+      <div id="transactionList">
 
+        <div class="empty">
+          No transactions yet.
+        </div>
 
-/* ELEMENTS */
+      </div>
 
-const authScreen=
-document.getElementById("auth");
+    </main>
 
-const appScreen=
-document.getElementById("app");
 
-const sideMenu=
-document.getElementById("sideMenu");
+    <!-- ================= ACCOUNT ================= -->
 
+    <main id="account" class="page">
 
-/* ERROR */
+      <h2 class="page-title">
+        My Account
+      </h2>
 
-function errorText(error){
+      <div class="card">
 
-const map={
+        <div class="account-row">
 
-"auth/invalid-email":
-"Invalid email address.",
+          <div class="account-label">
+            Username
+          </div>
 
-"auth/user-not-found":
-"Account not found.",
+          <div id="accountUsername" class="account-value">
+            —
+          </div>
 
-"auth/wrong-password":
-"Incorrect password.",
+        </div>
 
-"auth/invalid-credential":
-"Incorrect email or password.",
+        <div class="account-row">
 
-"auth/email-already-in-use":
-"Email is already registered.",
+          <div class="account-label">
+            Email
+          </div>
 
-"auth/weak-password":
-"Password must be at least 6 characters.",
+          <div id="accountEmail" class="account-value">
+            —
+          </div>
 
-"auth/popup-closed-by-user":
-"Google login cancelled."
+        </div>
 
-};
+        <div class="account-row">
 
-return map[error.code]||
-error.message||
-"Something went wrong.";
+          <div class="account-label">
+            User ID
+          </div>
 
-}
+          <div id="accountUid" class="account-value">
+            —
+          </div>
 
+        </div>
 
-/* FORM SWITCH */
+        <br>
 
-document.getElementById("toRegister").onclick=()=>{
+        <button id="logoutBtn2" class="small-btn">
+          LOGOUT
+        </button>
 
-document.getElementById("loginForm").classList.add("hidden");
+      </div>
 
-document.getElementById("registerForm").classList.remove("hidden");
+    </main>
 
-};
+  </section>
+  <!-- ================= PART 2 ================= -->
 
+  <script type="module">
 
-document.getElementById("toLogin").onclick=()=>{
+    /* ================= FIREBASE ================= */
 
-document.getElementById("registerForm").classList.add("hidden");
+    import { initializeApp }
+      from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
-document.getElementById("loginForm").classList.remove("hidden");
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      sendPasswordResetEmail,
+      onAuthStateChanged,
+      signOut,
+      updateProfile
+    }
+      from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
-};
+    import {
+      getFirestore,
+      doc,
+      setDoc,
+      getDoc
+    }
+      from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 
-/* REGISTER */
+    const firebaseConfig = {
+      apiKey: "AIzaSyAIRd6GaQ_Hczk8RQm-dY2WdcBTqOMNNSE",
+      authDomain: "mini4c-3962c.firebaseapp.com",
+      projectId: "mini4c-3962c",
+      storageBucket: "mini4c-3962c.firebasestorage.app",
+      messagingSenderId: "675135759481",
+      appId: "1:675135759481:web:fd49b233966412020c20a8",
+      measurementId: "G-JYF4M873QW"
+    };
 
-document.getElementById("registerBtn").onclick=async()=>{
 
-const username=
-document.getElementById("registerUsername").value.trim();
+    const app = initializeApp(firebaseConfig);
 
-const email=
-document.getElementById("registerEmail").value.trim();
+    const auth = getAuth(app);
 
-const password=
-document.getElementById("registerPassword").value;
+    const db = getFirestore(app);
 
-const confirm=
-document.getElementById("registerConfirm").value;
 
-const msg=
-document.getElementById("registerMsg");
+    /* ================= VARIABLES ================= */
 
+    const authSection =
+      document.getElementById("authSection");
 
-if(!username||!email||!password||!confirm){
+    const appSection =
+      document.getElementById("appSection");
 
-msg.textContent="Please fill all fields.";
+    const loginForm =
+      document.getElementById("loginForm");
 
-return;
+    const registerForm =
+      document.getElementById("registerForm");
 
-}
 
-if(username.length<3){
+    /* ================= LOGIN / REGISTER SWITCH ================= */
 
-msg.textContent=
-"Username must contain at least 3 characters.";
+    document.getElementById("toRegister").onclick = () => {
 
-return;
+      loginForm.classList.add("hidden");
 
-}
+      registerForm.classList.remove("hidden");
 
-if(password.length<6){
+      document.getElementById("loginMsg").textContent = "";
 
-msg.textContent=
-"Password must contain at least 6 characters.";
+    };
 
-return;
 
-}
+    document.getElementById("toLogin").onclick = () => {
 
-if(password!==confirm){
+      registerForm.classList.add("hidden");
 
-msg.textContent=
-"Passwords do not match.";
+      loginForm.classList.remove("hidden");
 
-return;
+      document.getElementById("registerMsg").textContent = "";
 
-}
+    };
 
-msg.textContent="Creating account...";
 
-try{
+    /* ================= CREATE ACCOUNT ================= */
 
-const credential=
-await createUserWithEmailAndPassword(
-auth,email,password
-);
+    document.getElementById("registerBtn").onclick =
+      async () => {
 
-const user=credential.user;
+        const username =
+          document.getElementById("registerUsername")
+            .value.trim();
 
-await updateProfile(user,{
-displayName:username
-});
+        const email =
+          document.getElementById("registerEmail")
+            .value.trim();
 
-await setDoc(
-doc(db,"users",user.uid),
-{
-uid:user.uid,
-username:username,
-email:user.email,
-createdAt:new Date().toISOString()
-}
-);
+        const password =
+          document.getElementById("registerPassword")
+            .value;
 
-msg.textContent=
-"Account created successfully.";
+        const confirm =
+          document.getElementById("registerConfirm")
+            .value;
 
-}catch(error){
+        const msg =
+          document.getElementById("registerMsg");
 
-msg.textContent=
-errorText(error);
 
-}
+        msg.textContent = "";
 
-};
 
+        if (!username) {
 
-/* LOGIN */
+          msg.textContent = "Username enter karo.";
 
-document.getElementById("loginBtn").onclick=async()=>{
+          return;
 
-const email=
-document.getElementById("loginEmail").value.trim();
+        }
 
-const password=
-document.getElementById("loginPassword").value;
 
-const msg=
-document.getElementById("loginMsg");
+        if (!email) {
 
+          msg.textContent = "Email enter karo.";
 
-if(!email||!password){
+          return;
 
-msg.textContent=
-"Enter email and password.";
+        }
 
-return;
 
-}
+        if (password.length < 6) {
 
-msg.textContent="Logging in...";
+          msg.textContent =
+            "Password kam se kam 6 characters ka hona chahiye.";
 
-try{
+          return;
 
-await signInWithEmailAndPassword(
-auth,email,password
-);
+        }
 
-}catch(error){
 
-msg.textContent=
-errorText(error);
+        if (password !== confirm) {
 
-}
+          msg.textContent =
+            "Passwords match nahi kar rahe.";
 
-};
+          return;
 
+        }
 
-/* FORGOT PASSWORD */
 
-document.getElementById("forgotBtn").onclick=async()=>{
+        try {
 
-const email=
-document.getElementById("loginEmail").value.trim();
+          const result =
+            await createUserWithEmailAndPassword(
+              auth,
+              email,
+              password
+            );
 
-const msg=
-document.getElementById("loginMsg");
 
-if(!email){
+          const user = result.user;
 
-msg.textContent=
-"Enter your email first.";
 
-return;
+          await updateProfile(user, {
+            displayName: username
+          });
 
-}
 
-try{
+          await setDoc(
+            doc(db, "users", user.uid),
+            {
+              uid: user.uid,
+              username: username,
+              email: email,
+              balance: 0,
+              createdAt: new Date().toISOString()
+            }
+          );
 
-await sendPasswordResetEmail(
-auth,email
-);
 
-msg.textContent=
-"Password reset email sent.";
+          msg.style.color = "#7dffb2";
 
-}catch(error){
+          msg.textContent =
+            "Account created successfully!";
 
-msg.textContent=
-errorText(error);
 
-}
+        } catch (error) {
 
-};
+          console.error(error);
 
+          msg.style.color = "#ff8585";
 
-/* GOOGLE */
+          msg.textContent =
+            firebaseError(error);
 
-async function googleLogin(msgId){
+        }
 
-const msg=
-document.getElementById(msgId);
+      };
 
-try{
 
-await signInWithPopup(
-auth,
-googleProvider
-);
+    /* ================= LOGIN ================= */
 
-}catch(error){
+    document.getElementById("loginBtn").onclick =
+      async () => {
 
-msg.textContent=
-errorText(error);
+        const email =
+          document.getElementById("loginEmail")
+            .value.trim();
 
-}
+        const password =
+          document.getElementById("loginPassword")
+            .value;
 
-}
+        const msg =
+          document.getElementById("loginMsg");
 
-document.getElementById("googleLogin").onclick=
-()=>googleLogin("loginMsg");
 
-document.getElementById("googleRegister").onclick=
-()=>googleLogin("registerMsg");
+        msg.textContent = "";
 
 
-/* MENU */
+        if (!email || !password) {
 
-document.getElementById("menuBtn").onclick=()=>{
-sideMenu.classList.add("open");
-};
+          msg.textContent =
+            "Email aur password enter karo.";
 
-document.getElementById("closeMenu").onclick=()=>{
-sideMenu.classList.remove("open");
-};
+          return;
 
+        }
 
-/* PAGES */
 
-document.querySelectorAll("[data-page]").forEach(btn=>{
+        try {
 
-btn.onclick=()=>{
+          await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
 
-const page=btn.dataset.page;
 
-document.querySelectorAll(".page")
-.forEach(p=>p.classList.remove("active"));
+          msg.style.color = "#7dffb2";
 
-document.getElementById(page)
-.classList.add("active");
+          msg.textContent = "Login successful!";
 
-sideMenu.classList.remove("open");
 
-if(page==="buy")renderProducts();
+        } catch (error) {
 
-};
+          console.error(error);
 
-});
+          msg.style.color = "#ff8585";
 
+          msg.textContent =
+            firebaseError(error);
 
-/* PRODUCTS */
+        }
 
-const products=[
+      };
 
-{
-id:1,
-name:"Digital Product Alpha",
-img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",
-variants:[
-{days:"1 Day",price:70},
-{days:"7 Days",price:250},
-{days:"30 Days",price:700}
-]
-},
 
-{
-id:2,
-name:"Digital Product Beta",
-img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",
-variants:[
-{days:"1 Day",price:50},
-{days:"7 Days",price:270},
-{days:"30 Days",price:750}
-]
-},
+    /* ================= GOOGLE BUTTON ================= */
 
-{
-id:3,
-name:"Digital Product Gamma",
-img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",
-variants:[
-{days:"3 Days",price:150},
-{days:"7 Days",price:300},
-{days:"30 Days",price:700}
-]
-}
+    document.getElementById("googleLogin").onclick =
+      () => {
 
-];
+        document.getElementById("loginMsg").style.color =
+          "#ffd36a";
 
+        document.getElementById("loginMsg").textContent =
+          "Google Login abhi available nahi hai.";
 
-/* RENDER */
+      };
 
-function renderProducts(){
 
-const grid=
-document.getElementById("productGrid");
+    document.getElementById("googleRegister").onclick =
+      () => {
 
-grid.innerHTML="";
+        document.getElementById("registerMsg").style.color =
+          "#ffd36a";
 
-products.forEach(product=>{
+        document.getElementById("registerMsg").textContent =
+          "Google Login abhi available nahi hai.";
 
-const card=
-document.createElement("div");
+      };
 
-card.className="card";
 
-card.innerHTML=`
+    /* ================= FORGOT PASSWORD ================= */
 
-<img src="${product.img}" alt="Product">
+    document.getElementById("forgotBtn").onclick =
+      async () => {
 
-<h3>${product.name}</h3>
+        const email =
+          document.getElementById("loginEmail")
+            .value.trim();
 
-<p>Select duration:</p>
+        const msg =
+          document.getElementById("loginMsg");
 
-<select class="variant">
 
-${product.variants.map((v,i)=>`
-<option value="${i}">
-${v.days} — ₹${v.price}
-</option>
-`).join("")}
+        if (!email) {
 
-</select>
+          msg.style.color = "#ffd36a";
 
-<button class="buy-btn">
-BUY NOW
-</button>
+          msg.textContent =
+            "Pehle apna email enter karo.";
 
-`;
+          return;
 
-card.querySelector(".buy-btn").onclick=()=>{
+        }
 
-const select=
-card.querySelector(".variant");
 
-const selected=
-product.variants[select.value];
+        try {
 
-showSupportMessage(
-product.name,
-selected.price,
-selected.days
-);
+          await sendPasswordResetEmail(
+            auth,
+            email
+          );
 
-};
 
-grid.appendChild(card);
+          msg.style.color = "#7dffb2";
 
-});
+          msg.textContent =
+            "Password reset email bhej diya gaya.";
 
-}
+        } catch (error) {
 
+          console.error(error);
 
-/* PURCHASE MESSAGE */
+          msg.style.color = "#ff8585";
 
-function showSupportMessage(name,price,duration){
+          msg.textContent =
+            firebaseError(error);
 
-const purchaseList=
-document.getElementById("purchaseList");
+        }
 
-const item=
-document.createElement("div");
+      };
 
-item.className="card";
 
-item.innerHTML=`
+    /* ================= AUTH STATE ================= */
 
-<h3>Purchase Request</h3>
+    onAuthStateChanged(
+      auth,
+      async (user) => {
 
-<p>
-Product: <b>${name}</b>
-</p>
+        if (user) {
 
-<p>
-Duration: <b>${duration}</b>
-</p>
+          authSection.classList.add("hidden");
 
-<p>
-Amount: <b>₹${price}</b>
-</p>
+          appSection.classList.remove("hidden");
 
-<p>
-For the legitimate digital product/order,
-contact support using one of the links below.
-</p>
+          await loadUser(user);
 
-<div class="support">
+          showPage("home");
 
-<a class="telegram"
-href="https://t.me/ADXANKIT"
-target="_blank">
-TELEGRAM
-</a>
+        } else {
 
-<a class="discord"
-href="https://discord.gg/Yttbf69xx"
-target="_blank">
-DISCORD
-</a>
+          authSection.classList.remove("hidden");
 
-</div>
+          appSection.classList.add("hidden");
 
-`;
+        }
 
-purchaseList.prepend(item);
+      }
+    );
 
-document.querySelectorAll(".page")
-.forEach(p=>p.classList.remove("active"));
 
-document.getElementById("purchases")
-.classList.add("active");
+    /* ================= LOAD USER ================= */
 
-}
+    async function loadUser(user) {
 
+      let username =
+        user.displayName || "User";
 
-/* AUTH STATE */
 
-onAuthStateChanged(auth,async(user)=>{
+      try {
 
-if(user){
+        const userRef =
+          doc(db, "users", user.uid);
 
-authScreen.style.display="none";
+        const snap =
+          await getDoc(userRef);
 
-appScreen.style.display="block";
 
-let username=
-user.displayName||
-"USER";
+        if (snap.exists()) {
 
-try{
+          const data = snap.data();
 
-const snap=
-await getDoc(
-doc(db,"users",user.uid)
-);
+          username =
+            data.username ||
+            user.displayName ||
+            "User";
 
-if(snap.exists()){
 
-username=
-snap.data().username||
-username;
+          const balance =
+            Number(data.balance || 0);
 
-}
+          document.getElementById("balance")
+            .textContent =
+            "₹" + balance.toFixed(2);
 
-}catch(e){
+        } else {
 
-console.error(e);
+          document.getElementById("balance")
+            .textContent = "₹0.00";
 
-}
+        }
 
-document.getElementById(
-"currentUsername"
-).textContent=username;
+      } catch (error) {
 
-document.getElementById(
-"accountUsername"
-).textContent=username;
+        console.error(error);
 
-document.getElementById(
-"accountEmail"
-).textContent=
-user.email||"-";
+        document.getElementById("balance")
+          .textContent = "₹0.00";
 
-}else{
+      }
 
-authScreen.style.display="flex";
 
-appScreen.style.display="none";
+      document.getElementById("currentUsername")
+        .textContent = username;
 
-}
 
-});
+      document.getElementById("accountUsername")
+        .textContent = username;
 
 
-/* LOGOUT */
+      document.getElementById("accountEmail")
+        .textContent =
+        user.email || "—";
 
-async function logout(){
 
-await signOut(auth);
+      document.getElementById("accountUid")
+        .textContent =
+        user.uid;
 
-}
+    }
 
-document.getElementById("logoutBtn").onclick=logout;
 
-document.getElementById("logoutBtn2").onclick=logout;
+    /* ================= PAGE NAVIGATION ================= */
 
+    function showPage(pageName) {
 
-/* INITIAL */
+      document
+        .querySelectorAll(".page")
+        .forEach(page => {
 
-renderProducts();
+          page.classList.remove("active");
 
-</script>
+        });
+
+
+      const target =
+        document.getElementById(pageName);
+
+
+      if (target) {
+
+        target.classList.add("active");
+
+      }
+
+    }
+
+
+    document
+      .querySelectorAll("[data-page]")
+      .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+          showPage(
+            button.getAttribute("data-page")
+          );
+
+          closeMenu();
+
+        });
+
+      });
+
+
+    /* ================= MENU ================= */
+
+    const sideMenu =
+      document.getElementById("sideMenu");
+
+    const overlay =
+      document.getElementById("menuOverlay");
+
+
+    document.getElementById("menuBtn")
+      .onclick = () => {
+
+        sideMenu.classList.add("open");
+
+        overlay.classList.add("show");
+
+      };
+
+
+    function closeMenu() {
+
+      sideMenu.classList.remove("open");
+
+      overlay.classList.remove("show");
+
+    }
+
+
+    document.getElementById("closeMenu")
+      .onclick = closeMenu;
+
+
+    overlay.onclick = closeMenu;
+
+
+    /* ================= PRODUCTS ================= */
+
+    const products = [
+
+      {
+        name: "Digital Product Alpha",
+        description:
+          "Premium digital product.",
+        price: 70
+      },
+
+      {
+        name: "Digital Product Beta",
+        description:
+          "Premium digital product.",
+        price: 50
+      },
+
+      {
+        name: "Digital Product Gamma",
+        description:
+          "Premium digital product.",
+        price: 150
+      }
+
+    ];
+
+
+    const productGrid =
+      document.getElementById("productGrid");
+
+
+    products.forEach(product => {
+
+      const card =
+        document.createElement("div");
+
+      card.className = "card";
+
+
+      card.innerHTML = `
+
+        <h3>${product.name}</h3>
+
+        <p>
+          ${product.description}
+        </p>
+
+        <div class="price">
+          ₹${product.price}
+        </div>
+
+        <button class="small-btn">
+          REQUEST ORDER
+        </button>
+
+      `;
+
+
+      card.querySelector("button")
+        .onclick = () => {
+
+          window.open(
+            "https://t.me/ADXANKIT",
+            "_blank"
+          );
+
+        };
+
+
+      productGrid.appendChild(card);
+
+    });
+
+
+    /* ================= CONTACT ================= */
+
+    document.getElementById("contactOwner")
+      .onclick = () => {
+
+        window.open(
+          "https://t.me/ADXANKIT",
+          "_blank"
+        );
+
+        closeMenu();
+
+      };
+
+
+    document.getElementById("discordBtn")
+      .onclick = () => {
+
+        window.open(
+          "https://discord.gg/Yttbf69xx",
+          "_blank"
+        );
+
+        closeMenu();
+
+      };
+
+
+    document.getElementById("telegramCreditBtn")
+      .onclick = () => {
+
+        window.open(
+          "https://t.me/ADXANKIT",
+          "_blank"
+        );
+
+      };
+
+
+    document.getElementById("discordCreditBtn")
+      .onclick = () => {
+
+        window.open(
+          "https://discord.gg/Yttbf69xx",
+          "_blank"
+        );
+
+      };
+
+
+    /* ================= LOGOUT ================= */
+
+    async function logout() {
+
+      try {
+
+        await signOut(auth);
+
+      } catch (error) {
+
+        console.error(error);
+
+      }
+
+    }
+
+
+    document.getElementById("logoutBtn")
+      .onclick = logout;
+
+
+    document.getElementById("logoutBtn2")
+      .onclick = logout;
+
+
+    /* ================= FIREBASE ERROR ================= */
+
+    function firebaseError(error) {
+
+      const code =
+        error?.code || "";
+
+
+      switch (code) {
+
+        case "auth/invalid-email":
+          return "Email address valid nahi hai.";
+
+        case "auth/email-already-in-use":
+          return "Ye email already registered hai.";
+
+        case "auth/weak-password":
+          return "Password bahut weak hai.";
+
+        case "auth/user-not-found":
+          return "Is email ka account nahi mila.";
+
+        case "auth/wrong-password":
+          return "Password galat hai.";
+
+        case "auth/invalid-credential":
+          return "Email ya password galat hai.";
+
+        case "auth/network-request-failed":
+          return "Internet connection check karo.";
+
+        case "auth/operation-not-allowed":
+          return "Email/Password sign-in Firebase mein enable nahi hai.";
+
+        case "auth/unauthorized-domain":
+          return "GitHub Pages domain Firebase mein authorize nahi hai.";
+
+        case "permission-denied":
+          return "Firebase Firestore permission denied.";
+
+        default:
+          return error?.message ||
+            "Something went wrong.";
+
+      }
+
+    }
+
+  </script>
+
 
 </body>
- </html>
- 
+</html>
