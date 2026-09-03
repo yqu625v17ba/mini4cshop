@@ -4,8 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MINI4C Store</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --card-bg: #14141f;
+            --accent: #ff003c;
+            --blue: #00f0ff;
+            --text: #ffffff;
+            --border: rgba(255, 0, 60, 0.25);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background: var(--bg); color: var(--text); padding-bottom: 30px; }
+
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; background: var(--card-bg); border-bottom: 1px solid var(--border); }
+        .logo { font-weight: bold; color: var(--accent); font-size: 18px; }
+        .wallet-bar { display: flex; gap: 12px; align-items: center; font-weight: bold; color: var(--blue); }
+
+        .container { max-width: 1000px; margin: 25px auto; padding: 0 15px; }
+        .tab-buttons { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab-btn { padding: 10px 18px; background: var(--card-bg); border: 1px solid var(--border); color: #fff; cursor: pointer; border-radius: 6px; }
+        .tab-btn.active { border-color: var(--accent); color: var(--accent); }
+
+        .section { display: none; }
+        .section.active { display: block; }
+        .section-title { font-size: 18px; color: var(--accent); }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; }
+        .product-card { background: var(--card-bg); border: 1px solid var(--border); padding: 18px; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between; }
+        .product-card h3 { font-size: 14px; margin-bottom: 10px; color: #fff; }
+
+        .btn-primary { background: var(--accent); color: #fff; border: none; padding: 8px 14px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .btn-success { background: #00ff66; color: #000; border: none; width: 100%; padding: 10px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .btn-close { background: #222; color: #aaa; border: none; width: 100%; padding: 8px; margin-top: 10px; border-radius: 5px; cursor: pointer; }
+
+        .input-field { width: 100%; padding: 10px; background: rgba(0,0,0,0.6); border: 1px solid var(--border); color: #fff; border-radius: 5px; outline: none; margin-top: 5px; }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-card { background: var(--card-bg); border: 1px solid var(--accent); padding: 22px; width: 90%; max-width: 380px; border-radius: 10px; }
+        .qr-box { margin-top: 15px; text-align: center; }
+        .qr-box img { width: 160px; height: 160px; background: #fff; padding: 8px; border-radius: 6px; }
+        .qr-text { color: var(--blue); font-weight: bold; margin-top: 8px; }
+        .utr-box { text-align: left; margin-top: 12px; font-size: 12px; }
+
+        .utr-item { background: #1a1a26; border: 1px solid #333; padding: 12px; border-radius: 6px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+    </style>
 </head>
 <body>
 
@@ -23,19 +67,16 @@
             <button onclick="switchTab('admin')" class="tab-btn" id="adminTabBtn">Admin Panel</button>
         </div>
 
-        <!-- Store Section -->
         <section id="storeSection" class="section active">
             <div id="productGrid" class="grid"></div>
         </section>
 
-        <!-- Admin Section -->
         <section id="adminSection" class="section">
             <h3 class="section-title">Pending UTR Verification Requests</h3>
             <div id="utrRequestsList" style="margin-top: 15px;"></div>
         </section>
     </main>
 
-    <!-- Payment Modal -->
     <div id="fundModal" class="modal">
         <div class="modal-card">
             <h3>Add Funds via UPI</h3>
@@ -56,213 +97,170 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        const defaultProducts = [
+            { id: 1, name: "DELTA PROXY IOS IPHONE", price: 150 },
+            { id: 2, name: "MIGUL IPHONE IOS SERVICE", price: 250 },
+            { id: 3, name: "XYZ UTILITY ROOT ANDROID", price: 70 },
+            { id: 4, name: "PRIME HOOK NONROOT ANDROID", price: 50 },
+            { id: 5, name: "BALA SYSTEM V2 NONROOT", price: 230 },
+            { id: 6, name: "HG PRIME PROXY NONROOT", price: 70 },
+            { id: 7, name: "DRIPCLIENT SERVICE MODULE", price: 60 },
+            { id: 8, name: "HG ANDROID PROXY NONROOT", price: 70 },
+            { id: 9, name: "HG DUAL MODE UTILITY", price: 70 },
+            { id: 10, name: "HAXX PRO ROOT EDITION", price: 180 },
+            { id: 11, name: "SILENT ACCESS ROOT ANDROID", price: 90 },
+            { id: 12, name: "PATO TEAM SUITE ALL ANDROID", price: 150 },
+            { id: 13, name: "BR VERSION PC EDITION", price: 79 },
+            { id: 14, name: "INVISIBLE X STREAMER PANEL", price: 99 },
+            { id: 15, name: "RAPID CORE OPTIMIZER", price: 89 },
+            { id: 16, name: "SKB SPECIAL OFFER BUNDLE", price: 99 },
+            { id: 17, name: "INVISIBLE X PRO PASS", price: 99 },
+            { id: 18, name: "P20 ROOT SERVICE PACK", price: 600 },
+            { id: 19, name: "P20 STANDARD NON ROOT PACK", price: 800 },
+            { id: 20, name: "DEVICE CONFIGURATION SERVICE", price: 1000 },
+            { id: 21, name: "NINE X INJECTOR SYSTEM", price: 400 }
+        ];
+
+        let userBalance = parseFloat(localStorage.getItem("walletBalance") || "0.00");
+        let currentUser = "ANKIT_USER";
+
+        document.addEventListener("DOMContentLoaded", () => {
+            updateBalanceUI();
+            renderProducts();
+            renderUTRRequests();
+        });
+
+        function updateBalanceUI() {
+            document.getElementById("userBalance").innerText = userBalance.toFixed(2);
+            localStorage.setItem("walletBalance", userBalance.toFixed(2));
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById("productGrid");
+            grid.innerHTML = "";
+            defaultProducts.forEach(p => {
+                grid.innerHTML += `
+                    <div class="product-card">
+                        <div>
+                            <h3>${p.name}</h3>
+                            <p style="color:var(--blue); font-weight:bold; margin-bottom:10px;">₹${p.price}.00</p>
+                        </div>
+                        <button class="btn-primary" onclick="buyProduct(${p.price}, '${p.name}')">Buy Item</button>
+                    </div>
+                `;
+            });
+        }
+
+        function buyProduct(price, name) {
+            if(userBalance >= price) {
+                userBalance -= price;
+                updateBalanceUI();
+                alert(`Successfully purchased: ${name}`);
+            } else {
+                alert("Insufficient Balance! Please add funds first.");
+                openFundModal();
+            }
+        }
+
+        function generateQR() {
+            let amt = parseFloat(document.getElementById("fundAmount").value);
+            if(isNaN(amt) || amt < 10) {
+                alert("Enter a valid amount (Min ₹10)");
+                return;
+            }
+            let upiUrl = `upi://pay?pa=ankittt.3@fam&pn=MINI4C&am=${amt}&cu=INR`;
+            document.getElementById("qrImg").src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(upiUrl)}`;
+            document.getElementById("qrAmountText").innerText = `Paying: ₹${amt}.00`;
+            document.getElementById("qrContainer").style.display = "block";
+        }
+
+        function submitUTR() {
+            let amt = parseFloat(document.getElementById("fundAmount").value);
+            let utr = document.getElementById("utrInput").value.trim();
+
+            if (!utr || utr.length !== 12 || isNaN(utr)) {
+                alert("Enter a valid 12-digit UTR/Reference number!");
+                return;
+            }
+
+            let pendingUTRs = JSON.parse(localStorage.getItem("pendingUTRs") || "[]");
+            
+            if(pendingUTRs.some(req => req.utr === utr)) {
+                alert("This UTR is already submitted/processed!");
+                return;
+            }
+
+            pendingUTRs.push({
+                id: Date.now(),
+                user: currentUser,
+                amount: amt,
+                utr: utr,
+                time: new Date().toLocaleTimeString()
+            });
+
+            localStorage.setItem("pendingUTRs", JSON.stringify(pendingUTRs));
+            alert("UTR Submitted Successfully! Waiting for Admin Approval.");
+            closeFundModal();
+            renderUTRRequests();
+        }
+
+        function renderUTRRequests() {
+            const list = document.getElementById("utrRequestsList");
+            let pendingUTRs = JSON.parse(localStorage.getItem("pendingUTRs") || "[]");
+            
+            list.innerHTML = "";
+            if(pendingUTRs.length === 0) {
+                list.innerHTML = "<p style='color:#888;'>No pending UTR approval requests.</p>";
+                return;
+            }
+
+            pendingUTRs.forEach(req => {
+                list.innerHTML += `
+                    <div class="utr-item">
+                        <div>
+                            <strong>User: ${req.user}</strong> | Amount: <span style="color:var(--blue)">₹${req.amount}</span><br>
+                            <small>UTR: ${req.utr} (${req.time})</small>
+                        </div>
+                        <button class="btn-primary" style="background:#00ff66; color:#000;" onclick="approveUTR(${req.id}, ${req.amount})">Approve</button>
+                    </div>
+                `;
+            });
+        }
+
+        function approveUTR(reqId, amount) {
+            let pendingUTRs = JSON.parse(localStorage.getItem("pendingUTRs") || "[]");
+            pendingUTRs = pendingUTRs.filter(req => req.id !== reqId);
+            localStorage.setItem("pendingUTRs", JSON.stringify(pendingUTRs));
+
+            userBalance += amount;
+            updateBalanceUI();
+            renderUTRRequests();
+            alert(`Approved ₹${amount} successfully!`);
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            
+            if(tabName === 'store') {
+                document.getElementById('storeSection').classList.add('active');
+                document.getElementById('storeTabBtn').classList.add('active');
+            } else if(tabName === 'admin') {
+                document.getElementById('adminSection').classList.add('active');
+                document.getElementById('adminTabBtn').classList.add('active');
+            }
+        }
+
+        function openFundModal() { 
+            document.getElementById("fundModal").style.display = "flex"; 
+        }
+
+        function closeFundModal() { 
+            document.getElementById("fundModal").style.display = "none"; 
+            document.getElementById("qrContainer").style.display = "none";
+            document.getElementById("utrInput").value = "";
+        }
+    </script>
 </body>
 </html>
-:root {
-    --bg: #0a0a0f;
-    --card-bg: #14141f;
-    --accent: #ff003c;
-    --blue: #00f0ff;
-    --text: #ffffff;
-    --border: rgba(255, 0, 60, 0.25);
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-body { background: var(--bg); color: var(--text); padding-bottom: 30px; }
-
-.navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; background: var(--card-bg); border-bottom: 1px solid var(--border); }
-.logo { font-weight: bold; color: var(--accent); font-size: 18px; }
-.wallet-bar { display: flex; gap: 12px; align-items: center; font-weight: bold; color: var(--blue); }
-
-.container { max-width: 1000px; margin: 25px auto; padding: 0 15px; }
-.tab-buttons { display: flex; gap: 10px; margin-bottom: 20px; }
-.tab-btn { padding: 10px 18px; background: var(--card-bg); border: 1px solid var(--border); color: #fff; cursor: pointer; border-radius: 6px; }
-.tab-btn.active { border-color: var(--accent); color: var(--accent); }
-
-.section { display: none; }
-.section.active { display: block; }
-.section-title { font-size: 18px; color: var(--accent); }
-
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; }
-.product-card { background: var(--card-bg); border: 1px solid var(--border); padding: 18px; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between; }
-.product-card h3 { font-size: 14px; margin-bottom: 10px; color: #fff; }
-
-.btn-primary { background: var(--accent); color: #fff; border: none; padding: 8px 14px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-.btn-success { background: #00ff66; color: #000; border: none; width: 100%; padding: 10px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-.btn-close { background: #222; color: #aaa; border: none; width: 100%; padding: 8px; margin-top: 10px; border-radius: 5px; cursor: pointer; }
-
-.input-field { width: 100%; padding: 10px; background: rgba(0,0,0,0.6); border: 1px solid var(--border); color: #fff; border-radius: 5px; outline: none; margin-top: 5px; }
-
-.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 1000; }
-.modal-card { background: var(--card-bg); border: 1px solid var(--accent); padding: 22px; width: 90%; max-width: 380px; border-radius: 10px; }
-.qr-box { margin-top: 15px; text-align: center; }
-.qr-box img { width: 160px; height: 160px; background: #fff; padding: 8px; border-radius: 6px; }
-.qr-text { color: var(--blue); font-weight: bold; margin-top: 8px; }
-.utr-box { text-align: left; margin-top: 12px; font-size: 12px; }
-
-.utr-item { background: #1a1a26; border: 1px solid #333; padding: 12px; border-radius: 6px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-const defaultProducts = [
-    { id: 1, name: "DELTA PROXY IOS IPHONE", price: 150 },
-    { id: 2, name: "MIGUL IPHONE IOS SERVICE", price: 250 },
-    { id: 3, name: "XYZ UTILITY ROOT ANDROID", price: 70 },
-    { id: 4, name: "PRIME HOOK NONROOT ANDROID", price: 50 },
-    { id: 5, name: "BALA SYSTEM V2 NONROOT", price: 230 },
-    { id: 6, name: "HG PRIME PROXY NONROOT", price: 70 },
-    { id: 7, name: "DRIPCLIENT SERVICE MODULE", price: 60 },
-    { id: 8, name: "HG ANDROID PROXY NONROOT", price: 70 },
-    { id: 9, name: "HG DUAL MODE UTILITY", price: 70 },
-    { id: 10, name: "HAXX PRO ROOT EDITION", price: 180 },
-    { id: 11, name: "SILENT ACCESS ROOT ANDROID", price: 90 },
-    { id: 12, name: "PATO TEAM SUITE ALL ANDROID", price: 150 },
-    { id: 13, name: "BR VERSION PC EDITION", price: 79 },
-    { id: 14, name: "INVISIBLE X STREAMER PANEL", price: 99 },
-    { id: 15, name: "RAPID CORE OPTIMIZER", price: 89 },
-    { id: 16, name: "SKB SPECIAL OFFER BUNDLE", price: 99 },
-    { id: 17, name: "INVISIBLE X PRO PASS", price: 99 },
-    { id: 18, name: "P20 ROOT SERVICE PACK", price: 600 },
-    { id: 19, name: "P20 STANDARD NON ROOT PACK", price: 800 },
-    { id: 20, name: "DEVICE CONFIGURATION SERVICE", price: 1000 },
-    { id: 21, name: "NINE X INJECTOR SYSTEM", price: 400 }
-];
-
-let userBalance = parseFloat(localStorage.getItem("walletBalance") || "0.00");
-let currentUser = "ANKIT_USER";
-
-document.addEventListener("DOMContentLoaded", () => {
-    updateBalanceUI();
-    renderProducts();
-    renderUTRRequests();
-});
-
-function updateBalanceUI() {
-    document.getElementById("userBalance").innerText = userBalance.toFixed(2);
-    localStorage.setItem("walletBalance", userBalance.toFixed(2));
-}
-
-function renderProducts() {
-    const grid = document.getElementById("productGrid");
-    grid.innerHTML = "";
-    defaultProducts.forEach(p => {
-        grid.innerHTML += `
-            <div class="product-card">
-                <div>
-                    <h3>${p.name}</h3>
-                    <p style="color:var(--blue); font-weight:bold; margin-bottom:10px;">₹${p.price}.00</p>
-                </div>
-                <button class="btn-primary" onclick="buyProduct(${p.price}, '${p.name}')">Buy Item</button>
-            </div>
-        `;
-    });
-}
-
-function buyProduct(price, name) {
-    if(userBalance >= price) {
-        userBalance -= price;
-        updateBalanceUI();
-        alert(`Successfully purchased: ${name}`);
-    } else {
-        alert("Insufficient Balance! Please add funds first.");
-        openFundModal();
-    }
-}
-
-function generateQR() {
-    let amt = parseFloat(document.getElementById("fundAmount").value);
-    if(isNaN(amt) || amt < 10) {
-        alert("Enter a valid amount (Min ₹10)");
-        return;
-    }
-    let upiUrl = `upi://pay?pa=ankittt.3@fam&pn=MINI4C&am=${amt}&cu=INR`;
-    document.getElementById("qrImg").src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(upiUrl)}`;
-    document.getElementById("qrAmountText").innerText = `Paying: ₹${amt}.00`;
-    document.getElementById("qrContainer").style.display = "block";
-}
-
-function submitUTR() {
-    let amt = parseFloat(document.getElementById("fundAmount").value);
-    let utr = document.getElementById("utrInput").value.trim();
-
-    if (!utr || utr.length !== 12 || isNaN(utr)) {
-        alert("Enter a valid 12-digit UTR/Reference number!");
-        return;
-    }
-
-    let pendingUTRs = JSON.parse(localStorage.getItem("pendingUTRs") || "[]");
-    
-    if(pendingUTRs.some(req => req.utr === utr)) {
-        alert("This UTR is already submitted/processed!");
-        return;
-    }
-
-    pendingUTRs.push({
-        id: Date.now(),
-        user: currentUser,
-        amount: amt,
-        utr: utr,
-        time: new Date().toLocaleTimeString()
-    });
-
-    localStorage.setItem("pendingUTRs", JSON.stringify(pendingUTRs));
-    alert("UTR Submitted Successfully! Waiting for Admin Approval.");
-    closeFundModal();
-    renderUTRRequests();
-}
-
-function renderUTRRequests() {
-    const list = document.getElementById("utrRequestsList");
-    let pendingUTRs = JSON.parse(localStorage.getItem("pendingUTRs") || "[]");
-    
-    list.innerHTML = "";
-    if(pendingUTRs.length === 0) {
-        list.innerHTML = "<p style='color:#888;'>No pending UTR approval requests.</p>";
-        return;
-    }
-
-    pendingUTRs.forEach(req => {
-        list.innerHTML += `
-            <div class="utr-item">
-                <div>
-                    <strong>User: ${req.user}</strong> | Amount: <span style="color:var(--blue)">₹${req.amount}</span><br>
-                    <small>UTR: ${req.utr} (${req.time})</small>
-                </div>
-                <button class="btn-primary" style="background:#00ff66; color:#000;" onclick="approveUTR(${req.id}, ${req.amount})">Approve</button>
-            </div>
-        `;
-    });
-}
-
-function approveUTR(reqId, amount) {
-    let pendingUTRs = JSON.parse(localStorage.getItem("pendingUTRs") || "[]");
-    pendingUTRs = pendingUTRs.filter(req => req.id !== reqId);
-    localStorage.setItem("pendingUTRs", JSON.stringify(pendingUTRs));
-
-    userBalance += amount;
-    updateBalanceUI();
-    renderUTRRequests();
-    alert(`Approved ₹${amount} successfully!`);
-}
-
-function switchTab(tabName) {
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    
-    if(tabName === 'store') {
-        document.getElementById('storeSection').classList.add('active');
-        document.getElementById('storeTabBtn').classList.add('active');
-    } else if(tabName === 'admin') {
-        document.getElementById('adminSection').classList.add('active');
-        document.getElementById('adminTabBtn').classList.add('active');
-    }
-}
-
-function openFundModal() { 
-    document.getElementById("fundModal").style.display = "flex"; 
-}
-
-function closeFundModal() { 
-    document.getElementById("fundModal").style.display = "none"; 
-    document.getElementById("qrContainer").style.display = "none";
-    document.getElementById("utrInput").value = "";
-}
-     
