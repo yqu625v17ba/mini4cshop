@@ -20,16 +20,12 @@
 
         .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; background: var(--card-bg); border-bottom: 1px solid var(--border); }
         .logo { font-weight: bold; color: var(--accent); font-size: 18px; }
-        .wallet-bar { display: flex; gap: 12px; align-items: center; font-weight: bold; color: var(--blue); }
+        .wallet-bar { display: flex; gap: 10px; align-items: center; font-weight: bold; color: var(--blue); }
 
         .container { max-width: 1000px; margin: 25px auto; padding: 0 15px; }
-        .tab-buttons { display: flex; gap: 10px; margin-bottom: 20px; }
-        .tab-btn { padding: 10px 18px; background: var(--card-bg); border: 1px solid var(--border); color: #fff; cursor: pointer; border-radius: 6px; }
-        .tab-btn.active { border-color: var(--accent); color: var(--accent); }
 
         .section { display: none; }
         .section.active { display: block; }
-        .section-title { font-size: 18px; color: var(--accent); }
 
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; }
         .product-card { background: var(--card-bg); border: 1px solid var(--border); padding: 18px; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between; }
@@ -38,8 +34,9 @@
         .btn-primary { background: var(--accent); color: #fff; border: none; padding: 8px 14px; border-radius: 5px; cursor: pointer; font-weight: bold; }
         .btn-success { background: #00ff66; color: #000; border: none; width: 100%; padding: 10px; border-radius: 5px; cursor: pointer; font-weight: bold; }
         .btn-close { background: #222; color: #aaa; border: none; width: 100%; padding: 8px; margin-top: 10px; border-radius: 5px; cursor: pointer; }
+        .btn-small { padding: 5px 10px; font-size: 12px; }
 
-        .input-field { width: 100%; padding: 10px; background: rgba(0,0,0,0.6); border: 1px solid var(--border); color: #fff; border-radius: 5px; outline: none; margin-top: 5px; }
+        .input-field { width: 100%; padding: 10px; background: rgba(0,0,0,0.6); border: 1px solid var(--border); color: #fff; border-radius: 5px; outline: none; margin-top: 5px; margin-bottom: 10px; }
 
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 1000; }
         .modal-card { background: var(--card-bg); border: 1px solid var(--accent); padding: 22px; width: 90%; max-width: 380px; border-radius: 10px; }
@@ -48,35 +45,51 @@
         .qr-text { color: var(--blue); font-weight: bold; margin-top: 8px; }
         .utr-box { text-align: left; margin-top: 12px; font-size: 12px; }
 
-        .utr-item { background: #1a1a26; border: 1px solid #333; padding: 12px; border-radius: 6px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .auth-card { background: var(--card-bg); border: 1px solid var(--accent); padding: 25px; max-width: 380px; margin: 40px auto; border-radius: 10px; }
+        .auth-toggle { text-align: center; font-size: 13px; color: var(--blue); cursor: pointer; margin-top: 12px; text-decoration: underline; }
     </style>
 </head>
 <body>
 
+    <!-- Navbar -->
     <header class="navbar">
         <div class="logo"><i class="fa-solid fa-store"></i> MINI4C STORE</div>
         <div class="wallet-bar">
-            <span>Balance: ₹<span id="userBalance">0.00</span></span>
-            <button onclick="openFundModal()" class="btn-primary">+ Add Money</button>
+            <span id="userBadge" style="color:#aaa; font-size:12px;">Guest</span>
+            <span>₹<span id="userBalance">0.00</span></span>
+            <button onclick="openFundModal()" class="btn-primary btn-small">+ Add Money</button>
+            <button id="logoutBtn" onclick="logoutUser()" class="btn-primary btn-small" style="background:#444; display:none;">Logout</button>
         </div>
     </header>
 
     <main class="container">
-        <div class="tab-buttons">
-            <button onclick="switchTab('store')" class="tab-btn active" id="storeTabBtn">Store Catalog</button>
-            <button onclick="switchTab('admin')" class="tab-btn" id="adminTabBtn">Admin Panel</button>
-        </div>
+        <!-- Auth Section (Login / Register) -->
+        <section id="authSection" class="section active">
+            <div class="auth-card" id="loginBox">
+                <h3 style="color:var(--accent); margin-bottom:15px; text-align:center;">User / Admin Login</h3>
+                <input type="text" id="loginUser" placeholder="Username" class="input-field">
+                <input type="password" id="loginPass" placeholder="Password" class="input-field">
+                <button onclick="loginUser()" class="btn-primary" style="width:100%; margin-top:5px;">LOGIN</button>
+                <div class="auth-toggle" onclick="toggleAuth('register')">New User? Register Here</div>
+            </div>
 
-        <section id="storeSection" class="section active">
-            <div id="productGrid" class="grid"></div>
+            <div class="auth-card" id="registerBox" style="display:none;">
+                <h3 style="color:var(--accent); margin-bottom:15px; text-align:center;">Register Account</h3>
+                <input type="text" id="regUser" placeholder="Choose Username" class="input-field">
+                <input type="password" id="regPass" placeholder="Choose Password" class="input-field">
+                <button onclick="registerUser()" class="btn-primary" style="width:100%; margin-top:5px; background:#00ff66; color:#000;">REGISTER</button>
+                <div class="auth-toggle" onclick="toggleAuth('login')">Already have an account? Login</div>
+            </div>
         </section>
 
-        <section id="adminSection" class="section">
-            <h3 class="section-title">Pending UTR Verification Requests</h3>
-            <div id="utrRequestsList" style="margin-top: 15px;"></div>
+        <!-- Main Store Catalog (After Login) -->
+        <section id="dashboardSection" class="section">
+            <h2 style="color:var(--accent); margin-bottom: 20px;">Store Catalog</h2>
+            <div id="productGrid" class="grid"></div>
         </section>
     </main>
 
+    <!-- Payment Modal -->
     <div id="fundModal" class="modal">
         <div class="modal-card">
             <h3>Add Funds via UPI</h3>
@@ -90,7 +103,7 @@
                 <div class="utr-box">
                     <label>Enter 12-Digit UTR / Ref Number:</label>
                     <input type="text" id="utrInput" maxlength="12" placeholder="e.g. 423456789012" class="input-field">
-                    <button onclick="submitUTR()" class="btn-success" style="margin-top:8px;">SUBMIT UTR FOR APPROVAL</button>
+                    <button onclick="submitUTR()" class="btn-success" style="margin-top:8px;">INSTANT ADD FUNDS</button>
                 </div>
             </div>
             <button onclick="closeFundModal()" class="btn-close">Close</button>
@@ -122,18 +135,112 @@
             { id: 21, name: "NINE X INJECTOR SYSTEM", price: 400 }
         ];
 
-        let userBalance = parseFloat(localStorage.getItem("walletBalance") || "0.00");
-        let currentUser = "ANKIT_USER";
+        let currentUser = localStorage.getItem("activeUser") || null;
 
         document.addEventListener("DOMContentLoaded", () => {
-            updateBalanceUI();
+            checkAuth();
             renderProducts();
-            renderUTRRequests();
         });
 
+        function toggleAuth(type) {
+            if(type === 'register') {
+                document.getElementById("loginBox").style.display = "none";
+                document.getElementById("registerBox").style.display = "block";
+            } else {
+                document.getElementById("registerBox").style.display = "none";
+                document.getElementById("loginBox").style.display = "block";
+            }
+        }
+
+        function registerUser() {
+            let u = document.getElementById("regUser").value.trim();
+            let p = document.getElementById("regPass").value.trim();
+
+            if(!u || !p) {
+                alert("Fill all fields!");
+                return;
+            }
+
+            let users = JSON.parse(localStorage.getItem("storeUsers") || "{}");
+            if(users[u]) {
+                alert("Username already exists!");
+                return;
+            }
+
+            users[u] = { password: p, balance: 0.00 };
+            localStorage.setItem("storeUsers", JSON.stringify(users));
+            alert("Registration Successful! Please Login.");
+            toggleAuth('login');
+        }
+
+        function loginUser() {
+            let u = document.getElementById("loginUser").value.trim();
+            let p = document.getElementById("loginPass").value.trim();
+
+            if(u === "ADX ANKIT" && p === "MINI4C") {
+                currentUser = "ADX ANKIT";
+                localStorage.setItem("activeUser", currentUser);
+                checkAuth();
+                return;
+            }
+
+            let users = JSON.parse(localStorage.getItem("storeUsers") || "{}");
+            if(users[u] && users[u].password === p) {
+                currentUser = u;
+                localStorage.setItem("activeUser", currentUser);
+                checkAuth();
+            } else {
+                alert("Invalid Username or Password!");
+            }
+        }
+
+        function logoutUser() {
+            localStorage.removeItem("activeUser");
+            currentUser = null;
+            checkAuth();
+        }
+
+        function checkAuth() {
+            if(currentUser) {
+                document.getElementById("authSection").classList.remove("active");
+                document.getElementById("dashboardSection").classList.add("active");
+                document.getElementById("logoutBtn").style.display = "inline-block";
+                document.getElementById("userBadge").innerText = currentUser;
+                updateBalanceUI();
+            } else {
+                document.getElementById("authSection").classList.add("active");
+                document.getElementById("dashboardSection").classList.remove("active");
+                document.getElementById("logoutBtn").style.display = "none";
+                document.getElementById("userBadge").innerText = "Guest";
+                document.getElementById("userBalance").innerText = "0.00";
+            }
+        }
+
+        function getBalance() {
+            if(currentUser === "ADX ANKIT") {
+                return parseFloat(localStorage.getItem("adminBalance") || "0.00");
+            }
+            let users = JSON.parse(localStorage.getItem("storeUsers") || "{}");
+            return users[currentUser] ? users[currentUser].balance : 0.00;
+        }
+
+        function setBalance(amt) {
+            if(currentUser === "ADX ANKIT") {
+                localStorage.setItem("adminBalance", amt.toFixed(2));
+            } else {
+                let users = JSON.parse(localStorage.getItem("storeUsers") || "{}");
+                if(users[currentUser]) {
+                    users[currentUser].balance = amt;
+                    localStorage.setItem("storeUsers", JSON.stringify(users));
+                }
+            }
+            updateBalanceUI();
+        }
+
         function updateBalanceUI() {
-            document.getElementById("userBalance").innerText = userBalance.toFixed(2);
-            localStorage.setItem("walletBalance", userBalance.toFixed(2));
+            if(currentUser) {
+                document.getElementById("userBalance").innerText = getBalance().toFixed(2);
+            }
         }
 
         function renderProducts() {
@@ -153,9 +260,9 @@
         }
 
         function buyProduct(price, name) {
-            if(userBalance >= price) {
-                userBalance -= price;
-                updateBalanceUI();
+            let bal = getBalance();
+            if(bal >= price) {
+                setBalance(bal - price);
                 alert(`Successfully purchased: ${name}`);
             } else {
                 alert("Insufficient Balance! Please add funds first.");
@@ -184,75 +291,29 @@
                 return;
             }
 
-            let pendingUTRs = JSON.parse(localStorage.getItem("pendingUTRs") || "[]");
+            let usedUTRs = JSON.parse(localStorage.getItem("usedUTRs") || "[]");
             
-            if(pendingUTRs.some(req => req.utr === utr)) {
-                alert("This UTR is already submitted/processed!");
+            if(usedUTRs.includes(utr)) {
+                alert("This UTR has already been used!");
                 return;
             }
 
-            pendingUTRs.push({
-                id: Date.now(),
-                user: currentUser,
-                amount: amt,
-                utr: utr,
-                time: new Date().toLocaleTimeString()
-            });
+            // Auto Approve Fund
+            usedUTRs.push(utr);
+            localStorage.setItem("usedUTRs", JSON.stringify(usedUTRs));
 
-            localStorage.setItem("pendingUTRs", JSON.stringify(pendingUTRs));
-            alert("UTR Submitted Successfully! Waiting for Admin Approval.");
+            let currentBal = getBalance();
+            setBalance(currentBal + amt);
+
+            alert(`Success! ₹${amt} added instantly to your wallet.`);
             closeFundModal();
-            renderUTRRequests();
-        }
-
-        function renderUTRRequests() {
-            const list = document.getElementById("utrRequestsList");
-            let pendingUTRs = JSON.parse(localStorage.getItem("pendingUTRs") || "[]");
-            
-            list.innerHTML = "";
-            if(pendingUTRs.length === 0) {
-                list.innerHTML = "<p style='color:#888;'>No pending UTR approval requests.</p>";
-                return;
-            }
-
-            pendingUTRs.forEach(req => {
-                list.innerHTML += `
-                    <div class="utr-item">
-                        <div>
-                            <strong>User: ${req.user}</strong> | Amount: <span style="color:var(--blue)">₹${req.amount}</span><br>
-                            <small>UTR: ${req.utr} (${req.time})</small>
-                        </div>
-                        <button class="btn-primary" style="background:#00ff66; color:#000;" onclick="approveUTR(${req.id}, ${req.amount})">Approve</button>
-                    </div>
-                `;
-            });
-        }
-
-        function approveUTR(reqId, amount) {
-            let pendingUTRs = JSON.parse(localStorage.getItem("pendingUTRs") || "[]");
-            pendingUTRs = pendingUTRs.filter(req => req.id !== reqId);
-            localStorage.setItem("pendingUTRs", JSON.stringify(pendingUTRs));
-
-            userBalance += amount;
-            updateBalanceUI();
-            renderUTRRequests();
-            alert(`Approved ₹${amount} successfully!`);
-        }
-
-        function switchTab(tabName) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            
-            if(tabName === 'store') {
-                document.getElementById('storeSection').classList.add('active');
-                document.getElementById('storeTabBtn').classList.add('active');
-            } else if(tabName === 'admin') {
-                document.getElementById('adminSection').classList.add('active');
-                document.getElementById('adminTabBtn').classList.add('active');
-            }
         }
 
         function openFundModal() { 
+            if(!currentUser) {
+                alert("Please login first!");
+                return;
+            }
             document.getElementById("fundModal").style.display = "flex"; 
         }
 
