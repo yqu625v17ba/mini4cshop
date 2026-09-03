@@ -1,1936 +1,665 @@
  <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MINI4C X | ADX ANKIT</title>
-
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,Helvetica,sans-serif;
-}
-
-:root{
-    --bg:#020b12;
-    --card:#061722;
-    --card2:#081e2d;
-    --cyan:#00d9ff;
-    --blue:#1aa7ff;
-    --text:#eafaff;
-    --muted:#8ba9b8;
-    --border:rgba(0,217,255,.25);
-    --danger:#ff5268;
-}
-
-body{
-    background:
-        radial-gradient(circle at 20% 10%,rgba(0,217,255,.12),transparent 30%),
-        radial-gradient(circle at 80% 80%,rgba(26,167,255,.10),transparent 30%),
-        var(--bg);
-    color:var(--text);
-    min-height:100vh;
-}
-
-button,input{
-    font:inherit;
-}
-
-button{
-    cursor:pointer;
-}
-
-.hidden{
-    display:none!important;
-}
-
-/* AUTH */
-
-.auth-wrap{
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-}
-
-.auth-card{
-    width:100%;
-    max-width:430px;
-    background:rgba(6,23,34,.94);
-    border:1px solid var(--border);
-    border-radius:24px;
-    padding:30px;
-    box-shadow:0 0 45px rgba(0,217,255,.10);
-}
-
-.logo{
-    text-align:center;
-    margin-bottom:25px;
-}
-
-.logo h1{
-    color:var(--cyan);
-    font-size:32px;
-    letter-spacing:3px;
-    text-shadow:0 0 18px rgba(0,217,255,.5);
-}
-
-.logo p{
-    color:var(--muted);
-    margin-top:7px;
-    font-size:13px;
-    letter-spacing:2px;
-}
-
-.form-title{
-    text-align:center;
-    margin-bottom:20px;
-    font-size:22px;
-}
-
-.input-group{
-    margin-bottom:15px;
-}
-
-.input-group label{
-    display:block;
-    color:var(--muted);
-    font-size:13px;
-    margin-bottom:7px;
-}
-
-.input-group input{
-    width:100%;
-    padding:14px;
-    border-radius:12px;
-    border:1px solid var(--border);
-    background:#03111a;
-    color:white;
-    outline:none;
-}
-
-.input-group input:focus{
-    border-color:var(--cyan);
-    box-shadow:0 0 12px rgba(0,217,255,.12);
-}
-
-.primary-btn{
-    width:100%;
-    padding:14px;
-    border:0;
-    border-radius:12px;
-    background:linear-gradient(90deg,var(--cyan),var(--blue));
-    color:#001018;
-    font-weight:bold;
-    margin-top:5px;
-}
-
-.secondary-btn{
-    width:100%;
-    padding:13px;
-    border:1px solid var(--border);
-    border-radius:12px;
-    background:#061923;
-    color:white;
-    margin-top:10px;
-}
-
-.text-btn{
-    border:0;
-    background:none;
-    color:var(--cyan);
-    margin-top:14px;
-}
-
-.auth-switch{
-    text-align:center;
-    margin-top:18px;
-    color:var(--muted);
-    font-size:14px;
-}
-
-.message{
-    text-align:center;
-    font-size:13px;
-    margin-top:12px;
-    min-height:18px;
-}
-
-/* APP */
-
-#appSection{
-    min-height:100vh;
-}
-
-.topbar{
-    height:70px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 18px;
-    border-bottom:1px solid var(--border);
-    background:rgba(2,11,18,.88);
-    position:sticky;
-    top:0;
-    z-index:20;
-    backdrop-filter:blur(12px);
-}
-
-.brand{
-    color:var(--cyan);
-    font-weight:bold;
-    letter-spacing:2px;
-}
-
-.user-balance{
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
-
-.balance-box{
-    border:1px solid var(--border);
-    padding:8px 12px;
-    border-radius:10px;
-    color:var(--cyan);
-}
-
-.menu-btn{
-    width:42px;
-    height:42px;
-    border:1px solid var(--border);
-    border-radius:10px;
-    background:#061923;
-    color:var(--cyan);
-    font-size:22px;
-}
-
-.page{
-    display:none;
-    max-width:1100px;
-    margin:auto;
-    padding:30px 18px 50px;
-}
-
-.page.active{
-    display:block;
-}
-
-.hero{
-    padding:35px 20px;
-    border:1px solid var(--border);
-    border-radius:22px;
-    background:linear-gradient(145deg,rgba(0,217,255,.08),rgba(26,167,255,.03));
-    margin-bottom:22px;
-}
-
-.hero h2{
-    font-size:30px;
-    color:var(--cyan);
-    margin-bottom:10px;
-}
-
-.hero p{
-    color:var(--muted);
-    line-height:1.6;
-}
-
-.section-title{
-    margin-bottom:18px;
-    color:var(--cyan);
-}
-
-/* CARDS */
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:16px;
-}
-
-.card{
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:18px;
-    padding:20px;
-}
-
-.card h3{
-    margin-bottom:10px;
-}
-
-.card p{
-    color:var(--muted);
-    line-height:1.5;
-}
-
-.price{
-    color:var(--cyan);
-    font-size:22px;
-    font-weight:bold;
-    margin:15px 0;
-}
-
-.search{
-    width:100%;
-    padding:14px;
-    margin-bottom:18px;
-    border-radius:12px;
-    border:1px solid var(--border);
-    background:#03111a;
-    color:white;
-    outline:none;
-}
-
-/* SIDE MENU */
-
-.overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.6);
-    display:none;
-    z-index:30;
-}
-
-.overlay.show{
-    display:block;
-}
-
-.side-menu{
-    position:fixed;
-    top:0;
-    right:-310px;
-    width:290px;
-    height:100%;
-    background:#03131e;
-    border-left:1px solid var(--border);
-    z-index:40;
-    padding:20px;
-    transition:.3s;
-}
-
-.side-menu.open{
-    right:0;
-}
-
-.close-menu{
-    display:block;
-    margin-left:auto;
-    border:0;
-    background:none;
-    color:white;
-    font-size:25px;
-}
-
-.menu-user{
-    padding:20px 0;
-    border-bottom:1px solid var(--border);
-    margin-bottom:10px;
-}
-
-.menu-user strong{
-    color:var(--cyan);
-}
-
-.menu-item{
-    width:100%;
-    padding:13px;
-    margin:4px 0;
-    text-align:left;
-    border:0;
-    border-radius:10px;
-    background:transparent;
-    color:white;
-}
-
-.menu-item:hover{
-    background:rgba(0,217,255,.08);
-    color:var(--cyan);
-}
-
-.logout{
-    color:#ff6577;
-}
-
-/* CREDIT */
-
-.credit-box{
-    max-width:600px;
-    margin:auto;
-}
-
-.payment-info{
-    background:#041923;
-    border:1px solid var(--border);
-    border-radius:16px;
-    padding:18px;
-    margin:15px 0;
-}
-
-.upi{
-    color:var(--cyan);
-    font-size:18px;
-    font-weight:bold;
-    word-break:break-all;
-}
-
-.status{
-    margin-top:15px;
-    padding:12px;
-    border-radius:10px;
-    background:rgba(0,217,255,.07);
-    color:var(--cyan);
-    display:none;
-}
-
-/* MODAL */
-
-.modal-wrap{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.7);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    z-index:100;
-}
-
-.modal-wrap.show{
-    display:flex;
-}
-
-.modal{
-    width:100%;
-    max-width:430px;
-    background:#061722;
-    border:1px solid var(--border);
-    border-radius:20px;
-    padding:25px;
-}
-
-.modal h2{
-    color:var(--cyan);
-    margin-bottom:15px;
-}
-
-.modal-close{
-    width:100%;
-    padding:12px;
-    margin-top:10px;
-    border:1px solid var(--border);
-    background:#061923;
-    color:white;
-    border-radius:10px;
-}
-
-.list-empty{
-    text-align:center;
-    color:var(--muted);
-    padding:30px;
-}
-
-@media(max-width:500px){
-    .auth-card{
-        padding:22px;
-    }
-
-    .hero h2{
-        font-size:24px;
-    }
-
-    .brand{
-        font-size:14px;
-    }
-
-    .balance-box{
-        font-size:12px;
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MINI4C SHOP - Cyber Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #050508;
+            --card-bg: rgba(18, 18, 26, 0.75);
+            --red-glow: #ff003c;
+            --red-bright: #ff2a5f;
+            --neon-blue: #00f0ff;
+            --border-neon: rgba(255, 0, 60, 0.25);
+            --text-main: #ffffff;
+            --text-sub: #b0b5c0;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Rajdhani', sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); overflow-x: hidden; }
+
+        /* Particle Background */
+        #bgCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
+
+        /* Cyber Loading Screen */
+        #loader-overlay {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background: #050508; z-index: 99999; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; transition: opacity 0.5s ease;
+        }
+        .cyber-spinner {
+            width: 60px; height: 60px; border: 3px solid rgba(255, 0, 60, 0.1);
+            border-top: 3px solid var(--red-glow); border-right: 3px solid var(--neon-blue);
+            border-radius: 50%; animation: spin 0.8s linear infinite;
+            box-shadow: 0 0 20px rgba(255, 0, 60, 0.4);
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loader-title {
+            margin-top: 20px; color: var(--red-glow); font-family: 'Orbitron', sans-serif;
+            font-weight: 700; letter-spacing: 3px; font-size: 14px; text-shadow: 0 0 10px var(--red-glow);
+        }
+
+        /* Authentication Modal Overlay */
+        #authScreen {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background: rgba(3, 3, 6, 0.92); backdrop-filter: blur(12px);
+            z-index: 10000; display: flex; justify-content: center; align-items: center; padding: 20px;
+        }
+        .auth-card {
+            background: var(--card-bg); border: 1px solid var(--red-glow);
+            padding: 30px 25px; border-radius: 12px; width: 100%; max-width: 380px;
+            box-shadow: 0 0 30px rgba(255, 0, 60, 0.25); backdrop-filter: blur(20px);
+            position: relative; animation: cardGlow 3s infinite alternate;
+        }
+        @keyframes cardGlow {
+            0% { box-shadow: 0 0 20px rgba(255,0,60,0.2); }
+            100% { box-shadow: 0 0 35px rgba(255,0,60,0.45); }
+        }
+        .auth-header { display: flex; justify-content: space-around; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .auth-tab {
+            font-family: 'Orbitron', sans-serif; font-size: 14px; padding: 8px 15px; cursor: pointer;
+            color: var(--text-sub); transition: 0.3s; position: relative; border: none; background: none;
+        }
+        .auth-tab.active { color: var(--red-glow); text-shadow: 0 0 8px var(--red-glow); }
+        .auth-tab.active::after {
+            content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 2px;
+            background: var(--red-glow); box-shadow: 0 0 10px var(--red-glow);
+        }
+
+        .auth-form { display: none; }
+        .auth-form.active { display: block; }
+
+        .input-group { margin-bottom: 18px; position: relative; }
+        .input-group label { display: block; font-size: 13px; color: var(--text-sub); margin-bottom: 6px; font-weight: 600; }
+        .input-wrapper { position: relative; }
+        .input-wrapper input {
+            width: 100%; padding: 12px 40px 12px 14px; background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--border-neon); color: #fff; border-radius: 6px;
+            outline: none; font-size: 14px; transition: 0.3s;
+        }
+        .input-wrapper input:focus { border-color: var(--red-glow); box-shadow: 0 0 10px rgba(255, 0, 60, 0.3); }
+        .password-toggle {
+            position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+            color: var(--text-sub); cursor: pointer; font-size: 14px; transition: 0.2s;
+        }
+        .password-toggle:hover { color: var(--red-glow); }
+
+        .cyber-btn {
+            width: 100%; padding: 12px; background: linear-gradient(135deg, var(--red-glow), #b3002d);
+            color: #fff; border: none; font-family: 'Orbitron', sans-serif; font-weight: 700;
+            border-radius: 6px; cursor: pointer; font-size: 13px; letter-spacing: 1px;
+            transition: 0.3s; text-transform: uppercase; box-shadow: 0 0 15px rgba(255, 0, 60, 0.4);
+        }
+        .cyber-btn:hover { background: linear-gradient(135deg, #ff2a5f, var(--red-glow)); transform: translateY(-2px); box-shadow: 0 0 25px rgba(255, 0, 60, 0.7); }
+
+        /* Navbar */
+        .top-navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 24px; background: rgba(10, 10, 16, 0.85); backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border-neon); position: sticky; top:0; z-index: 1000;
+        }
+        .logo { font-family: 'Orbitron', sans-serif; font-weight: 900; color: var(--red-glow); font-size: 18px; letter-spacing: 2px; text-shadow: 0 0 12px var(--red-glow); }
+        .menu-toggle { cursor: pointer; font-size: 20px; transition: 0.2s; }
+        .menu-toggle:hover { color: var(--red-glow); }
+        .wallet-section { display: flex; align-items: center; gap: 12px; }
+        .wallet-balance { background: rgba(0, 0, 0, 0.8); padding: 5px 12px; border-radius: 20px; border: 1px solid var(--neon-blue); font-size: 14px; color: var(--neon-blue); font-weight: 700; font-family: 'Orbitron', sans-serif; }
+        .add-fund-btn { background: var(--red-glow); color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .add-fund-btn:hover { box-shadow: 0 0 12px var(--red-glow); transform: scale(1.05); }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed; top: 0; left: -280px; width: 270px; height: 100%;
+            background: rgba(10, 10, 16, 0.95); backdrop-filter: blur(20px); z-index: 10001; transition: 0.3s ease; padding: 25px 20px;
+            border-right: 1px solid var(--border-neon);
+        }
+        .sidebar.active { left: 0; }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .sidebar-header h3 { font-family: 'Orbitron', sans-serif; font-size: 15px; letter-spacing: 1px; color: var(--red-glow); }
+        .sidebar-links { list-style: none; }
+        .sidebar-links li { margin-bottom: 18px; }
+        .sidebar-links a { color: var(--text-main); text-decoration: none; font-size: 15px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: 0.2s; }
+        .sidebar-links a:hover { color: var(--red-glow); transform: translateX(5px); }
+
+        /* Container & Grid */
+        .container { padding: 25px 20px; max-width: 1200px; margin: 0 auto; }
+        .section { display: none; }
+        .section.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .section-title { font-family: 'Orbitron', sans-serif; font-size: 18px; color: var(--red-glow); border-left: 4px solid var(--red-glow); padding-left: 12px; margin-bottom: 25px; letter-spacing: 1px; }
+
+        /* Search Filter Bar */
+        .search-wrapper { margin-bottom: 25px; position: relative; }
+        .search-input {
+            width: 100%; padding: 12px 18px 12px 45px; background: rgba(15, 15, 22, 0.8);
+            border: 1px solid var(--border-neon); border-radius: 8px; color: #fff;
+            outline: none; font-size: 15px; transition: 0.3s;
+        }
+        .search-input:focus { border-color: var(--red-glow); box-shadow: 0 0 15px rgba(255, 0, 60, 0.2); }
+        .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-sub); font-size: 16px; }
+
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; }
+        .product-card {
+            background: var(--card-bg); border: 1px solid var(--border-neon); backdrop-filter: blur(10px);
+            border-radius: 10px; padding: 20px; position: relative; transition: all 0.3s ease; display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .product-card:hover { border-color: var(--red-glow); transform: translateY(-5px); box-shadow: 0 10px 25px rgba(255, 0, 60, 0.25); }
+        .product-title { font-family: 'Orbitron', sans-serif; font-size: 14px; color: #fff; margin-bottom: 12px; text-align: center; font-weight: 700; letter-spacing: 0.5px; }
+        .feature-list { list-style: none; margin-bottom: 20px; font-size: 13px; color: var(--text-sub); }
+        .feature-list li { margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+        .feature-list li i { color: var(--red-glow); font-size: 11px; }
+
+        /* Modals */
+        .modal {
+            display: none; position: fixed; top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 20000; justify-content: center; align-items: center; padding: 20px;
+        }
+        .modal-content {
+            background: var(--card-bg); border: 1px solid var(--red-glow);
+            padding: 25px; border-radius: 12px; width: 100%; max-width: 400px; text-align: center; position: relative;
+            box-shadow: 0 0 30px rgba(255, 0, 60, 0.3);
+        }
+        .support-btn {
+            display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 11px; margin-top: 10px; border-radius: 6px;
+            font-weight: bold; text-decoration: none; font-size: 14px; transition: 0.2s;
+        }
+        .btn-tg { background: #0088cc; color: #fff; }
+        .btn-tg:hover { background: #00a0f0; box-shadow: 0 0 12px #0088cc; }
+        .btn-dc { background: #5865F2; color: #fff; }
+        .btn-dc:hover { background: #6975ff; box-shadow: 0 0 12px #5865F2; }
+
+        .plan-option-btn {
+            width: 100%; padding: 12px 15px; margin-bottom: 10px; background: rgba(0,0,0,0.6);
+            border: 1px solid var(--border-neon); color: #fff; border-radius: 6px;
+            display: flex; justify-content: space-between; align-items: center;
+            cursor: pointer; transition: 0.2s; font-size: 14px; font-weight: 600;
+        }
+        .plan-option-btn:hover { border-color: var(--red-glow); background: rgba(255, 0, 60, 0.15); transform: scale(1.02); }
+        .plan-price-tag { color: var(--neon-blue); font-family: 'Orbitron', sans-serif; font-weight: 700; }
+    </style>
 </head>
 <body>
+ <canvas id="bgCanvas"></canvas>
 
-<!-- AUTH SECTION -->
-<section id="authSection" class="auth-wrap">
-
-    <div class="auth-card">
-
-        <div class="logo">
-            <h1>MINI4C X</h1>
-            <p>ADX ANKIT</p>
-        </div>
-
-        <!-- LOGIN -->
-        <div id="loginForm">
-
-            <h2 class="form-title">Login</h2>
-
-            <div class="input-group">
-                <label>Email</label>
-                <input id="loginEmail" type="email" placeholder="Enter your email">
-            </div>
-
-            <div class="input-group">
-                <label>Password</label>
-                <input id="loginPassword" type="password" placeholder="Enter your password">
-            </div>
-
-            <button id="loginBtn" class="primary-btn">
-                Login
-            </button>
-
-            <button id="googleLogin" class="secondary-btn">
-                Continue with Google
-            </button>
-
-            <button id="forgotBtn" class="text-btn">
-                Forgot Password?
-            </button>
-
-            <div id="loginMsg" class="message"></div>
-
-            <div class="auth-switch">
-                Don't have an account?
-                <button id="toRegister" class="text-btn">
-                    Create Account
-                </button>
-            </div>
-
-        </div>
-
-
-        <!-- REGISTER -->
-        <div id="registerForm" class="hidden">
-
-            <h2 class="form-title">Create Account</h2>
-
-            <div class="input-group">
-                <label>Username</label>
-                <input id="registerUsername" type="text" placeholder="Choose username">
-            </div>
-
-            <div class="input-group">
-                <label>Gmail / Email</label>
-                <input id="registerEmail" type="email" placeholder="Enter your email">
-            </div>
-
-            <div class="input-group">
-                <label>Password</label>
-                <input id="registerPassword" type="password" placeholder="Create password">
-            </div>
-
-            <div class="input-group">
-                <label>Confirm Password</label>
-                <input id="registerConfirm" type="password" placeholder="Confirm password">
-            </div>
-
-            <button id="registerBtn" class="primary-btn">
-                Create Account
-            </button>
-
-            <button id="googleRegister" class="secondary-btn">
-                Continue with Google
-            </button>
-
-            <div id="registerMsg" class="message"></div>
-
-            <div class="auth-switch">
-                Already have an account?
-                <button id="toLogin" class="text-btn">
-                    Login
-                </button>
-            </div>
-
-        </div>
-
+    <div id="loader-overlay">
+        <div class="cyber-spinner"></div>
+        <div class="loader-title"><i class="fa-solid fa-skull"></i> INITIALIZING MINI4C STORE...</div>
     </div>
-</section>
 
-
-<!-- APP SECTION -->
-<section id="appSection" class="hidden">
-
-    <header class="topbar">
-
-        <div class="brand">
-            MINI4C X
-        </div>
-
-        <div class="user-balance">
-            <div class="balance-box">
-                ₹<span id="balance">0.00</span>
+    <!-- Multi-Auth Modal System -->
+    <div id="authScreen">
+        <div class="auth-card">
+            <div class="auth-header">
+                <button class="auth-tab active" id="tabLoginBtn" onclick="toggleAuthTab('login')">LOGIN</button>
+                <button class="auth-tab" id="tabRegisterBtn" onclick="toggleAuthTab('register')">CREATE ACCOUNT</button>
             </div>
 
-            <button id="menuBtn" class="menu-btn">
-                ☰
-            </button>
-        </div>
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form active" onsubmit="event.preventDefault(); handleAuthSubmit('login');">
+                <div class="input-group">
+                    <label><i class="fa-solid fa-user"></i> Username</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="loginUsername" placeholder="Enter Username" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label><i class="fa-solid fa-lock"></i> Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="loginPassword" placeholder="Enter Password" required>
+                        <i class="fa-solid fa-eye password-toggle" onclick="togglePasswordVisibility('loginPassword', this)"></i>
+                    </div>
+                </div>
+                <button type="submit" class="cyber-btn"><i class="fa-solid fa-right-to-bracket"></i> ACCESS STORE</button>
+            </form>
 
+            <!-- Registration Form -->
+            <form id="registerForm" class="auth-form" onsubmit="event.preventDefault(); handleAuthSubmit('register');">
+                <div class="input-group">
+                    <label><i class="fa-solid fa-user-plus"></i> Choose Username</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="regUsername" placeholder="Create Username" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label><i class="fa-solid fa-key"></i> Create Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="regPassword" placeholder="Create Password" required>
+                        <i class="fa-solid fa-eye password-toggle" onclick="togglePasswordVisibility('regPassword', this)"></i>
+                    </div>
+                </div>
+                <button type="submit" class="cyber-btn"><i class="fa-solid fa-user-check"></i> REGISTER ACCOUNT</button>
+            </form>
+        </div>
+    </div>
+
+    <header class="top-navbar">
+        <div class="menu-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></div>
+        <div class="logo"><i class="fa-solid fa-skull"></i> MINI4C X STORE</div>
+        <div class="wallet-section">
+            <span class="wallet-balance">₹<span id="userBalance">0.00</span></span>
+            <button class="add-fund-btn" onclick="openAddFundModal()">+ FUND</button>
+        </div>
     </header>
 
+    <nav id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h3><i class="fa-solid fa-gamepad"></i> DASHBOARD</h3>
+            <i class="fa-solid fa-xmark" onclick="toggleSidebar()" style="cursor:pointer; font-size: 18px;"></i>
+        </div>
+        <ul class="sidebar-links">
+            <li><a onclick="switchTab('buyKey')"><i class="fa-solid fa-key"></i> Marketplace Stock</a></li>
+            <li><a onclick="switchTab('myKeys')"><i class="fa-solid fa-box-archive"></i> My Purchased Keys</a></li>
+            <li><a onclick="openAddFundModal(); toggleSidebar();"><i class="fa-solid fa-wallet"></i> Add Wallet Money</a></li>
+            <li><a onclick="switchTab('history')"><i class="fa-solid fa-clock-rotate-left"></i> Payment Log History</a></li>
+            <li id="adminTabLink" style="display: none;"><a onclick="switchTab('adminPanel')" style="color: var(--neon-blue); font-weight: bold;"><i class="fa-solid fa-user-shield"></i> Admin Dashboard</a></li>
+            <li><a href="https://t.me/+Ga2FZ1QnY8VjN2Y1" target="_blank"><i class="fa-brands fa-telegram"></i> Telegram Channel</a></li>
+            <li><a href="https://discord.gg/Yttbf69xx" target="_blank"><i class="fa-brands fa-discord"></i> Discord Community</a></li>
+            <li><a onclick="handleLogout()" style="color: var(--red-glow);"><i class="fa-solid fa-right-from-bracket"></i> Logout Session</a></li>
+        </ul>
+    </nav>
 
-    <!-- HOME -->
-    <section id="home" class="page active">
-
-        <div class="hero">
-            <h2>Welcome, <span id="currentUsername">User</span></h2>
-            <p>
-                Welcome to MINI4C X. Manage your account,
-                credits, purchases and transactions from one place.
-            </p>
+    <div class="container">
+        <div id="buyKeySection" class="section active">
+            <h2 class="section-title">MARKETPLACE / PRODUCTS</h2>
+            <div class="search-wrapper">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="productSearchInput" class="search-input" placeholder="Search hacks, cheats or mods (e.g. iOS, Root, Nonroot, PC)..." onkeyup="filterProducts()">
+            </div>
+            <div id="productContainer" class="product-grid"></div>
         </div>
 
-        <div class="grid">
-
-            <div class="card">
-                <h3>Account</h3>
-                <p>View your account information and login details.</p>
-                <button class="primary-btn" onclick="showPage('account')">
-                    My Account
-                </button>
-            </div>
-
-            <div class="card">
-                <h3>Add Credits</h3>
-                <p>Add credits through the available payment process.</p>
-                <button class="primary-btn" onclick="showPage('credits')">
-                    Add Credits
-                </button>
-            </div>
-
-            <div class="card">
-                <h3>Purchases</h3>
-                <p>View your purchase records.</p>
-                <button class="primary-btn" onclick="showPage('purchases')">
-                    My Purchases
-                </button>
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- BUY -->
-    <section id="buy" class="page">
-
-        <h2 class="section-title">Buy</h2>
-
-        <input
-            id="productSearch"
-            class="search"
-            type="text"
-            placeholder="Search products..."
-        >
-
-        <div id="productGrid" class="grid"></div>
-
-    </section>
-
-
-    <!-- PURCHASES -->
-    <section id="purchases" class="page">
-
-        <h2 class="section-title">My Purchases</h2>
-
-        <div id="purchaseList" class="grid">
-            <div class="list-empty">
-                No purchases found.
+        <div id="myKeysSection" class="section">
+            <h2 class="section-title">MY PURCHASED KEYS</h2>
+            <div style="background: var(--card-bg); padding: 20px; border-radius: 8px; border: 1px solid var(--border-neon);">
+                <p style="color:var(--text-sub); font-size:14px;">No active key transactions logged yet.</p>
             </div>
         </div>
 
-    </section>
-
-
-    <!-- ADD CREDITS -->
-    <section id="credits" class="page">
-
-        <div class="credit-box">
-
-            <h2 class="section-title">Add Credits</h2>
-
-            <div class="card">
-
-                <div class="input-group">
-                    <label>Amount</label>
-
-                    <input
-                        id="creditAmount"
-                        type="number"
-                        min="1"
-                        step="1"
-                        placeholder="Enter amount"
-                    >
-                </div>
-
-                <div class="payment-info">
-
-                    <p style="color:var(--muted);margin-bottom:8px;">
-                        Payment UPI ID
-                    </p>
-
-                    <div class="upi">
-                        ankittt.3@fam
-                    </div>
-
-                    <p style="color:var(--muted);margin-top:10px;font-size:13px;">
-                        After completing your payment, enter the UTR/reference
-                        number below for verification.
-                    </p>
-
-                </div>
-
-                <div class="input-group">
-
-                    <label>UTR / Transaction Reference</label>
-
-                    <input
-                        id="utrInput"
-                        type="text"
-                        maxlength="80"
-                        placeholder="Enter UTR / reference number"
-                    >
-
-                </div>
-
-                <button id="submitCreditBtn" class="primary-btn">
-                    Submit for Verification
-                </button>
-
-                <div id="creditStatus" class="status"></div>
-
+        <div id="historySection" class="section">
+            <h2 class="section-title">TRANSACTION HISTORY</h2>
+            <div style="background: var(--card-bg); padding: 20px; border-radius: 8px; border: 1px solid var(--border-neon);">
+                <p style="color:var(--text-sub); font-size:14px;">No prior deposit/purchase logs found.</p>
             </div>
-
         </div>
 
-    </section>
-
-
-    <!-- TRANSACTIONS -->
-    <section id="transactions" class="page">
-
-        <h2 class="section-title">Transaction History</h2>
-
-        <div id="transactionList" class="grid">
-
-            <div class="list-empty">
-                No transactions found.
+        <div id="adminPanelSection" class="section">
+            <h2 class="section-title" style="color: var(--neon-blue); border-color: var(--neon-blue);"><i class="fa-solid fa-user-shield"></i> Admin Panel</h2>
+            <div style="background: var(--card-bg); border: 1px solid var(--border-neon); padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+                <h3 style="color: var(--red-glow); font-size: 16px; margin-bottom: 15px; font-family:'Orbitron', sans-serif;">Credit Funds To Account</h3>
+                <input type="text" id="adminTargetUser" placeholder="Username" style="width: 100%; padding: 10px; background: rgba(0,0,0,0.7); border: 1px solid var(--border-neon); color: #fff; border-radius: 6px; margin-bottom: 10px;">
+                <input type="number" id="adminAddBalance" placeholder="Amount (INR)" style="width: 100%; padding: 10px; background: rgba(0,0,0,0.7); border: 1px solid var(--border-neon); color: #fff; border-radius: 6px; margin-bottom: 10px;">
+                <button onclick="adminAddFunds()" style="width: 100%; padding: 10px; background: var(--neon-blue); color: #000; border: none; font-weight: bold; font-family:'Orbitron', sans-serif; border-radius: 6px; cursor: pointer;">CREDIT BALANCE</button>
             </div>
-
         </div>
-
-    </section>
-
-
-    <!-- ACCOUNT -->
-    <section id="account" class="page">
-
-        <h2 class="section-title">My Account</h2>
-
-        <div class="card">
-
-            <div class="input-group">
-                <label>Username</label>
-                <input id="accountUsername" readonly>
-            </div>
-
-            <div class="input-group">
-                <label>Email</label>
-                <input id="accountEmail" readonly>
-            </div>
-
-            <div class="input-group">
-                <label>User ID</label>
-                <input id="accountUid" readonly>
-            </div>
-
-            <button id="logoutBtn2" class="secondary-btn">
-                Logout
-            </button>
-
-        </div>
-
-    </section>
-
-</section>
-
-
-<!-- OVERLAY -->
-<div id="overlay" class="overlay"></div>
-
-
-<!-- SIDE MENU -->
-<aside id="sideMenu" class="side-menu">
-
-    <button id="closeMenu" class="close-menu">
-        ×
-    </button>
-
-    <div class="menu-user">
-        <div style="color:var(--muted);font-size:12px;">
-            Logged in as
-        </div>
-
-        <strong id="menuUsername">
-            User
-        </strong>
     </div>
 
-    <button class="menu-item" data-page="home">
-        Home
-    </button>
-
-    <button class="menu-item" data-page="buy">
-        Buy
-    </button>
-
-    <button class="menu-item" data-page="purchases">
-        My Purchases
-    </button>
-
-    <button class="menu-item" data-page="credits">
-        Add Credits
-    </button>
-
-    <button class="menu-item" data-page="transactions">
-        Transaction History
-    </button>
-
-    <button class="menu-item" data-page="account">
-        My Account
-    </button>
-
-    <button
-        class="menu-item"
-        onclick="window.open('https://t.me/ADXANKIT','_blank')"
-    >
-        Contact Owner
-    </button>
-
-    <button
-        class="menu-item"
-        onclick="window.open('https://discord.gg/Yttbf69xx','_blank')"
-    >
-        Discord
-    </button>
-
-    <button id="logoutBtn" class="menu-item logout">
-        Logout
-    </button>
-
-</aside>
-
-
-<!-- PRODUCT MODAL -->
-<div id="productModal" class="modal-wrap">
-
-    <div class="modal">
-
-        <h2 id="modalProductName">
-            Product
-        </h2>
-
-        <p id="modalProductInfo" style="color:var(--muted);line-height:1.6;">
-        </p>
-
-        <div class="price">
-            ₹<span id="modalProductPrice">0</span>
+    <!-- Select Plan Modal -->
+    <div id="planSelectModal" class="modal">
+        <div class="modal-content">
+            <h3 id="planModalTitle" style="color: var(--red-glow); font-family:'Orbitron', sans-serif; font-size: 16px; margin-bottom: 15px;">Select Plan</h3>
+            <div id="plansListContainer" style="max-height: 260px; overflow-y: auto; margin-bottom: 15px;"></div>
+            <button onclick="closePlanModal()" style="width: 100%; padding: 10px; background: #1a1a24; color: #aaa; border: 1px solid var(--border-neon); border-radius: 6px; cursor: pointer; font-size: 13px;">Cancel</button>
         </div>
+    </div>
 
-        <button id="modalClose" class="modal-close">
-            Close
-        </button>
-<script type="module">
+    <!-- Purchase Success Modal -->
+    <div id="buySuccessModal" class="modal">
+        <div class="modal-content">
+            <i class="fa-solid fa-circle-check" style="font-size: 45px; color: var(--neon-blue); margin-bottom: 12px; filter: drop-shadow(0 0 10px var(--neon-blue));"></i>
+            <h3 style="color: #fff; font-size: 17px; margin-bottom: 8px; font-family:'Orbitron', sans-serif;">Order Placed Successfully!</h3>
+            <p id="modalPurchasedItemText" style="color: var(--red-glow); font-weight: bold; font-size: 14px; margin-bottom: 15px;"></p>
+            <div style="background: rgba(0,0,0,0.6); padding: 14px; border-radius: 8px; border: 1px dashed var(--red-glow); margin-bottom: 15px;">
+                <p style="font-size: 13px; color: #fff; line-height: 1.4;">
+                    <strong>Note:</strong> Transaction record ho chuka hai. Apni <b>Real License Key</b> activate / claim karne ke liye Customer Support team se contact karein.
+                </p>
+            </div>
+            <a href="https://t.me/+Ga2FZ1QnY8VjN2Y1" target="_blank" class="support-btn btn-tg"><i class="fa-brands fa-telegram"></i> Telegram Support</a>
+            <a href="https://discord.gg/Yttbf69xx" target="_blank" class="support-btn btn-dc"><i class="fa-brands fa-discord"></i> Discord Support</a>
+            <button onclick="closeBuySuccessModal()" style="width: 100%; padding: 9px; background: #1f1f2e; color: #aaa; border: 1px solid #333; border-radius: 6px; cursor: pointer; margin-top: 10px; font-size: 12px;">Close</button>
+        </div>
+    </div>
 
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+    <!-- Add Funds UPI Modal -->
+    <div id="addFundModal" class="modal">
+        <div class="modal-content">
+            <h3 style="color: var(--red-glow); font-family:'Orbitron', sans-serif; margin-bottom: 10px;">Add Wallet Money</h3>
+            <p style="font-size: 13px; color: var(--text-sub); margin-bottom: 15px;">Amount fill karke dynamic QR code generate karein</p>
+            
+            <input type="number" id="fundAmountInput" placeholder="Enter Amount (INR)" style="width: 100%; padding: 12px; background: rgba(0,0,0,0.7); border: 1px solid var(--border-neon); color: #fff; border-radius: 6px; margin-bottom: 12px; text-align: center; font-size: 16px; font-weight: bold; outline: none;">
+            <button onclick="generateAddFundQR()" class="cyber-btn" style="margin-bottom: 15px;">GENERATE QR CODE</button>
+            
+            <div id="qrCodeContainer" style="display: none; background: #fff; padding: 15px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 0 15px rgba(255,255,255,0.2);">
+                <img id="generatedQRImg" src="" alt="Dynamic UPI QR" style="width: 170px; height: 170px;">
+                <p id="displayAmountText" style="color: #000; font-weight: bold; font-size: 15px; margin-top: 8px; font-family:'Orbitron', sans-serif;"></p>
+                <p style="color: #333; font-size: 12px; font-weight: 600;">UPI VPA: <b>ankittt.3@fam</b></p>
+            </div>
 
-import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    GoogleAuthProvider,
-    signInWithPopup,
-    sendPasswordResetEmail,
-    onAuthStateChanged,
-    signOut,
-    updateProfile
-} from
-"https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+            <button onclick="closeAddFundModal()" style="width: 100%; padding: 9px; background: #222; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Close</button>
+        </div>
+    </div>
+    <script>
+        const API_BASE_URL = "";
 
-import {
-    getFirestore,
-    doc,
-    setDoc,
-    getDoc,
-    addDoc,
-    collection,
-    serverTimestamp,
-    query,
-    where,
-    orderBy,
-    getDocs
-} from
-"https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
-
-
-const firebaseConfig = {
-    apiKey: "AIzaSyAIRd6GaQ_Hczk8RQm-dY2WdcBTqOMNNSE",
-    authDomain: "mini4c-3962.firebaseapp.com",
-    projectId: "mini4c-3962",
-    storageBucket: "mini4c-3962.firebasestorage.app",
-    messagingSenderId: "675135759481",
-    appId: "1:675135759481:web:fd49b233966412020c20a8",
-    measurementId: "G-JYF4M873QW"
-};
-
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-const googleProvider = new GoogleAuthProvider();
-
-
-const $ = id => document.getElementById(id);
-
-
-function message(element, text, good = false){
-
-    element.textContent = text;
-
-    element.style.color =
-        good ? "#00e6a8" : "#ff6577";
-}
-
-
-function cleanUsername(value){
-
-    return value
-        .trim()
-        .replace(/\s+/g," ")
-        .slice(0,30);
-}
-
-
-/* AUTH SWITCH */
-
-$("toRegister").onclick = () => {
-
-    $("loginForm").classList.add("hidden");
-    $("registerForm").classList.remove("hidden");
-
-};
-
-
-$("toLogin").onclick = () => {
-
-    $("registerForm").classList.add("hidden");
-    $("loginForm").classList.remove("hidden");
-
-};
-
-
-/* REGISTER */
-
-$("registerBtn").onclick = async () => {
-
-    const username =
-        cleanUsername($("registerUsername").value);
-
-    const email =
-        $("registerEmail").value.trim();
-
-    const password =
-        $("registerPassword").value;
-
-    const confirm =
-        $("registerConfirm").value;
-
-
-    if(!username || !email || !password || !confirm){
-
-        message(
-            $("registerMsg"),
-            "Please fill all fields."
-        );
-
-        return;
-    }
-
-
-    if(password !== confirm){
-
-        message(
-            $("registerMsg"),
-            "Passwords do not match."
-        );
-
-        return;
-    }
-
-
-    if(password.length < 6){
-
-        message(
-            $("registerMsg"),
-            "Password must contain at least 6 characters."
-        );
-
-        return;
-    }
-
-
-    $("registerBtn").disabled = true;
-    $("registerBtn").textContent = "Creating...";
-
-
-    try{
-
-        const credential =
-            await createUserWithEmailAndPassword(
-                auth,
-                email,
-                password
-            );
-
-
-        await updateProfile(
-            credential.user,
-            {
-                displayName: username
+        async function apiRequest(path, options = {}) {
+            if (!API_BASE_URL) {
+                console.warn("Backend API not connected yet. Running in local mode.");
+                return null;
             }
-        );
 
+            const token = localStorage.getItem("authToken");
+            const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
 
-        await setDoc(
-            doc(db,"users",credential.user.uid),
-            {
-                username: username,
-                email: email,
-                uid: credential.user.uid,
-                balance: 0,
-                createdAt: serverTimestamp()
-            },
-            { merge:true }
-        );
+            if (token) headers.Authorization = `Bearer ${token}`;
 
+            const response = await fetch(`${API_BASE_URL}${path}`, { ...options, headers });
 
-        message(
-            $("registerMsg"),
-            "Account created successfully.",
-            true
-        );
+            let data = null;
+            try { data = await response.json(); } catch (_) {}
 
+            if (!response.ok) {
+                throw new Error(data?.message || `Request failed (${response.status})`);
+            }
 
-    }catch(error){
-
-        console.error(error);
-
-        let text = "Unable to create account.";
-
-        if(error.code === "auth/email-already-in-use")
-            text = "This email is already registered.";
-
-        if(error.code === "auth/invalid-email")
-            text = "Invalid email address.";
-
-        if(error.code === "auth/weak-password")
-            text = "Password is too weak.";
-
-        message($("registerMsg"),text);
-
-    }finally{
-
-        $("registerBtn").disabled = false;
-        $("registerBtn").textContent = "Create Account";
-
-    }
-
-};
-
-
-/* LOGIN */
-
-$("loginBtn").onclick = async () => {
-
-    const email =
-        $("loginEmail").value.trim();
-
-    const password =
-        $("loginPassword").value;
-
-
-    if(!email || !password){
-
-        message(
-            $("loginMsg"),
-            "Enter email and password."
-        );
-
-        return;
-    }
-
-
-    $("loginBtn").disabled = true;
-    $("loginBtn").textContent = "Logging in...";
-
-
-    try{
-
-        await signInWithEmailAndPassword(
-            auth,
-            email,
-            password
-        );
-
-
-        message(
-            $("loginMsg"),
-            "Login successful.",
-            true
-        );
-
-
-    }catch(error){
-
-        console.error(error);
-
-        let text = "Login failed.";
-
-        if(
-            error.code === "auth/invalid-credential" ||
-            error.code === "auth/wrong-password" ||
-            error.code === "auth/user-not-found"
-        ){
-
-            text = "Invalid email or password.";
-
+            return data;
         }
 
-        if(error.code === "auth/too-many-requests")
-            text = "Too many attempts. Try again later.";
-
-        message($("loginMsg"),text);
-
-    }finally{
-
-        $("loginBtn").disabled = false;
-        $("loginBtn").textContent = "Login";
-
-    }
-
-};
-
-
-/* GOOGLE LOGIN */
-
-async function googleLogin(){
-
-    try{
-
-        await signInWithPopup(
-            auth,
-            googleProvider
-        );
-
-    }catch(error){
-
-        console.error(error);
-
-        let text = "Google login failed.";
-
-        if(error.code === "auth/popup-closed-by-user")
-            text = "Google login was cancelled.";
-
-        if(error.code === "auth/popup-blocked")
-            text = "Popup was blocked by the browser.";
-
-        if(error.code === "auth/unauthorized-domain")
-            text = "This website is not authorized in Firebase.";
-
-        message($("loginMsg"),text);
-
-    }
-
-}
-
-
-$("googleLogin").onclick = googleLogin;
-$("googleRegister").onclick = googleLogin;
-
-
-/* FORGOT PASSWORD */
-
-$("forgotBtn").onclick = async () => {
-
-    const email =
-        $("loginEmail").value.trim();
-
-
-    if(!email){
-
-        message(
-            $("loginMsg"),
-            "Enter your email first."
-        );
-
-        return;
-    }
-
-
-    try{
-
-        await sendPasswordResetEmail(
-            auth,
-            email
-        );
-
-
-        message(
-            $("loginMsg"),
-            "Password reset email sent.",
-            true
-        );
-
-
-    }catch(error){
-
-        console.error(error);
-
-        message(
-            $("loginMsg"),
-            "Unable to send reset email."
-        );
-
-    }
-
-};
-
-
-/* LOAD USER */
-
-async function loadUser(user){
-
-    if(!user) return;
-
-
-    let username =
-        user.displayName || "User";
-
-
-    try{
-
-        const snap =
-            await getDoc(
-                doc(db,"users",user.uid)
-            );
-
-
-        if(snap.exists()){
-
-            const data = snap.data();
-
-            username =
-                data.username ||
-                user.displayName ||
-                "User";
-
-            $("balance").textContent =
-                Number(data.balance || 0).toFixed(2);
-
-        }else{
-
-            await setDoc(
-                doc(db,"users",user.uid),
-                {
-                    username: username,
-                    email: user.email || "",
-                    uid: user.uid,
-                    balance: 0,
-                    createdAt: serverTimestamp()
-                },
-                { merge:true }
-            );
-
-            $("balance").textContent = "0.00";
-
-        }
-
-
-    }catch(error){
-
-        console.error("User data error:",error);
-
-    }
-
-
-    $("currentUsername").textContent = username;
-    $("menuUsername").textContent = username;
-
-    $("accountUsername").value = username;
-    $("accountEmail").value = user.email || "";
-    $("accountUid").value = user.uid;
-
-}
-
-
-/* AUTH STATE */
-
-onAuthStateChanged(auth,async user => {
-
-    if(user){
-
-        $("authSection").classList.add("hidden");
-        $("appSection").classList.remove("hidden");
-
-        await loadUser(user);
-
-        renderProducts();
-        loadCreditRequests();
-
-    }else{
-
-        $("authSection").classList.remove("hidden");
-        $("appSection").classList.add("hidden");
-
-    }
-
-});
-
-
-/* LOGOUT */
-
-async function logout(){
-
-    try{
-
-        await signOut(auth);
-
-    }catch(error){
-
-        console.error(error);
-
-    }
-
-}
-
-
-$("logoutBtn").onclick = logout;
-$("logoutBtn2").onclick = logout;
-
-
-/* PAGE NAVIGATION */
-
-window.showPage = function(pageId){
-
-    document
-        .querySelectorAll(".page")
-        .forEach(page => page.classList.remove("active"));
-
-
-    const page =
-        $(pageId);
-
-
-    if(page)
-        page.classList.add("active");
-
-
-    $("sideMenu").classList.remove("open");
-    $("overlay").classList.remove("show");
-
-};
-
-
-/* MENU */
-
-$("menuBtn").onclick = () => {
-
-    $("sideMenu").classList.add("open");
-    $("overlay").classList.add("show");
-
-};
-
-
-$("closeMenu").onclick = () => {
-
-    $("sideMenu").classList.remove("open");
-    $("overlay").classList.remove("show");
-
-};
-
-
-$("overlay").onclick = () => {
-
-    $("sideMenu").classList.remove("open");
-    $("overlay").classList.remove("show");
-
-};
-
-
-document
-    .querySelectorAll(".menu-item[data-page]")
-    .forEach(button => {
-
-        button.onclick = () => {
-
-            showPage(
-                button.dataset.page
-            );
-
+        const defaultProducts = [
+            { id: 1, name: "DELTA PROXY IOS IPHONE", features: ["Body Proxy - Full Red", "Neck Proxy V1", "Neck Proxy V2"], variants: [{ name: "1 Days", price: 150 }, { name: "7 Days", price: 350 }, { name: "30 Days", price: 700 }] },
+            { id: 2, name: "MIGUL IPHONE IOS FF", features: ["Silent Aim", "AimBot", "Speed Hack"], variants: [{ name: "1 Day's Basic", price: 250 }, { name: "7 Day's Basic", price: 600 }, { name: "30 Day's Basic", price: 1200 }, { name: "1 Day's PRO", price: 250 }, { name: "7 Day's PRO", price: 600 }, { name: "30 Day's PRO", price: 1200 }] },
+            { id: 3, name: "XYZ CHEATS FF ROOT ANDROID", features: ["Silent Aim", "Aim Magnet", "Aimbot"], variants: [{ name: "1 Days", price: 70 }, { name: "2 Days", price: 150 }] },
+            { id: 4, name: "PRIME HOOK FF NONROOT ANDROID", features: ["Aim Magnet", "Silent Aim", "Aimbot"], variants: [{ name: "1 Days Nonroot", price: 50 }, { name: "3 Days Nonroot", price: 100 }, { name: "7 Days Nonroot", price: 270 }, { name: "10 Days Nonroot", price: 300 }] },
+            { id: 5, name: "BALA MOD XYZ - V2 FF NONROOT", features: ["NONROOT Direct", "Auto Headshot", "ESP Location"], variants: [{ name: "1 Hours", price: 15 }, { name: "3 Hours", price: 35 }, { name: "6 Hours", price: 60 }, { name: "12 Hours", price: 120 }, { name: "1 Days", price: 230 }, { name: "2 Days", price: 400 }, { name: "3 Days", price: 550 }, { name: "5 Days", price: 950 }, { name: "7 Days", price: 1300 }] },
+            { id: 6, name: "HG CHEATS PRIME PROXY FF NONROOT", features: ["Aimsafe Main", "Aimbot", "Headshot"], variants: [{ name: "1 Days", price: 70 }, { name: "7 Days", price: 250 }, { name: "10 Days", price: 300 }] },
+            { id: 7, name: "DRIPCLIENT FF NONROOT APKMOD", features: ["Aimkill", "Silent Aim", "Underkill"], variants: [{ name: "1 Day's Nonroot", price: 60 }, { name: "3 Day's Nonroot", price: 140 }, { name: "7 Day's Nonroot", price: 250 }, { name: "15 Day's Nonroot", price: 400 }, { name: "30 Day's Nonroot", price: 600 }] },
+            { id: 8, name: "HG CHEATS ANDROID PROXY FF NONROOT", features: ["AIMBOT", "PRECISAO", "HS ALTO"], variants: [{ name: "1 Day's", price: 70 }, { name: "7 Day's", price: 270 }, { name: "10 Day's", price: 300 }, { name: "30 Day's", price: 500 }] },
+            { id: 9, name: "HG CHEATS FF APKMOD NONROOT+ROOT", features: ["Aim Magnet", "Silent Aim", "Aimbot"], variants: [{ name: "1 Day's Root + Nonroot", price: 70 }, { name: "7 Day's Root + Nonroot", price: 270 }, { name: "10 Day's Root + Nonroot", price: 300 }, { name: "30 Day's Root + Nonroot", price: 500 }] },
+            { id: 10, name: "HAXX-CKER PRO FF ROOT", features: ["Aimsafe Main Id Root", "Aimbot", "Headshot"], variants: [{ name: "3 Day's", price: 180 }, { name: "5 Day's", price: 280 }, { name: "10 Day's", price: 550 }, { name: "20 Day's", price: 1050 }, { name: "30 Day's", price: 1450 }, { name: "60 Day's", price: 2800 }] },
+            { id: 11, name: "SILENT CHEAT FF ROOT ANDROID", features: ["Safe Main Id", "Silent Aim", "Underkill"], variants: [{ name: "1 Day's SAFE", price: 90 }, { name: "3 Day's SAFE", price: 180 }, { name: "7 Day's SAFE", price: 350 }, { name: "14 Day's SAFE", price: 600 }, { name: "28 Day's SAFE", price: 900 }, { name: "1 Day's BRUTAL", price: 90 }, { name: "3 Day's BRUTAL", price: 180 }, { name: "7 Day's BRUTAL", price: 350 }, { name: "14 Day's BRUTAL", price: 600 }, { name: "28 Day's BRUTAL", price: 900 }] },
+            { id: 12, name: "PATO TEAM FF ALL ANDROID", features: ["Silent Aim", "Aim Magnet", "Speed"], variants: [{ name: "3 Day's All Colours Mix", price: 150 }, { name: "7 Day's All Colours Mix", price: 300 }, { name: "15 Day's All Colours Mix", price: 500 }, { name: "30 Day's All Colours Mix", price: 700 }] },
+            { id: 13, name: "BR MOD FF PC VERSION", features: ["Silent Aim", "Aim Magnet", "Speed"], variants: [{ name: "1 Day Pc Aim Silent", price: 79 }, { name: "10 Days Pc Aim Silent", price: 479 }, { name: "20 Days Pc Aim Silent", price: 799 }, { name: "10 Days Pc Bypass + Silent", price: 519 }, { name: "1 Day Pc Modmenu x86", price: 79 }, { name: "10 Day Pc Modmenu x86", price: 479 }, { name: "30 Day Pc Modmenu x86", price: 799 }] },
+            { id: 14, name: "INVISIBLE X (STREAMER PANEL)", features: ["Streamer Panel", "All Devices Support"], variants: [{ name: "1 Day", price: 99 }, { name: "7 Days", price: 399 }, { name: "15 Days", price: 599 }, { name: "31 Days", price: 999 }] },
+            { id: 15, name: "RAPID CORE", features: ["Rapid Core Engine", "Anti-Cheat Bypass"], variants: [{ name: "1 Day", price: 89 }, { name: "7 Days", price: 279 }, { name: "15 Days", price: 459 }, { name: "30 Days", price: 799 }] },
+            { id: 16, name: "SKB MOD (SPECIAL OFFER)", features: ["Special Offer", "High Headshot"], variants: [{ name: "1 Day", price: 99 }, { name: "7 Days", price: 299 }, { name: "15 Days", price: 499 }, { name: "30 Days", price: 799 }] },
+            { id: 17, name: "INVISABLE X", features: ["High Performance", "Safe Aim"], variants: [{ name: "1 Day", price: 99 }, { name: "7 Days", price: 349 }, { name: "15 Days", price: 599 }, { name: "30 Days", price: 999 }] },
+            { id: 18, name: "P20 ROOT DEVICE", features: ["Root Device Special"], variants: [{ name: "30 Days Plan", price: 600 }] },
+            { id: 19, name: "P20 NON ROOT", features: ["Non-Root Supported"], variants: [{ name: "30 Days Plan", price: 800 }] },
+            { id: 20, name: "PHONE TO PHONE ROOTING SERVICE", features: ["Xiaomi HyperOS (₹1500)", "POCO HyperOS (₹1500)", "Redmi MIUI / Moto / Infinix / Tecno / Samsung / Nothing / OnePlus (₹1000)"], variants: [{ name: "HyperOS Device Root", price: 1500 }, { name: "Other Brands Root", price: 1000 }] },
+            { id: 21, name: "NINE X INJECTOR", features: ["High Precision Injector"], variants: [{ name: "10 Days", price: 400 }] }
+        ];
+
+        window.addEventListener("load", function() {
+            setTimeout(() => {
+                const loader = document.getElementById("loader-overlay");
+                if(loader) { loader.style.opacity = "0"; loader.style.visibility = "hidden"; }
+            }, 700);
+        });
+
+        window.onload = function() {
+            let activeUser = localStorage.getItem("loggedInUser");
+            if(localStorage.getItem("isLoggedIn") === "true" && activeUser) {
+                document.getElementById("authScreen").style.display = "none";
+                checkAdminAccess(activeUser);
+            } else {
+                document.getElementById("authScreen").style.display = "flex";
+            }
+            updateBalanceUI();
+            renderProducts(defaultProducts);
+            initCanvas();
         };
 
-    });
-
-
-/* PRODUCTS */
-
-const products = [
-
-    {
-        name:"Digital Product 1",
-        description:"Premium digital product",
-        price:99
-    },
-
-    {
-        name:"Digital Product 2",
-        description:"Premium digital product",
-        price:149
-    },
-
-    {
-        name:"Digital Product 3",
-        description:"Premium digital product",
-        price:199
-    },
-
-    {
-        name:"Digital Product 4",
-        description:"Premium digital product",
-        price:249
-    },
-
-    {
-        name:"Digital Product 5",
-        description:"Premium digital product",
-        price:299
-    },
-
-    {
-        name:"Digital Product 6",
-        description:"Premium digital product",
-        price:399
-    }
-
-];
-
-
-function renderProducts(search=""){
-
-    const grid =
-        $("productGrid");
-
-
-    grid.innerHTML = "";
-
-
-    const filtered =
-        products.filter(product =>
-            product.name
-                .toLowerCase()
-                .includes(search.toLowerCase())
-        );
-
-
-    if(filtered.length === 0){
-
-        grid.innerHTML =
-            `<div class="list-empty">
-                No products found.
-            </div>`;
-
-        return;
-    }
-
-
-    filtered.forEach(product => {
-
-        const card =
-            document.createElement("div");
-
-        card.className = "card";
-
-
-        card.innerHTML = `
-
-            <h3>${product.name}</h3>
-
-            <p>
-                ${product.description}
-            </p>
-
-            <div class="price">
-                ₹${product.price}
-            </div>
-
-            <button class="primary-btn">
-                Buy Now
-            </button>
-
-        `;
-
-
-        card
-            .querySelector("button")
-            .onclick = () => {
-
-                $("modalProductName")
-                    .textContent = product.name;
-
-                $("modalProductInfo")
-                    .textContent =
-                    product.description;
-
-                $("modalProductPrice")
-                    .textContent =
-                    product.price;
-
-                $("productModal")
-                    .classList.add("show");
-
-            };
-
-
-        grid.appendChild(card);
-
-    });
-
-}
-
-
-$("productSearch").addEventListener(
-    "input",
-    event => {
-
-        renderProducts(
-            event.target.value
-        );
-
-    }
-);
-
-
-/* MODAL */
-
-$("modalClose").onclick = () => {
-
-    $("productModal")
-        .classList.remove("show");
-
-};
-
-
-$("productModal").onclick = event => {
-
-    if(event.target === $("productModal")){
-
-        $("productModal")
-            .classList.remove("show");
-
-    }
-
-};
-
-
-/* EXPOSE USER */
-
-window.getCurrentUser = () => auth.currentUser;
-
-</script>
-     <script type="module">
-
-import {
-    getFirestore,
-    collection,
-    addDoc,
-    serverTimestamp,
-    query,
-    where,
-    orderBy,
-    getDocs
-} from
-"https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
-
-import {
-    getAuth
-} from
-"https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
-
-import {
-    initializeApp,
-    getApps
-} from
-"https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-
-
-/*
-   Firebase app is already initialized in Part 3.
-   Reuse the existing Firebase app.
-*/
-
-const firebaseApp =
-    getApps()[0];
-
-const db =
-    getFirestore(firebaseApp);
-
-const auth =
-    getAuth(firebaseApp);
-
-
-/* ADD CREDIT REQUEST */
-
-const submitBtn =
-    document.getElementById(
-        "submitCreditBtn"
-    );
-
-
-submitBtn.onclick = async () => {
-
-    const user =
-        auth.currentUser;
-
-
-    if(!user){
-
-        alert("Please login first.");
-        return;
-
-    }
-
-
-    const amount =
-        Number(
-            document.getElementById(
-                "creditAmount"
-            ).value
-        );
-
-
-    const utr =
-        document.getElementById(
-            "utrInput"
-        ).value.trim();
-
-
-    const status =
-        document.getElementById(
-            "creditStatus"
-        );
-
-
-    if(!amount || amount <= 0){
-
-        status.style.display = "block";
-        status.textContent =
-            "Please enter a valid amount.";
-
-        return;
-
-    }
-
-
-    if(!utr || utr.length < 6){
-
-        status.style.display = "block";
-        status.textContent =
-            "Please enter a valid UTR/reference number.";
-
-        return;
-
-    }
-
-
-    submitBtn.disabled = true;
-    submitBtn.textContent = "Submitting...";
-
-
-    try{
-
-        /*
-          IMPORTANT:
-          This only creates a verification request.
-          It does NOT increase the user's balance.
-        */
-
-        await addDoc(
-            collection(
-                db,
-                "creditRequests"
-            ),
-            {
-                uid: user.uid,
-                email: user.email || "",
-                amount: amount,
-                utr: utr,
-                status: "pending",
-                createdAt: serverTimestamp()
+        function toggleAuthTab(type) {
+            document.querySelectorAll('.auth-tab').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+
+            if(type === 'login') {
+                document.getElementById('tabLoginBtn').classList.add('active');
+                document.getElementById('loginForm').classList.add('active');
+            } else {
+                document.getElementById('tabRegisterBtn').classList.add('active');
+                document.getElementById('registerForm').classList.add('active');
             }
-        );
-
-
-        status.style.display = "block";
-
-        status.textContent =
-            "Verification Pending. Your request has been submitted.";
-
-
-        status.style.color =
-            "#00e6a8";
-
-
-        document.getElementById(
-            "creditAmount"
-        ).value = "";
-
-
-        document.getElementById(
-            "utrInput"
-        ).value = "";
-
-
-        loadCreditRequests();
-
-
-    }catch(error){
-
-        console.error(error);
-
-        status.style.display = "block";
-
-        status.textContent =
-            "Unable to submit request. Check Firebase Firestore rules.";
-
-        status.style.color =
-            "#ff6577";
-
-    }finally{
-
-        submitBtn.disabled = false;
-        submitBtn.textContent =
-            "Submit for Verification";
-
-    }
-
-};
-
-
-/* LOAD USER'S CREDIT REQUESTS */
-
-async function loadCreditRequests(){
-
-    const user =
-        auth.currentUser;
-
-
-    if(!user) return;
-
-
-    const transactionList =
-        document.getElementById(
-            "transactionList"
-        );
-
-
-    try{
-
-        const q =
-            query(
-                collection(
-                    db,
-                    "creditRequests"
-                ),
-                where(
-                    "uid",
-                    "==",
-                    user.uid
-                )
-            );
-
-
-        const snapshot =
-            await getDocs(q);
-
-
-        transactionList.innerHTML = "";
-
-
-        if(snapshot.empty){
-
-            transactionList.innerHTML =
-                `<div class="list-empty">
-                    No transactions found.
-                </div>`;
-
-            return;
-
         }
 
+        function togglePasswordVisibility(fieldId, iconElem) {
+            let input = document.getElementById(fieldId);
+            if (input.type === "password") {
+                input.type = "text";
+                iconElem.classList.replace("fa-eye", "fa-eye-slash");
+            } else {
+                input.type = "password";
+                iconElem.classList.replace("fa-eye-slash", "fa-eye");
+            }
+        }
 
-        const rows = [];
+        function handleAuthSubmit(type) {
+            let userDb = JSON.parse(localStorage.getItem("registeredUsers") || "{}");
 
+            if(type === 'register') {
+                let u = document.getElementById("regUsername").value.trim();
+                let p = document.getElementById("regPassword").value.trim();
 
-        snapshot.forEach(item => {
+                if(!u || !p) { alert("Please fill all details!"); return; }
+                if(userDb[u]) { alert("Username already exists! Choose another name."); return; }
 
-            rows.push({
-                id:item.id,
-                ...item.data()
+                userDb[u] = { password: p, balance: 0.00 };
+                localStorage.setItem("registeredUsers", JSON.stringify(userDb));
+                
+                alert("Account Created Successfully! Please Login now.");
+                toggleAuthTab('login');
+                document.getElementById("loginUsername").value = u;
+            } 
+            else if(type === 'login') {
+                let u = document.getElementById("loginUsername").value.trim();
+                let p = document.getElementById("loginPassword").value.trim();
+
+                if(u === "ADX ANKIT" && p === "admin123") {
+                    loginUserSuccess(u, 99999.00);
+                    return;
+                }
+
+                if(userDb[u] && userDb[u].password === p) {
+                    loginUserSuccess(u, userDb[u].balance || 0.00);
+                } else {
+                    alert("Invalid Username or Password!");
+                }
+            }
+        }
+
+        function loginUserSuccess(username, initialBal) {
+            localStorage.setItem("isLoggedIn", "true");
+            localStorage.setItem("loggedInUser", username);
+            if(localStorage.getItem("walletBalance") === null) {
+                localStorage.setItem("walletBalance", initialBal.toFixed(2));
+            }
+            document.getElementById("authScreen").style.display = "none";
+            checkAdminAccess(username);
+            updateBalanceUI();
+        }
+
+        function renderProducts(productsList) {
+            let container = document.getElementById("productContainer");
+            container.innerHTML = "";
+
+            if(productsList.length === 0) {
+                container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-sub); padding: 30px;">No matching items found.</p>`;
+                return;
+            }
+
+            productsList.forEach(p => {
+                let card = document.createElement("div");
+                card.className = "product-card";
+                card.innerHTML = `
+                    <div>
+                        <h3 class="product-title">${p.name}</h3>
+                        <ul class="feature-list">
+                            ${p.features.map(f => `<li><i class="fa-solid fa-bolt"></i> ${f}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <button class="cyber-btn" onclick="openPlanModal(${p.id})">BUY NOW</button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function filterProducts() {
+            let query = document.getElementById("productSearchInput").value.toLowerCase();
+            let filtered = defaultProducts.filter(p => 
+                p.name.toLowerCase().includes(query) || 
+                p.features.some(f => f.toLowerCase().includes(query))
+            );
+            renderProducts(filtered);
+        }
+
+        function openPlanModal(productId) {
+            let prod = defaultProducts.find(p => p.id === productId);
+            if(!prod) return;
+
+            document.getElementById("planModalTitle").innerText = prod.name;
+            let container = document.getElementById("plansListContainer");
+            container.innerHTML = "";
+
+            prod.variants.forEach(v => {
+                let btn = document.createElement("button");
+                btn.className = "plan-option-btn";
+                btn.innerHTML = `<span>${v.name}</span> <span class="plan-price-tag">₹${v.price}.00</span>`;
+                btn.onclick = function() {
+                    closePlanModal();
+                    processPurchase(prod.name, v.name, v.price);
+                };
+                container.appendChild(btn);
             });
 
-        });
+            document.getElementById("planSelectModal").style.display = "flex";
+        }
 
+        function closePlanModal() { document.getElementById("planSelectModal").style.display = "none"; }
 
-        rows.sort((a,b) => {
+        function processPurchase(prodName, variantName, price) {
+            let currentBal = parseFloat(localStorage.getItem("walletBalance") || "0.00");
+            if(currentBal >= price) {
+                currentBal -= price;
+                localStorage.setItem("walletBalance", currentBal.toFixed(2));
+                updateBalanceUI();
+                
+                document.getElementById("modalPurchasedItemText").innerText = `${prodName} - (${variantName})`;
+                document.getElementById("buySuccessModal").style.display = "flex";
+            } else {
+                alert("Insufficient Balance! Please Add Funds first.");
+                openAddFundModal();
+            }
+        }
 
-            const aTime =
-                a.createdAt?.seconds || 0;
+        function closeBuySuccessModal() { document.getElementById("buySuccessModal").style.display = "none"; }
 
-            const bTime =
-                b.createdAt?.seconds || 0;
+        function checkAdminAccess(username) {
+            if(username === "ADX ANKIT") {
+                document.getElementById("adminTabLink").style.display = "block";
+            } else {
+                document.getElementById("adminTabLink").style.display = "none";
+            }
+        }
 
-            return bTime - aTime;
+        function handleLogout() {
+            localStorage.removeItem("isLoggedIn");
+            localStorage.removeItem("loggedInUser");
+            location.reload();
+        }
 
-        });
+        function toggleSidebar() { document.getElementById("sidebar").classList.toggle("active"); }
 
+        function switchTab(tabName) {
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            toggleSidebar();
+            if(tabName === 'buyKey') document.getElementById('buyKeySection').classList.add('active');
+            if(tabName === 'myKeys') document.getElementById('myKeysSection').classList.add('active');
+            if(tabName === 'history') document.getElementById('historySection').classList.add('active');
+            if(tabName === 'adminPanel') document.getElementById('adminPanelSection').classList.add('active');
+        }
 
-        rows.forEach(data => {
+        function updateBalanceUI() {
+            let bal = parseFloat(localStorage.getItem("walletBalance") || "0.00");
+            document.getElementById("userBalance").innerText = bal.toFixed(2);
+        }
 
-            const card =
-                document.createElement("div");
+        function adminAddFunds() {
+            let targetUser = document.getElementById("adminTargetUser").value.trim();
+            let amt = parseFloat(document.getElementById("adminAddBalance").value);
+            if(!targetUser || isNaN(amt) || amt <= 0) { alert("Invalid inputs!"); return; }
 
-            card.className = "card";
+            let currentBal = parseFloat(localStorage.getItem("walletBalance") || "0.00");
+            currentBal += amt;
+            localStorage.setItem("walletBalance", currentBal.toFixed(2));
+            updateBalanceUI();
+            alert(`Credited ₹${amt} successfully!`);
+        }
 
+        function generateAddFundQR() {
+            let amtInput = document.getElementById("fundAmountInput").value;
+            let amt = parseFloat(amtInput);
 
-            const date =
-                data.createdAt?.toDate
-                    ? data.createdAt
-                        .toDate()
-                        .toLocaleString()
-                    : "Pending";
+            if(!amtInput || isNaN(amt) || amt < 10) {
+                alert("Please enter a valid amount (Min ₹10)");
+                document.getElementById("qrCodeContainer").style.display = "none";
+                return;
+            }
 
+            let upiUrl = `upi://pay?pa=ankittt.3@fam&pn=MINI4C&am=${amt}&cu=INR`;
+            let qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
+            
+            document.getElementById("generatedQRImg").src = qrApi;
+            document.getElementById("displayAmountText").innerText = `Pay Amount: ₹${amt}.00`;
+            document.getElementById("qrCodeContainer").style.display = "block";
+        }
 
-            let statusText =
-                data.status || "pending";
+        function openAddFundModal() { document.getElementById("addFundModal").style.display = "flex"; }
+        function closeAddFundModal() { document.getElementById("addFundModal").style.display = "none"; }
 
+        function initCanvas() {
+            const canvas = document.getElementById("bgCanvas");
+            const ctx = canvas.getContext("2d");
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
 
-            statusText =
-                statusText.charAt(0)
-                .toUpperCase()
-                +
-                statusText.slice(1);
+            let particles = [];
+            for(let i = 0; i < 45; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+                    radius: Math.random() * 2 + 1, dx: (Math.random() - 0.5) * 0.8, dy: (Math.random() - 0.5) * 0.8
+                });
+            }
 
+            function animate() {
+                requestAnimationFrame(animate);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                particles.forEach((p, index) => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = "rgba(255, 0, 60, 0.5)";
+                    ctx.fill();
 
-            card.innerHTML = `
+                    for(let j = index + 1; j < particles.length; j++) {
+                        let p2 = particles[j];
+                        let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                        if(dist < 100) {
+                            ctx.beginPath();
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.strokeStyle = `rgba(255, 0, 60, ${0.15 - dist/700})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
+                    }
 
-                <h3>
-                    Credit Request
-                </h3>
-
-                <p>
-                    Amount:
-                    <strong style="color:var(--cyan)">
-                        ₹${Number(data.amount || 0).toFixed(2)}
-                    </strong>
-                </p>
-
-                <p style="margin-top:8px">
-                    UTR:
-                    ${escapeHTML(data.utr || "")}
-                </p>
-
-                <p style="margin-top:8px">
-                    Status:
-                    <strong style="color:var(--cyan)">
-                        ${escapeHTML(statusText)}
-                    </strong>
-                </p>
-
-                <p style="margin-top:8px;font-size:12px">
-                    ${escapeHTML(date)}
-                </p>
-
-            `;
-
-
-            transactionList.appendChild(card);
-
-        });
-
-
-    }catch(error){
-
-        console.error(
-            "Transaction loading error:",
-            error
-        );
-
-        transactionList.innerHTML =
-            `<div class="list-empty">
-                Unable to load transactions.
-            </div>`;
-
-    }
-
-}
-
-
-function escapeHTML(value){
-
-    return String(value)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-
-}
-
-
-/* REFRESH HISTORY WHEN PAGE OPENS */
-
-document
-    .querySelectorAll(
-        '.menu-item[data-page="transactions"]'
-    )
-    .forEach(button => {
-
-        button.addEventListener(
-            "click",
-            () => loadCreditRequests()
-        );
-
-    });
-
-
-/* INITIAL LOAD */
-
-if(auth.currentUser){
-
-    loadCreditRequests();
-
-}
-
-</script>
-
+                    p.x += p.dx; p.y += p.dy;
+                    if(p.x < 0 || p.x > canvas.width) p.dx = -p.dx;
+                    if(p.y < 0 || p.y > canvas.height) p.dy = -p.dy;
+                });
+            }
+            animate();
+        }
+    </script>
 </body>
-    </html>
-    </div>
-
-</div>
+</html
