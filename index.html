@@ -20,7 +20,6 @@ body{background:var(--bg);color:var(--text);overflow-x:hidden;min-height:100vh}
 .particle:nth-child(6){left:85%;width:90px;height:90px;animation-duration:11s;animation-delay:2s;}
 @keyframes animate{0%{transform:translateY(0) rotate(0deg);opacity:1;}100%{transform:translateY(-1000px) rotate(720deg);opacity:0;}}
 
-/* Floating Animation for Cards */
 @keyframes floatCard {
     0% { transform: translateY(0px); box-shadow: 0 5px 15px rgba(0,0,0,0.5), inset 0 0 10px rgba(255,0,60,0.1); }
     50% { transform: translateY(-7px); box-shadow: 0 12px 25px rgba(0,240,255,0.15), inset 0 0 15px rgba(0,240,255,0.2); }
@@ -50,7 +49,6 @@ body{background:var(--bg);color:var(--text);overflow-x:hidden;min-height:100vh}
     animation: floatCard 4s ease-in-out infinite;
     transition: 0.3s;
 }
-/* Stagger floating effect so they don't move together identically */
 .grid .card:nth-child(2n){animation-duration: 4.5s; animation-delay: 1s;}
 .grid .card:nth-child(3n){animation-duration: 3.8s; animation-delay: 2s;}
 
@@ -72,7 +70,8 @@ body{background:var(--bg);color:var(--text);overflow-x:hidden;min-height:100vh}
 </style>
 </head>
 <body>
- <div class="bg-animation">
+
+<div class="bg-animation">
     <li class="particle"></li><li class="particle"></li><li class="particle"></li>
     <li class="particle"></li><li class="particle"></li><li class="particle"></li>
 </div>
@@ -113,8 +112,7 @@ body{background:var(--bg);color:var(--text);overflow-x:hidden;min-height:100vh}
         <h3 id="authTitle" style="color:var(--red);font-family:'Orbitron';margin-bottom:15px;text-shadow:0 0 10px rgba(255,0,60,0.5)">LOGIN TO MINI4C</h3>
         <input type="text" id="username" class="inp" placeholder="Username">
         <input type="password" id="password" class="inp" placeholder="Password">
-        <button id="authBtn" onclick="handleAuth()" class="cyber-btn" style="margin-bottom:12px">LOGIN</button>
-        <p id="switchText" style="font-size:12px;color:#aaa;cursor:pointer;" onclick="toggleAuthMode()">Don't have an account? <b style="color:var(--neon)">Register</b></p>
+        <button onclick="handleLogin()" class="cyber-btn" style="margin-bottom:12px">ENTER PANEL</button>
     </div>
 </div>
 
@@ -137,58 +135,53 @@ body{background:var(--bg);color:var(--text);overflow-x:hidden;min-height:100vh}
 <div id="keysModal" class="modal"><div class="modal-content" style="max-width:420px"><h3 style="color:var(--red);margin-bottom:12px;font-family:'Orbitron'">My Purchased Keys</h3><div id="keysList" style="max-height:250px;overflow-y:auto;margin-bottom:12px;text-align:left"></div><button onclick="closeModal('keysModal')" class="btn" style="background:#222">Close</button></div></div>
 
 <div id="fundModal" class="modal"><div class="modal-content"><h3 style="color:var(--red);margin-bottom:10px;font-family:'Orbitron'">Add Funds</h3><input type="number" id="fAmt" class="inp" placeholder="Amount (INR)"><button onclick="genQR()" class="cyber-btn" style="margin-bottom:10px">GENERATE QR</button><div id="qrBox" style="display:none;background:#fff;padding:10px;border-radius:6px;margin-bottom:10px"><img id="qrImg" style="width:150px;height:150px"><p id="qrAmt" style="color:#000;font-weight:bold;font-size:13px;margin-top:5px"></p><p style="color:#333;font-size:11px">UPI: ankittt.3@fam</p></div><input type="text" id="utr" class="inp" placeholder="Enter UTR" style="display:none"><button id="vBtn" onclick="addMoney()" class="cyber-btn" style="background:var(--neon);color:#000;display:none;margin-bottom:8px;box-shadow:0 0 10px rgba(0,240,255,0.4)">VERIFY & ADD</button><button onclick="closeModal('fundModal')" class="btn" style="background:#222">Close</button></div></div>
-
-<script>
+ <script>
 const products=[
-{id:1,name:"DELTA PROXY IOS IPHONE",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:150},{days:"3 Days",price:350},{days:"7 Days",price:500},{days:"30 Days",price:700}]},
-{id:2,name:"MIGUL IPHONE IOS FF",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:250},{days:"3 Days",price:450},{days:"7 Days",price:600},{days:"30 Days",price:1200}]},
-{id:3,name:"XYZ CHEATS FF ROOT",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:70},{days:"2 Days",price:150},{days:"7 Days",price:300},{days:"30 Days",price:800}]},
-{id:4,name:"PRIME HOOK FF NONROOT",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:50},{days:"3 Days",price:100},{days:"7 Days",price:270},{days:"30 Days",price:750}]},
-{id:5,name:"BALA MOD V2 FF",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Hr",price:15},{days:"1 Day",price:230},{days:"7 Days",price:950},{days:"30 Days",price:2000}]},
-{id:6,name:"HG PROXY FF NONROOT",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:70},{days:"3 Days",price:150},{days:"7 Days",price:250},{days:"30 Days",price:650}]},
-{id:7,name:"DRIPCLIENT FF NONROOT",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:60},{days:"7 Days",price:200},{days:"30 Days",price:600}]},
-{id:8,name:"HG ANDROID PROXY FF",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:70},{days:"7 Days",price:220},{days:"30 Days",price:500}]},
-{id:9,name:"HG APKMOD ROOT+NONROOT",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:70},{days:"7 Days",price:220},{days:"30 Days",price:500}]},
-{id:10,name:"HAXX-CKER PRO FF ROOT",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"3 Days",price:180},{days:"7 Days",price:400},{days:"30 Days",price:1450}]},
-{id:11,name:"SILENT CHEAT ROOT",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:90},{days:"7 Days",price:300},{days:"30 Days",price:900}]},
-{id:12,name:"PATO TEAM FF ANDROID",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"3 Days",price:150},{days:"7 Days",price:300},{days:"30 Days",price:700}]},
-{id:13,name:"BR MOD FF PC",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:79},{days:"7 Days",price:250},{days:"30 Days",price:799}]},
-{id:14,name:"NINE X INJECTER",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:60},{days:"10 Days",price:400},{days:"30 Days",price:900}]},
-{id:15,name:"SKB MOD",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:150},{days:"7 Days",price:500},{days:"30 Days",price:1500}]},
-{id:16,name:"INVISABLE X",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:150},{days:"7 Days",price:500},{days:"30 Days",price:1500}]},
-{id:17,name:"P20 ROOT DEVICE",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"7 Days",price:300},{days:"30 Days",price:800}]},
-{id:18,name:"P20 NON ROOT",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"7 Days",price:350},{days:"30 Days",price:1000}]},
-{id:19,name:"RAPID CORE",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:89},{days:"7 Days",price:280},{days:"30 Days",price:799}]},
-{id:20,name:"DOLPHIN",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:80},{days:"7 Days",price:500},{days:"31 Days",price:1600}]},
-{id:21,name:"BR MOD ROOT",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:80},{days:"7 Days",price:350},{days:"30 Days",price:1000}]},
-{id:22,name:"AIM HACK NONROOT",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Hr",price:15},{days:"1 Day",price:70},{days:"7 Days",price:250},{days:"30 Days",price:700}]}
+{id:1,name:"AIM HACK FF ROOT+NONROOT+IOS+PC",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:70},{days:"7 Days",price:250},{days:"30 Days",price:700}]},
+{id:2,name:"PRIME HOOK FF NONROOT ANDROID",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:50},{days:"3 Days",price:100},{days:"7 Days",price:270},{days:"30 Days",price:750}]},
+{id:3,name:"PATO TEAM FF ALL ANDROID",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"3 Days",price:150},{days:"7 Days",price:300},{days:"30 Days",price:700}]},
+{id:4,name:"SILENT CHEAT FF ROOT ANDROID",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:90},{days:"7 Days",price:300},{days:"30 Days",price:900}]},
+{id:5,name:"BR MOD FF PC VERSION",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:79},{days:"7 Days",price:250},{days:"30 Days",price:799}]},
+{id:6,name:"DELTA PROXY IOS IPHONE",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:150},{days:"3 Days",price:350},{days:"7 Days",price:500},{days:"30 Days",price:700}]},
+{id:7,name:"HAXX-CKER PRO FF ROOT",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"3 Days",price:180},{days:"7 Days",price:400},{days:"30 Days",price:1450}]},
+{id:8,name:"HG CHEATS FF APKMOD NONROOT+ROOT",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:70},{days:"7 Days",price:220},{days:"30 Days",price:500}]},
+{id:9,name:"HG CHEATS PRIME PROXY FF",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:70},{days:"7 Days",price:220},{days:"30 Days",price:500}]},
+{id:10,name:"MIGUL IPHONE IOS FF",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:250},{days:"3 Days",price:450},{days:"7 Days",price:600},{days:"30 Days",price:1200}]},
+{id:11,name:"XYZ CHEATS FF ROOT",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:70},{days:"2 Days",price:150},{days:"7 Days",price:300},{days:"30 Days",price:800}]},
+{id:12,name:"BALA MOD V2 FF",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Hr",price:15},{days:"1 Day",price:230},{days:"7 Days",price:950},{days:"30 Days",price:2000}]},
+{id:13,name:"HG PROXY FF NONROOT",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:70},{days:"3 Days",price:150},{days:"7 Days",price:250},{days:"30 Days",price:650}]},
+{id:14,name:"DRIPCLIENT FF NONROOT",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:60},{days:"7 Days",price:200},{days:"30 Days",price:600}]},
+{id:15,name:"NINE X INJECTER",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:60},{days:"10 Days",price:400},{days:"30 Days",price:900}]},
+{id:16,name:"SKB MOD",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:150},{days:"7 Days",price:500},{days:"30 Days",price:1500}]},
+{id:17,name:"INVISABLE X",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:150},{days:"7 Days",price:500},{days:"30 Days",price:1500}]},
+{id:18,name:"P20 ROOT DEVICE",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"7 Days",price:300},{days:"30 Days",price:800}]},
+{id:19,name:"P20 NON ROOT",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"7 Days",price:350},{days:"30 Days",price:1000}]},
+{id:20,name:"RAPID CORE",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:89},{days:"7 Days",price:280},{days:"30 Days",price:799}]},
+{id:21,name:"DOLPHIN",img:"https://cdn-icons-png.flaticon.com/512/1243/1243301.png",variants:[{days:"1 Day",price:80},{days:"7 Days",price:500},{days:"31 Days",price:1600}]}
 ];
 
-let isReg = false;
 window.onload=()=>{checkAuth();};
- function toggleAuthMode(){
-isReg = !isReg;
-document.getElementById("authTitle").innerText = isReg ? "REGISTER ACCOUNT" : "LOGIN TO MINI4C";
-document.getElementById("authBtn").innerText = isReg ? "REGISTER" : "LOGIN";
-document.getElementById("switchText").innerHTML = isReg ? "Already have an account? <b style='color:var(--neon)'>Login</b>" : "Don't have an account? <b style='color:var(--neon)'>Register</b>";
+
+function checkAuth(){
+let user = localStorage.getItem("currUser");
+if(user){
+document.getElementById("authModal").style.display="none";
+document.getElementById("navBar").style.display="flex";
+document.getElementById("mainContainer").style.display="block";
+document.getElementById("uNameDisplay").innerText = "USER: " + user.toUpperCase();
+render(products);updateBal();
+}else{
+document.getElementById("authModal").style.display="flex";
+document.getElementById("navBar").style.display="none";
+document.getElementById("mainContainer").style.display="none";
+}
 }
 
-function handleAuth(){
+function handleLogin(){
 let u = document.getElementById("username").value.trim();
-let p = document.getElementById("password").value.trim();
-if(!u || !p){alert("Fill all fields!");return;}
-let users = JSON.parse(localStorage.getItem("usersDB")||"{}");
-if(isReg){
-if(users[u]){alert("Username already exists!");return;}
-users[u] = p;
-localStorage.setItem("usersDB",JSON.stringify(users));
-alert("Account registered successfully! Please login.");
-toggleAuthMode();
-}else{
-if(!users[u] || users[u]!==p){alert("Invalid username or password!");return;}
+if(!u){alert("Please enter a username!");return;}
 localStorage.setItem("currUser", u);
 checkAuth();
-}
 }
 
 function logout(){
